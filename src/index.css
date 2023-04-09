@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --header-height: 64px;
+  }
+
+  body {
+    @apply bg-blue-50
+  }
+}
