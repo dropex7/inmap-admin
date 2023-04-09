@@ -1,14 +1,8 @@
 import type { RouteObject } from "react-router-dom";
-import {Outlet} from "react-router";
+import { Outlet } from "react-router";
+import { Empty } from "antd";
 
 const additional: Array<RouteObject> = [
-  {
-    path: "home",
-    lazy: () => import("../routes/Test"),
-    handle: {
-      title: "Главная",
-    },
-  },
   {
     path: "subject",
     element: <Outlet />,
@@ -18,40 +12,88 @@ const additional: Array<RouteObject> = [
     children: [
       {
         path: ":id",
-        lazy: () => import("../routes/Test"),
+        lazy: () => import("../entities/Place/Page"),
         handle: {
-          title: "Объекты",
+          title: "Список объектов",
         },
       },
       {
         index: true,
-        lazy: () => import("../routes/Test"),
+        lazy: () => import("../components/GlobalSelectPlace"),
         handle: {
-          title: "Объекты",
+          title: "Список объектов",
+        },
+      },
+    ],
+  },
+  {
+    path: "schema",
+    element: <Outlet />,
+    handle: {
+      title: "Схема",
+    },
+    children: [
+      {
+        path: ":id",
+        element: <Empty />,
+        handle: {
+          title: "Схема",
+        },
+      },
+      {
+        index: true,
+        lazy: () => import("../components/GlobalSelectPlace"),
+        handle: {
+          title: "Список объектов",
         },
       },
     ],
   },
   {
     path: "recommendation",
-    lazy: () => import("../routes/Test"),
+    element: <Outlet />,
     handle: {
       title: "Рекомендации",
     },
+    children: [
+      {
+        path: ":id",
+        element: <Empty />,
+        handle: {
+          title: "Рекомендации",
+        },
+      },
+      {
+        index: true,
+        lazy: () => import("../components/GlobalSelectPlace"),
+        handle: {
+          title: "Список объектов",
+        },
+      },
+    ],
   },
   {
-    path: "news_promo",
-    lazy: () => import("../routes/Test"),
+    path: "news-promo",
+    element: <Outlet />,
     handle: {
       title: "Новости и акции",
     },
-  },
-  {
-    path: "kek",
-    lazy: () => import("../routes/Test"),
-    handle: {
-      title: "Превью акций",
-    },
+    children: [
+      {
+        path: ":id",
+        element: <Empty />,
+        handle: {
+          title: "Новости и акции",
+        },
+      },
+      {
+        index: true,
+        lazy: () => import("../components/GlobalSelectPlace"),
+        handle: {
+          title: "Список объектов",
+        },
+      },
+    ],
   },
 ];
 
