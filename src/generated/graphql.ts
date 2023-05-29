@@ -599,9 +599,17 @@ export type GetPlaceQueryVariables = Exact<{
 
 export type GetPlaceQuery = { __typename?: 'Query', place: { __typename?: 'PlaceModel', title: string, logoUrl: string, address: string, schedule: any, recs: Array<{ __typename?: 'PlaceRecommendation', title: string }>, promos?: Array<{ __typename?: 'Promo', title: string }> | null } };
 
+export type GetSubjectsOfPlaceQueryVariables = Exact<{
+  placeUuid: Scalars['String'];
+}>;
+
+
+export type GetSubjectsOfPlaceQuery = { __typename?: 'Query', subjectsOfPlace: Array<{ __typename?: 'SubjectModel', uuid: string, name: string, layerUuid: string, logoUrl: string, logoBackgroundColor: string, images?: Array<{ __typename?: 'ImageModel', uuid: string, url: string, cloudinaryId: string }> | null }> };
+
 
 export const GetListOfPlacesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetListOfPlaces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"places"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}}]}}]}}]} as unknown as DocumentNode<GetListOfPlacesQuery, GetListOfPlacesQueryVariables>;
 export const GetPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"place"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"uuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"schedule"}},{"kind":"Field","name":{"kind":"Name","value":"recs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"Field","name":{"kind":"Name","value":"promos"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<GetPlaceQuery, GetPlaceQueryVariables>;
+export const GetSubjectsOfPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubjectsOfPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subjectsOfPlace"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"layerUuid"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"logoBackgroundColor"}},{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"cloudinaryId"}}]}}]}}]}}]} as unknown as DocumentNode<GetSubjectsOfPlaceQuery, GetSubjectsOfPlaceQueryVariables>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -1195,3 +1203,10 @@ export type GetPlaceQueryVariables = Exact<{
 
 
 export type GetPlaceQuery = { __typename?: 'Query', place: { __typename?: 'PlaceModel', title: string, logoUrl: string, address: string, schedule: any, recs: Array<{ __typename?: 'PlaceRecommendation', title: string }>, promos?: Array<{ __typename?: 'Promo', title: string }> | null } };
+
+export type GetSubjectsOfPlaceQueryVariables = Exact<{
+  placeUuid: Scalars['String'];
+}>;
+
+
+export type GetSubjectsOfPlaceQuery = { __typename?: 'Query', subjectsOfPlace: Array<{ __typename?: 'SubjectModel', uuid: string, name: string, layerUuid: string, logoUrl: string, logoBackgroundColor: string, images?: Array<{ __typename?: 'ImageModel', uuid: string, url: string, cloudinaryId: string }> | null }> };

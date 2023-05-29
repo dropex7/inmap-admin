@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  query GetListOfPlaces {\n    places {\n      uuid\n      title\n      logoUrl\n    }\n  }\n": types.GetListOfPlacesDocument,
     "\n  query GetPlace($uuid: String!) {\n    place(uuid: $uuid) {\n      title\n      logoUrl\n      address\n      schedule\n      recs {\n        title\n      }\n      promos {\n        title\n      }\n    }\n  }\n": types.GetPlaceDocument,
+    "\n  query GetSubjectsOfPlace($placeUuid: String!) {\n    subjectsOfPlace(placeUuid: $placeUuid) {\n      uuid\n      name\n      layerUuid\n      logoUrl\n      logoBackgroundColor\n      images {\n        uuid\n        url\n        cloudinaryId\n      }\n    }\n  }\n": types.GetSubjectsOfPlaceDocument,
 };
 
 /**
@@ -39,6 +40,10 @@ export function graphql(source: "\n  query GetListOfPlaces {\n    places {\n    
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query GetPlace($uuid: String!) {\n    place(uuid: $uuid) {\n      title\n      logoUrl\n      address\n      schedule\n      recs {\n        title\n      }\n      promos {\n        title\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetPlace($uuid: String!) {\n    place(uuid: $uuid) {\n      title\n      logoUrl\n      address\n      schedule\n      recs {\n        title\n      }\n      promos {\n        title\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetSubjectsOfPlace($placeUuid: String!) {\n    subjectsOfPlace(placeUuid: $placeUuid) {\n      uuid\n      name\n      layerUuid\n      logoUrl\n      logoBackgroundColor\n      images {\n        uuid\n        url\n        cloudinaryId\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetSubjectsOfPlace($placeUuid: String!) {\n    subjectsOfPlace(placeUuid: $placeUuid) {\n      uuid\n      name\n      layerUuid\n      logoUrl\n      logoBackgroundColor\n      images {\n        uuid\n        url\n        cloudinaryId\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

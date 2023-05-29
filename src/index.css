@@ -1,6 +1,5 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
 
 @layer base {
   :root {
@@ -11,3 +10,4 @@
     @apply bg-blue-50
   }
 }
+@tailwind utilities;

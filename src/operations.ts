@@ -26,3 +26,20 @@ export const GET_PLACE = gql`
     }
   }
 `;
+
+export const GET_SUBJECTS = gql`
+  query GetSubjectsOfPlace($placeUuid: String!) {
+    subjectsOfPlace(placeUuid: $placeUuid) {
+      uuid
+      name
+      layerUuid
+      logoUrl
+      logoBackgroundColor
+      images {
+        uuid
+        url
+        cloudinaryId
+      }
+    }
+  }
+`;

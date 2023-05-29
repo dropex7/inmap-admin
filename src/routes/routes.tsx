@@ -1,27 +1,53 @@
 import type { RouteObject } from "react-router-dom";
 import { Outlet } from "react-router";
 import { Empty } from "antd";
+import { RouteObjectWithHandle } from "./types";
+import App from "../App";
+import PageError from "./PageError";
 
-const additional: Array<RouteObject> = [
+export const additional: Array<RouteObjectWithHandle> = [
+  {
+    path: "login",
+    lazy: () => import("../entities/Login/Page"),
+    handle: {
+      title: "Авторизация",
+    },
+  },
   {
     path: "subject",
     element: <Outlet />,
     handle: {
-      title: "Объекты",
+      title: "Места",
     },
     children: [
       {
         path: ":id",
-        lazy: () => import("../entities/Place/Page"),
+        element: <Outlet />,
         handle: {
           title: "Список объектов",
         },
+        children: [
+          {
+            path: "create",
+            lazy: () => import("../entities/Subject/FormSubject"),
+            handle: {
+              title: "Создание",
+            },
+          },
+          {
+            index: true,
+            lazy: () => import("../entities/Subject/Page"),
+            handle: {
+              title: "Список объектов",
+            },
+          },
+        ],
       },
       {
         index: true,
         lazy: () => import("../components/GlobalSelectPlace"),
         handle: {
-          title: "Список объектов",
+          title: "Список мест",
         },
       },
     ],
@@ -97,4 +123,18 @@ const additional: Array<RouteObject> = [
   },
 ];
 
-export default additional;
+const baseRoutes: Array<RouteObjectWithHandle> = [...additional];
+
+const rootRoutes: Array<RouteObjectWithHandle> = [
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <PageError />,
+    children: baseRoutes,
+    handle: {
+      title: "inMap",
+    },
+  },
+];
+
+export default rootRoutes;

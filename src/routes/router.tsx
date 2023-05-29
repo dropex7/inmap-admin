@@ -1,50 +1,28 @@
-import type { IndexRouteObject, RouteObject } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
 
-import App from "../App";
+import routes from "./routes";
+import { IndexRouteObjectWithHandle, RouteObjectWithHandle } from "./types";
 
-import PageError from "./PageError";
-import additional from "./routes";
-
-const baseRoutes: Array<RouteObject> = [...additional];
-
-const rootRoutes: Array<RouteObject> = [
-  {
-    path: "/",
-    element: <App />,
-    errorElement: <PageError />,
-    children: baseRoutes,
-    handle: {
-      title: "inMap",
-    },
-  },
-];
-
-function isIndexRoute(route: RouteObject): route is IndexRouteObject {
+function isIndexRoute(
+  route: RouteObjectWithHandle
+): route is IndexRouteObjectWithHandle {
   return !!route.index;
 }
 
-function wrap(all: Array<RouteObject>): Array<RouteObject> {
+function wrap(all: Array<RouteObjectWithHandle>): Array<RouteObjectWithHandle> {
   return all.map((route) => {
-    return isIndexRoute(route)
-      ? {
-          ...route,
-          element: route.element,
-          lazy: route.lazy,
-          loader: route.loader,
-          errorElement: route.errorElement ?? <PageError />,
-        }
-      : {
-          ...route,
-          element: route.element,
-          lazy: route.lazy,
-          loader: route.loader,
-          children: wrap(route.children ?? []),
-          errorElement: route.errorElement ?? <PageError />,
-        };
+    const isIndex = isIndexRoute(route);
+    const wrapped = isIndex ? undefined : wrap(route.children ?? []);
+
+    return {
+      ...route,
+      element: route.element,
+      lazy: route.lazy,
+      children: wrapped,
+    };
   });
 }
 
 export default function getRouter() {
-  return createBrowserRouter(wrap(rootRoutes));
+  return createBrowserRouter(wrap(routes));
 }
