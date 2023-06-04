@@ -2,10 +2,11 @@ import { useQuery } from "@apollo/client";
 import { GetSubjectsOfPlaceQuery } from "../../generated/graphql";
 import { GET_SUBJECTS } from "../../operations";
 import { useNavigate, useParams } from "react-router";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import SubjectCard from "./SubjectCard";
-import clsx from "clsx";
-import { NavLink } from "react-router-dom";
+import { Button, Input } from "antd";
+
+const { Search } = Input;
 
 export function Component() {
   const { id } = useParams();
@@ -14,6 +15,10 @@ export function Component() {
   const { data, error } = useQuery<GetSubjectsOfPlaceQuery>(GET_SUBJECTS, {
     variables: { placeUuid: id },
   });
+
+  const handleCreateObject = useCallback(() => {
+    navigate("create-subject");
+  }, []);
 
   useEffect(() => {
     if (error) {
@@ -26,15 +31,18 @@ export function Component() {
   }
 
   return (
-    <section className="flex flex-col p-6">
-      <NavLink
-        to={"create"}
-        className={({ isActive }) =>
-          clsx("px-4 no-underline", isActive ? "text-blue-500" : "text-black")
-        }
-      >
-        Создать
-      </NavLink>
+    <section className="flex flex-col gap-4 p-6">
+      <div className="flex justify-between">
+        <Button
+          shape="round"
+          size="large"
+          className="bg-yellow-200"
+          onClick={handleCreateObject}
+        >
+          Создать новый объект
+        </Button>
+        <Search placeholder="input search text" style={{ width: 200 }} />
+      </div>
 
       <div className="flex flex-wrap justify-center gap-4 rounded-lg">
         {data.subjectsOfPlace.map((sub) => (

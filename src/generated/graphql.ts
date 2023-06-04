@@ -48,6 +48,12 @@ export type CreatePlaceInput = {
   title: Scalars['String'];
 };
 
+export type CreatePlaceLayerInput = {
+  fullName: Scalars['String'];
+  placeUuid: Scalars['String'];
+  shortName: Scalars['String'];
+};
+
 export type CreatePlaceRecommendationInput = {
   icon: Scalars['String'];
   parentUuid?: InputMaybe<Scalars['String']>;
@@ -80,7 +86,6 @@ export type CreateSubjectInput = {
   placeUuid: Scalars['String'];
   schedule: Scalars['JSON'];
   shortDescription: Scalars['String'];
-  uuid: Scalars['String'];
 };
 
 export type CreateUserInput = {
@@ -100,12 +105,15 @@ export type Mutation = {
   __typename?: 'Mutation';
   createCity: City;
   createPlace: PlaceModel;
+  createPlaceLayer: PlaceLayer;
   createPlaceRecommendation: PlaceRecommendation;
   createPlan: Plan;
   createPromo: Promo;
   createPromoPreview: PromoPreview;
   createSubject: SubjectModel;
   createUser: UserModel;
+  movePlaceLayerDown: PlaceLayer;
+  movePlaceLayerUp: PlaceLayer;
   movePlaceRecommendationLeft: PlaceRecommendation;
   movePlaceRecommendationRight: PlaceRecommendation;
   movePromoPreviewLeft: PromoPreview;
@@ -113,6 +121,7 @@ export type Mutation = {
   removeAllPromoPreviewOfPlace: Array<PromoPreview>;
   removeCity: City;
   removePlace: PlaceModel;
+  removePlaceLayer: PlaceLayer;
   removePlaceRecommendation: PlaceRecommendation;
   removePlan: Plan;
   removePromo: Promo;
@@ -123,6 +132,7 @@ export type Mutation = {
   setLinkedSubjectsToRecommendation: PlaceRecommendation;
   updateCity: City;
   updatePlace: PlaceModel;
+  updatePlaceLayer: PlaceLayer;
   updatePlaceRecommendation: PlaceRecommendation;
   updatePlan: Plan;
   updatePromo: Promo;
@@ -139,6 +149,11 @@ export type MutationCreateCityArgs = {
 
 export type MutationCreatePlaceArgs = {
   createPlaceInput: CreatePlaceInput;
+};
+
+
+export type MutationCreatePlaceLayerArgs = {
+  createPlaceLayerInput: CreatePlaceLayerInput;
 };
 
 
@@ -173,6 +188,16 @@ export type MutationCreateUserArgs = {
 };
 
 
+export type MutationMovePlaceLayerDownArgs = {
+  uuid: Scalars['String'];
+};
+
+
+export type MutationMovePlaceLayerUpArgs = {
+  uuid: Scalars['String'];
+};
+
+
 export type MutationMovePlaceRecommendationLeftArgs = {
   uuid: Scalars['String'];
 };
@@ -204,6 +229,11 @@ export type MutationRemoveCityArgs = {
 
 
 export type MutationRemovePlaceArgs = {
+  uuid: Scalars['String'];
+};
+
+
+export type MutationRemovePlaceLayerArgs = {
   uuid: Scalars['String'];
 };
 
@@ -262,6 +292,11 @@ export type MutationUpdatePlaceArgs = {
 };
 
 
+export type MutationUpdatePlaceLayerArgs = {
+  updatePlaceLayerInput: UpdatePlaceLayerInput;
+};
+
+
 export type MutationUpdatePlaceRecommendationArgs = {
   updatePlaceRecommendationInput: UpdatePlaceRecommendationInput;
 };
@@ -298,6 +333,14 @@ export type NewPromoPreviewItemInput = {
   crossAxisCellCount: Scalars['Int'];
   mainAxisCellCount: Scalars['Int'];
   promoUuid: Scalars['String'];
+};
+
+export type PlaceLayer = {
+  __typename?: 'PlaceLayer';
+  fullName: Scalars['String'];
+  orderIndex: Scalars['Int'];
+  shortName: Scalars['String'];
+  uuid: Scalars['String'];
 };
 
 export type PlaceModel = {
@@ -369,6 +412,8 @@ export type Query = {
   city: City;
   findAllPromoPreviewOfPlace: Array<PromoPreview>;
   place: PlaceModel;
+  placeLayer: PlaceLayer;
+  placeLayers: Array<PlaceLayer>;
   placeRecommendation: PlaceRecommendation;
   placeRecommendations: Array<PlaceRecommendation>;
   placeWithCode: PlaceModel;
@@ -405,6 +450,16 @@ export type QueryFindAllPromoPreviewOfPlaceArgs = {
 
 export type QueryPlaceArgs = {
   uuid: Scalars['String'];
+};
+
+
+export type QueryPlaceLayerArgs = {
+  uuid: Scalars['String'];
+};
+
+
+export type QueryPlaceLayersArgs = {
+  placeUuid: Scalars['String'];
 };
 
 
@@ -517,6 +572,13 @@ export type UpdatePlaceInput = {
   schedule?: InputMaybe<Scalars['JSON']>;
   timezone?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
+  uuid: Scalars['String'];
+};
+
+export type UpdatePlaceLayerInput = {
+  fullName: Scalars['String'];
+  placeUuid?: InputMaybe<Scalars['String']>;
+  shortName: Scalars['String'];
   uuid: Scalars['String'];
 };
 
@@ -653,6 +715,12 @@ export type CreatePlaceInput = {
   title: Scalars['String'];
 };
 
+export type CreatePlaceLayerInput = {
+  fullName: Scalars['String'];
+  placeUuid: Scalars['String'];
+  shortName: Scalars['String'];
+};
+
 export type CreatePlaceRecommendationInput = {
   icon: Scalars['String'];
   parentUuid?: InputMaybe<Scalars['String']>;
@@ -685,7 +753,6 @@ export type CreateSubjectInput = {
   placeUuid: Scalars['String'];
   schedule: Scalars['JSON'];
   shortDescription: Scalars['String'];
-  uuid: Scalars['String'];
 };
 
 export type CreateUserInput = {
@@ -705,12 +772,15 @@ export type Mutation = {
   __typename?: 'Mutation';
   createCity: City;
   createPlace: PlaceModel;
+  createPlaceLayer: PlaceLayer;
   createPlaceRecommendation: PlaceRecommendation;
   createPlan: Plan;
   createPromo: Promo;
   createPromoPreview: PromoPreview;
   createSubject: SubjectModel;
   createUser: UserModel;
+  movePlaceLayerDown: PlaceLayer;
+  movePlaceLayerUp: PlaceLayer;
   movePlaceRecommendationLeft: PlaceRecommendation;
   movePlaceRecommendationRight: PlaceRecommendation;
   movePromoPreviewLeft: PromoPreview;
@@ -718,6 +788,7 @@ export type Mutation = {
   removeAllPromoPreviewOfPlace: Array<PromoPreview>;
   removeCity: City;
   removePlace: PlaceModel;
+  removePlaceLayer: PlaceLayer;
   removePlaceRecommendation: PlaceRecommendation;
   removePlan: Plan;
   removePromo: Promo;
@@ -728,6 +799,7 @@ export type Mutation = {
   setLinkedSubjectsToRecommendation: PlaceRecommendation;
   updateCity: City;
   updatePlace: PlaceModel;
+  updatePlaceLayer: PlaceLayer;
   updatePlaceRecommendation: PlaceRecommendation;
   updatePlan: Plan;
   updatePromo: Promo;
@@ -744,6 +816,11 @@ export type MutationCreateCityArgs = {
 
 export type MutationCreatePlaceArgs = {
   createPlaceInput: CreatePlaceInput;
+};
+
+
+export type MutationCreatePlaceLayerArgs = {
+  createPlaceLayerInput: CreatePlaceLayerInput;
 };
 
 
@@ -778,6 +855,16 @@ export type MutationCreateUserArgs = {
 };
 
 
+export type MutationMovePlaceLayerDownArgs = {
+  uuid: Scalars['String'];
+};
+
+
+export type MutationMovePlaceLayerUpArgs = {
+  uuid: Scalars['String'];
+};
+
+
 export type MutationMovePlaceRecommendationLeftArgs = {
   uuid: Scalars['String'];
 };
@@ -809,6 +896,11 @@ export type MutationRemoveCityArgs = {
 
 
 export type MutationRemovePlaceArgs = {
+  uuid: Scalars['String'];
+};
+
+
+export type MutationRemovePlaceLayerArgs = {
   uuid: Scalars['String'];
 };
 
@@ -867,6 +959,11 @@ export type MutationUpdatePlaceArgs = {
 };
 
 
+export type MutationUpdatePlaceLayerArgs = {
+  updatePlaceLayerInput: UpdatePlaceLayerInput;
+};
+
+
 export type MutationUpdatePlaceRecommendationArgs = {
   updatePlaceRecommendationInput: UpdatePlaceRecommendationInput;
 };
@@ -903,6 +1000,14 @@ export type NewPromoPreviewItemInput = {
   crossAxisCellCount: Scalars['Int'];
   mainAxisCellCount: Scalars['Int'];
   promoUuid: Scalars['String'];
+};
+
+export type PlaceLayer = {
+  __typename?: 'PlaceLayer';
+  fullName: Scalars['String'];
+  orderIndex: Scalars['Int'];
+  shortName: Scalars['String'];
+  uuid: Scalars['String'];
 };
 
 export type PlaceModel = {
@@ -974,6 +1079,8 @@ export type Query = {
   city: City;
   findAllPromoPreviewOfPlace: Array<PromoPreview>;
   place: PlaceModel;
+  placeLayer: PlaceLayer;
+  placeLayers: Array<PlaceLayer>;
   placeRecommendation: PlaceRecommendation;
   placeRecommendations: Array<PlaceRecommendation>;
   placeWithCode: PlaceModel;
@@ -1010,6 +1117,16 @@ export type QueryFindAllPromoPreviewOfPlaceArgs = {
 
 export type QueryPlaceArgs = {
   uuid: Scalars['String'];
+};
+
+
+export type QueryPlaceLayerArgs = {
+  uuid: Scalars['String'];
+};
+
+
+export type QueryPlaceLayersArgs = {
+  placeUuid: Scalars['String'];
 };
 
 
@@ -1122,6 +1239,13 @@ export type UpdatePlaceInput = {
   schedule?: InputMaybe<Scalars['JSON']>;
   timezone?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
+  uuid: Scalars['String'];
+};
+
+export type UpdatePlaceLayerInput = {
+  fullName: Scalars['String'];
+  placeUuid?: InputMaybe<Scalars['String']>;
+  shortName: Scalars['String'];
   uuid: Scalars['String'];
 };
 

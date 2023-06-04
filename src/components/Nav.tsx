@@ -12,7 +12,9 @@ const Nav = memo((): JSX.Element | null => {
   return (
     <nav className="flex items-center self-stretch">
       {additional
-        .filter((route) => !["login", "create"].includes(route.path ?? ""))
+        .filter(
+          (route) => !["login", "create-subject"].includes(route.path ?? "")
+        )
         .map(({ path, handle }) => (
           <NavLink
             key={path || "."}

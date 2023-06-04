@@ -14,10 +14,10 @@ export const additional: Array<RouteObjectWithHandle> = [
     },
   },
   {
-    path: "subject",
+    path: "place",
     element: <Outlet />,
     handle: {
-      title: "Места",
+      title: "Объекты",
     },
     children: [
       {
@@ -28,7 +28,7 @@ export const additional: Array<RouteObjectWithHandle> = [
         },
         children: [
           {
-            path: "create",
+            path: "create-subject",
             lazy: () => import("../entities/Subject/FormSubject"),
             handle: {
               title: "Создание",
@@ -75,52 +75,52 @@ export const additional: Array<RouteObjectWithHandle> = [
       },
     ],
   },
-  {
-    path: "recommendation",
-    element: <Outlet />,
-    handle: {
-      title: "Рекомендации",
-    },
-    children: [
-      {
-        path: ":id",
-        element: <Empty />,
-        handle: {
-          title: "Рекомендации",
-        },
-      },
-      {
-        index: true,
-        lazy: () => import("../components/GlobalSelectPlace"),
-        handle: {
-          title: "Список объектов",
-        },
-      },
-    ],
-  },
-  {
-    path: "news-promo",
-    element: <Outlet />,
-    handle: {
-      title: "Новости и акции",
-    },
-    children: [
-      {
-        path: ":id",
-        element: <Empty />,
-        handle: {
-          title: "Новости и акции",
-        },
-      },
-      {
-        index: true,
-        lazy: () => import("../components/GlobalSelectPlace"),
-        handle: {
-          title: "Список объектов",
-        },
-      },
-    ],
-  },
+  // {
+  //   path: "recommendation",
+  //   element: <Outlet />,
+  //   handle: {
+  //     title: "Рекомендации",
+  //   },
+  //   children: [
+  //     {
+  //       path: ":id",
+  //       element: <Empty />,
+  //       handle: {
+  //         title: "Рекомендации",
+  //       },
+  //     },
+  //     {
+  //       index: true,
+  //       lazy: () => import("../components/GlobalSelectPlace"),
+  //       handle: {
+  //         title: "Список объектов",
+  //       },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: "news-promo",
+  //   element: <Outlet />,
+  //   handle: {
+  //     title: "Новости и акции",
+  //   },
+  //   children: [
+  //     {
+  //       path: ":id",
+  //       element: <Empty />,
+  //       handle: {
+  //         title: "Новости и акции",
+  //       },
+  //     },
+  //     {
+  //       index: true,
+  //       lazy: () => import("../components/GlobalSelectPlace"),
+  //       handle: {
+  //         title: "Список объектов",
+  //       },
+  //     },
+  //   ],
+  // },
 ];
 
 const baseRoutes: Array<RouteObjectWithHandle> = [...additional];

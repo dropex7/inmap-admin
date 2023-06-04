@@ -15,7 +15,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigate("subject");
+        navigate("place");
 
         setIsLogined(true);
         // User is signed in, see docs for a list of available properties
