@@ -27,6 +27,15 @@ export const GET_PLACE = gql`
   }
 `;
 
+export const GET_PLACE_LAYERS = gql`
+  query GetPlaceLayers($placeUuid: String!) {
+    placeLayers(placeUuid: $placeUuid) {
+      uuid
+      fullName
+    }
+  }
+`;
+
 export const GET_SUBJECTS = gql`
   query GetSubjectsOfPlace($placeUuid: String!) {
     subjectsOfPlace(placeUuid: $placeUuid) {
@@ -40,6 +49,14 @@ export const GET_SUBJECTS = gql`
         url
         cloudinaryId
       }
+    }
+  }
+`;
+
+export const CREATE_SUBJECT = gql`
+  mutation CreateSubject($createSubjectInput: CreateSubjectInput!) {
+    createSubject(createSubjectInput: $createSubjectInput) {
+      uuid
     }
   }
 `;

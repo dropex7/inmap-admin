@@ -4,18 +4,69 @@
 import { Button, ColorPicker, Form, Input, Typography } from "antd";
 import BaseFields from "./BaseFields";
 import ImageLoaderField from "../../components/FormFields/ImageLoaderField";
-import React from "react";
+import React, { useCallback } from "react";
 import ScheduleField from "../../components/FormFields/SheduleField";
+import type { Color } from "antd/es/color-picker";
+import { UploadFile } from "antd/es/upload/interface";
+import { prepareColor } from "../../utils/utils";
+import { useRecoilValue } from "recoil";
+import { placeAtom } from "../../atoms/selectedPlace";
+import {
+  SCHEDULE_DAYS,
+  ScheduleOption,
+} from "../../components/FormFields/types";
+import { useMutation } from "@apollo/client";
+import { CREATE_SUBJECT } from "../../operations";
+
+interface SubjectFormValues {
+  name: string;
+  shortDescription: string;
+  layerUuid: string;
+  logo: Array<UploadFile>;
+  site: string;
+  schedule: Map<SCHEDULE_DAYS, ScheduleOption>;
+  images: Array<UploadFile>;
+}
 
 const { Item } = Form;
 const { Title } = Typography;
 
 export function Component() {
-  const onFinish = (values: any) => {
-    // TODO: Сделать запрос на бек
+  const placeUuid = useRecoilValue(placeAtom);
 
-    console.log("Success:", values);
-  };
+  const [createSubject, { error, loading }] =
+    useMutation<SubjectFormValues>(CREATE_SUBJECT);
+
+  const onFinish = useCallback(
+    ({
+      logoBackgroundColor,
+      images,
+      logo,
+      schedule,
+      site,
+      ...values
+    }: Omit<SubjectFormValues, "logoBackgroundColor"> & {
+      logoBackgroundColor: Color | string;
+    }) => {
+      createSubject({
+        variables: {
+          createSubjectInput: {
+            ...values,
+            placeUuid,
+            schedule: Object.fromEntries(schedule),
+            images: [],
+            logo: logo[0].thumbUrl,
+            logoBackgroundColor: prepareColor(logoBackgroundColor),
+            fields: [],
+          },
+        },
+      });
+    },
+    [placeUuid]
+  );
+
+  // if (loading) return "Submitting...";
+  // if (error) return `Submission error! ${error.message}`;
 
   return (
     <div className="p-6">
@@ -25,7 +76,6 @@ export function Component() {
         name="subjectForm"
         layout="vertical"
         className="flex flex-col gap-3"
-        onFieldsChange={onFinish}
         onFinish={onFinish}
       >
         <BaseFields />
@@ -64,7 +114,7 @@ export function Component() {
             name="site"
             rules={[{ required: true, message: "Введите сайт!" }]}
           >
-            <Input addonBefore="https://" />
+            <Input />
           </Item>
         </div>
 

@@ -3,12 +3,11 @@
  */
 
 import { HTMLProps, memo, useMemo } from "react";
-import { SubjectModel } from "../../generated/graphql";
-import clsx from "clsx";
+import type { SubjectLocalizedModel } from "../../generated/graphql";
 
 interface PreviewLogoProps extends HTMLProps<HTMLImageElement> {
-  backgroundColor: SubjectModel["logoBackgroundColor"];
-  logoUrl: SubjectModel["logoUrl"];
+  backgroundColor: SubjectLocalizedModel["logoBackgroundColor"];
+  logoUrl: SubjectLocalizedModel["logoUrl"];
   alt: HTMLProps<HTMLImageElement>["alt"];
 }
 

@@ -3,6 +3,7 @@ import {
   SCHEDULE_DAYS,
   ScheduleOption,
 } from "../components/FormFields/types";
+import { Color } from "antd/es/color-picker";
 
 const generatedSchedule = Object.keys(SCHEDULE_DAYS).map((day) => [
   day,
@@ -25,3 +26,14 @@ export const scheduleOptions = new Map<SCHEDULE_DAYS, ScheduleOption>(
   // @ts-ignore
   generatedSchedule
 );
+
+const isObjectColor = (c: Color | string): c is Color => typeof c !== "string";
+
+function addAlphaToStart(color: string) {
+  const alpha = color.slice(6);
+  return `#${alpha ? alpha : "ff"}${color.slice(0, 6)}`;
+}
+
+export function prepareColor(color: Color | string) {
+  return isObjectColor(color) ? addAlphaToStart(color.toHex()) : color;
+}

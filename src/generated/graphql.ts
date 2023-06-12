@@ -16,8 +16,8 @@ export type Scalars = {
   JSON: any;
 };
 
-export type City = {
-  __typename?: 'City';
+export type CityLocalizedModel = {
+  __typename?: 'CityLocalizedModel';
   active: Scalars['Boolean'];
   latitude: Scalars['Float'];
   longitude: Scalars['Float'];
@@ -94,6 +94,41 @@ export type CreateUserInput = {
   role: Scalars['String'];
 };
 
+export type FieldsContentWithTranslationPlaceModel = {
+  __typename?: 'FieldsContentWithTranslationPlaceModel';
+  title: TextContentModel;
+  uuid: Scalars['String'];
+};
+
+export type FieldsContentWithTranslationPromoModel = {
+  __typename?: 'FieldsContentWithTranslationPromoModel';
+  title: TextContentModel;
+  uuid: Scalars['String'];
+};
+
+export type FieldsContentWithTranslationSubjectModel = {
+  __typename?: 'FieldsContentWithTranslationSubjectModel';
+  name: TextContentModel;
+  uuid: Scalars['String'];
+};
+
+export type FieldsContentWithTranslationsModel = {
+  __typename?: 'FieldsContentWithTranslationsModel';
+  originalFields: Array<Scalars['JSON']>;
+  place?: Maybe<FieldsContentWithTranslationPlaceModel>;
+  promo?: Maybe<FieldsContentWithTranslationPromoModel>;
+  subject?: Maybe<FieldsContentWithTranslationSubjectModel>;
+  translations: Array<FieldsTranslationModel>;
+  uuid: Scalars['String'];
+};
+
+export type FieldsTranslationModel = {
+  __typename?: 'FieldsTranslationModel';
+  fieldsContentId: Scalars['String'];
+  languageId: Scalars['String'];
+  translation: Array<Scalars['JSON']>;
+};
+
 export type ImageModel = {
   __typename?: 'ImageModel';
   cloudinaryId: Scalars['String'];
@@ -101,44 +136,53 @@ export type ImageModel = {
   uuid: Scalars['String'];
 };
 
+export type LanguageModel = {
+  __typename?: 'LanguageModel';
+  locale: Scalars['String'];
+  name: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
-  createCity: City;
-  createPlace: PlaceModel;
-  createPlaceLayer: PlaceLayer;
-  createPlaceRecommendation: PlaceRecommendation;
+  createCity: CityLocalizedModel;
+  createPlace: PlaceLocalizedModel;
+  createPlaceLayer: PlaceLayerLocalizedModel;
+  createPlaceRecommendation: PlaceRecommendationLocalizedModel;
   createPlan: Plan;
-  createPromo: Promo;
+  createPromo: PromoLocalizedModel;
   createPromoPreview: PromoPreview;
-  createSubject: SubjectModel;
-  createUser: UserModel;
-  movePlaceLayerDown: PlaceLayer;
-  movePlaceLayerUp: PlaceLayer;
-  movePlaceRecommendationLeft: PlaceRecommendation;
-  movePlaceRecommendationRight: PlaceRecommendation;
+  createSubject: SubjectLocalizedModel;
+  createUser: UserLocalizedModel;
+  movePlaceLayerDown: PlaceLayerLocalizedModel;
+  movePlaceLayerUp: PlaceLayerLocalizedModel;
+  movePlaceRecommendationLeft: PlaceRecommendationLocalizedModel;
+  movePlaceRecommendationRight: PlaceRecommendationLocalizedModel;
   movePromoPreviewLeft: PromoPreview;
   movePromoPreviewRight: PromoPreview;
   removeAllPromoPreviewOfPlace: Array<PromoPreview>;
-  removeCity: City;
-  removePlace: PlaceModel;
-  removePlaceLayer: PlaceLayer;
-  removePlaceRecommendation: PlaceRecommendation;
+  removeCity: Scalars['String'];
+  removePlace: PlaceLocalizedModel;
+  removePlaceLayer: PlaceLayerLocalizedModel;
+  removePlaceRecommendation: Scalars['String'];
   removePlan: Plan;
-  removePromo: Promo;
+  removePromo: PromoLocalizedModel;
   removePromoPreview: PromoPreview;
-  removeSubject: SubjectModel;
-  removeUser: UserModel;
-  setLinkedRecsToSubject: SubjectModel;
-  setLinkedSubjectsToRecommendation: PlaceRecommendation;
-  updateCity: City;
-  updatePlace: PlaceModel;
-  updatePlaceLayer: PlaceLayer;
-  updatePlaceRecommendation: PlaceRecommendation;
+  removeSubject: Scalars['String'];
+  removeUser: UserLocalizedModel;
+  setLinkedRecsToSubject: SubjectLocalizedModel;
+  setLinkedSubjectsToRecommendation: PlaceRecommendationLocalizedModel;
+  updateCity: CityLocalizedModel;
+  updateFieldsTranslation: FieldsTranslationModel;
+  updateOriginalTextContent: TextContentModel;
+  updatePlace: PlaceLocalizedModel;
+  updatePlaceLayer: PlaceLayerLocalizedModel;
+  updatePlaceRecommendation: PlaceRecommendationLocalizedModel;
   updatePlan: Plan;
-  updatePromo: Promo;
+  updatePromo: PromoLocalizedModel;
   updatePromoPreview: PromoPreview;
-  updateSubject: SubjectModel;
-  updateUser: UserModel;
+  updateSubject: SubjectLocalizedModel;
+  updateTextTranslation: TextTranslationModel;
+  updateUser: UserLocalizedModel;
 };
 
 
@@ -287,6 +331,16 @@ export type MutationUpdateCityArgs = {
 };
 
 
+export type MutationUpdateFieldsTranslationArgs = {
+  input: UpdateFieldsTranslationInput;
+};
+
+
+export type MutationUpdateOriginalTextContentArgs = {
+  updateTextContentInput: UpdateOriginalTextInput;
+};
+
+
 export type MutationUpdatePlaceArgs = {
   updatePlaceInput: UpdatePlaceInput;
 };
@@ -324,6 +378,11 @@ export type MutationUpdateSubjectArgs = {
 };
 
 
+export type MutationUpdateTextTranslationArgs = {
+  input: UpdateTextTranslationInput;
+};
+
+
 export type MutationUpdateUserArgs = {
   updateUserInput: UpdateUserInput;
 };
@@ -335,16 +394,16 @@ export type NewPromoPreviewItemInput = {
   promoUuid: Scalars['String'];
 };
 
-export type PlaceLayer = {
-  __typename?: 'PlaceLayer';
+export type PlaceLayerLocalizedModel = {
+  __typename?: 'PlaceLayerLocalizedModel';
   fullName: Scalars['String'];
   orderIndex: Scalars['Int'];
   shortName: Scalars['String'];
   uuid: Scalars['String'];
 };
 
-export type PlaceModel = {
-  __typename?: 'PlaceModel';
+export type PlaceLocalizedModel = {
+  __typename?: 'PlaceLocalizedModel';
   address: Scalars['String'];
   code: Scalars['String'];
   fields: Array<Scalars['JSON']>;
@@ -356,22 +415,21 @@ export type PlaceModel = {
   plans: Array<Plan>;
   promoPreview: Array<PromoPreview>;
   promoPreviewCrossAxisCount: Scalars['Int'];
-  promos?: Maybe<Array<Promo>>;
-  recs: Array<PlaceRecommendation>;
+  promos?: Maybe<Array<PromoLocalizedModel>>;
+  recs: Array<PlaceRecommendationLocalizedModel>;
   schedule: Scalars['JSON'];
-  subjects?: Maybe<Array<SubjectModel>>;
+  subjectsUuids?: Maybe<Array<Scalars['String']>>;
   timezone: Scalars['String'];
   title: Scalars['String'];
   uuid: Scalars['String'];
 };
 
-export type PlaceRecommendation = {
-  __typename?: 'PlaceRecommendation';
-  children: Array<PlaceRecommendation>;
+export type PlaceRecommendationLocalizedModel = {
+  __typename?: 'PlaceRecommendationLocalizedModel';
   icon: Scalars['String'];
-  linkedSubjects: Array<SubjectModel>;
+  linkedSubjects: Array<RecommendationLinkedSubjectModel>;
   orderIndex: Scalars['Int'];
-  parent?: Maybe<PlaceRecommendation>;
+  parent?: Maybe<PlaceRecommendationLocalizedModel>;
   title: Scalars['String'];
   uuid: Scalars['String'];
 };
@@ -384,8 +442,8 @@ export type Plan = {
   version: Scalars['String'];
 };
 
-export type Promo = {
-  __typename?: 'Promo';
+export type PromoLocalizedModel = {
+  __typename?: 'PromoLocalizedModel';
   content: Array<Scalars['JSON']>;
   imageCloudinaryId: Scalars['String'];
   imageUrl: Scalars['String'];
@@ -407,28 +465,33 @@ export type PromoPreview = {
 
 export type Query = {
   __typename?: 'Query';
-  cities: Array<City>;
-  citiesOnMap: Array<City>;
-  city: City;
+  cities: Array<CityLocalizedModel>;
+  citiesOnMap: Array<CityLocalizedModel>;
+  city: CityLocalizedModel;
+  existingLanguages: Array<LanguageModel>;
+  fieldsContentTranslationsOfPlace: Array<FieldsContentWithTranslationsModel>;
   findAllPromoPreviewOfPlace: Array<PromoPreview>;
-  place: PlaceModel;
-  placeLayer: PlaceLayer;
-  placeLayers: Array<PlaceLayer>;
-  placeRecommendation: PlaceRecommendation;
-  placeRecommendations: Array<PlaceRecommendation>;
-  placeWithCode: PlaceModel;
-  places: Array<PlaceModel>;
-  placesOnMap: Array<PlaceModel>;
+  place: PlaceLocalizedModel;
+  placeLayer: PlaceLayerLocalizedModel;
+  placeLayers: Array<PlaceLayerLocalizedModel>;
+  placeRecommendation: PlaceRecommendationLocalizedModel;
+  placeRecommendations: Array<PlaceRecommendationLocalizedModel>;
+  placeWithCode: PlaceLocalizedModel;
+  places: Array<PlaceLocalizedModel>;
+  placesOnMap: Array<PlaceLocalizedModel>;
   plan: Plan;
   plansOfPlace: Array<Plan>;
-  promo: Promo;
-  promosOfPlace: Array<Promo>;
-  searchPlaces: Array<PlaceModel>;
-  searchSubjects: Array<SubjectModel>;
-  subject: SubjectModel;
-  subjectsOfPlace: Array<SubjectModel>;
-  user: UserModel;
-  users: Array<UserModel>;
+  promo: PromoLocalizedModel;
+  promosOfPlace: Array<PromoLocalizedModel>;
+  searchPlaces: Array<PlaceLocalizedModel>;
+  searchSubjects: Array<SubjectLocalizedModel>;
+  subject: SubjectLocalizedModel;
+  subjectsOfPlace: Array<SubjectLocalizedModel>;
+  textContent: TextContentModel;
+  textContentTranslationsOfPlace: Array<TextContentWithTranslationsModel>;
+  user: UserLocalizedModel;
+  users: Array<UserLocalizedModel>;
+  validVersion: ValidVersion;
 };
 
 
@@ -440,6 +503,11 @@ export type QueryCitiesOnMapArgs = {
 
 export type QueryCityArgs = {
   uuid: Scalars['String'];
+};
+
+
+export type QueryFieldsContentTranslationsOfPlaceArgs = {
+  placeUuid: Scalars['String'];
 };
 
 
@@ -529,12 +597,33 @@ export type QuerySubjectsOfPlaceArgs = {
 };
 
 
+export type QueryTextContentArgs = {
+  uuid: Scalars['String'];
+};
+
+
+export type QueryTextContentTranslationsOfPlaceArgs = {
+  placeUuid: Scalars['String'];
+};
+
+
 export type QueryUserArgs = {
   email: Scalars['String'];
 };
 
-export type SubjectModel = {
-  __typename?: 'SubjectModel';
+
+export type QueryValidVersionArgs = {
+  input: ValidVersionInput;
+};
+
+export type RecommendationLinkedSubjectModel = {
+  __typename?: 'RecommendationLinkedSubjectModel';
+  name: Scalars['String'];
+  uuid: Scalars['String'];
+};
+
+export type SubjectLocalizedModel = {
+  __typename?: 'SubjectLocalizedModel';
   fields: Array<Scalars['JSON']>;
   images?: Maybe<Array<ImageModel>>;
   layerUuid: Scalars['String'];
@@ -543,10 +632,30 @@ export type SubjectModel = {
   logoUrl: Scalars['String'];
   name: Scalars['String'];
   placeUuid: Scalars['String'];
-  recs?: Maybe<Array<PlaceRecommendation>>;
+  recs?: Maybe<Array<PlaceRecommendationLocalizedModel>>;
   schedule: Scalars['JSON'];
   shortDescription: Scalars['String'];
   uuid: Scalars['String'];
+};
+
+export type TextContentModel = {
+  __typename?: 'TextContentModel';
+  originalText: Scalars['String'];
+  uuid: Scalars['String'];
+};
+
+export type TextContentWithTranslationsModel = {
+  __typename?: 'TextContentWithTranslationsModel';
+  originalText: Scalars['String'];
+  translations: Array<TextTranslationModel>;
+  uuid: Scalars['String'];
+};
+
+export type TextTranslationModel = {
+  __typename?: 'TextTranslationModel';
+  languageId: Scalars['String'];
+  textContentId: Scalars['String'];
+  translation: Scalars['String'];
 };
 
 export type UpdateCityInput = {
@@ -554,6 +663,17 @@ export type UpdateCityInput = {
   latitude?: InputMaybe<Scalars['Float']>;
   longitude?: InputMaybe<Scalars['Float']>;
   name?: InputMaybe<Scalars['String']>;
+  uuid: Scalars['String'];
+};
+
+export type UpdateFieldsTranslationInput = {
+  fieldsContentId: Scalars['String'];
+  locale: Scalars['String'];
+  translation: Array<Scalars['JSON']>;
+};
+
+export type UpdateOriginalTextInput = {
+  originalText: Scalars['String'];
   uuid: Scalars['String'];
 };
 
@@ -627,6 +747,12 @@ export type UpdateSubjectInput = {
   uuid: Scalars['String'];
 };
 
+export type UpdateTextTranslationInput = {
+  locale: Scalars['String'];
+  textContentId: Scalars['String'];
+  translation: Scalars['String'];
+};
+
 export type UpdateUserInput = {
   addPlaces?: InputMaybe<Array<Scalars['String']>>;
   email?: InputMaybe<Scalars['String']>;
@@ -641,37 +767,72 @@ export type UploadImageModel = {
   uuid: Scalars['String'];
 };
 
-export type UserModel = {
-  __typename?: 'UserModel';
+export type UserConnectedPlace = {
+  __typename?: 'UserConnectedPlace';
+  title: Scalars['String'];
+  uuid: Scalars['String'];
+};
+
+export type UserLocalizedModel = {
+  __typename?: 'UserLocalizedModel';
+  connectedPlaces: Array<UserConnectedPlace>;
   email: Scalars['String'];
   mustChangePassword: Scalars['Boolean'];
-  places: Array<PlaceModel>;
   role: Scalars['String'];
+};
+
+export type ValidVersion = {
+  __typename?: 'ValidVersion';
+  /** If this app version is valid */
+  versionValid: Scalars['Boolean'];
+};
+
+export type ValidVersionInput = {
+  /** Platform of app (android/ios) */
+  platform: Scalars['String'];
+  /** Number of app version (ex 2.0.0) */
+  versionNumber: Scalars['String'];
 };
 
 export type GetListOfPlacesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetListOfPlacesQuery = { __typename?: 'Query', places: Array<{ __typename?: 'PlaceModel', uuid: string, title: string, logoUrl: string }> };
+export type GetListOfPlacesQuery = { __typename?: 'Query', places: Array<{ __typename?: 'PlaceLocalizedModel', uuid: string, title: string, logoUrl: string }> };
 
 export type GetPlaceQueryVariables = Exact<{
   uuid: Scalars['String'];
 }>;
 
 
-export type GetPlaceQuery = { __typename?: 'Query', place: { __typename?: 'PlaceModel', title: string, logoUrl: string, address: string, schedule: any, recs: Array<{ __typename?: 'PlaceRecommendation', title: string }>, promos?: Array<{ __typename?: 'Promo', title: string }> | null } };
+export type GetPlaceQuery = { __typename?: 'Query', place: { __typename?: 'PlaceLocalizedModel', title: string, logoUrl: string, address: string, schedule: any, recs: Array<{ __typename?: 'PlaceRecommendationLocalizedModel', title: string }>, promos?: Array<{ __typename?: 'PromoLocalizedModel', title: string }> | null } };
+
+export type GetPlaceLayersQueryVariables = Exact<{
+  placeUuid: Scalars['String'];
+}>;
+
+
+export type GetPlaceLayersQuery = { __typename?: 'Query', placeLayers: Array<{ __typename?: 'PlaceLayerLocalizedModel', uuid: string, fullName: string }> };
 
 export type GetSubjectsOfPlaceQueryVariables = Exact<{
   placeUuid: Scalars['String'];
 }>;
 
 
-export type GetSubjectsOfPlaceQuery = { __typename?: 'Query', subjectsOfPlace: Array<{ __typename?: 'SubjectModel', uuid: string, name: string, layerUuid: string, logoUrl: string, logoBackgroundColor: string, images?: Array<{ __typename?: 'ImageModel', uuid: string, url: string, cloudinaryId: string }> | null }> };
+export type GetSubjectsOfPlaceQuery = { __typename?: 'Query', subjectsOfPlace: Array<{ __typename?: 'SubjectLocalizedModel', uuid: string, name: string, layerUuid: string, logoUrl: string, logoBackgroundColor: string, images?: Array<{ __typename?: 'ImageModel', uuid: string, url: string, cloudinaryId: string }> | null }> };
+
+export type CreateSubjectMutationVariables = Exact<{
+  createSubjectInput: CreateSubjectInput;
+}>;
+
+
+export type CreateSubjectMutation = { __typename?: 'Mutation', createSubject: { __typename?: 'SubjectLocalizedModel', uuid: string } };
 
 
 export const GetListOfPlacesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetListOfPlaces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"places"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}}]}}]}}]} as unknown as DocumentNode<GetListOfPlacesQuery, GetListOfPlacesQueryVariables>;
 export const GetPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"place"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"uuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"schedule"}},{"kind":"Field","name":{"kind":"Name","value":"recs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"Field","name":{"kind":"Name","value":"promos"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<GetPlaceQuery, GetPlaceQueryVariables>;
+export const GetPlaceLayersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPlaceLayers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"placeLayers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}}]}}]}}]} as unknown as DocumentNode<GetPlaceLayersQuery, GetPlaceLayersQueryVariables>;
 export const GetSubjectsOfPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubjectsOfPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subjectsOfPlace"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"layerUuid"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"logoBackgroundColor"}},{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"cloudinaryId"}}]}}]}}]}}]} as unknown as DocumentNode<GetSubjectsOfPlaceQuery, GetSubjectsOfPlaceQueryVariables>;
+export const CreateSubjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateSubject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createSubjectInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateSubjectInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createSubject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createSubjectInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createSubjectInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}}]}}]}}]} as unknown as DocumentNode<CreateSubjectMutation, CreateSubjectMutationVariables>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -683,8 +844,8 @@ export type Scalars = {
   JSON: any;
 };
 
-export type City = {
-  __typename?: 'City';
+export type CityLocalizedModel = {
+  __typename?: 'CityLocalizedModel';
   active: Scalars['Boolean'];
   latitude: Scalars['Float'];
   longitude: Scalars['Float'];
@@ -761,6 +922,41 @@ export type CreateUserInput = {
   role: Scalars['String'];
 };
 
+export type FieldsContentWithTranslationPlaceModel = {
+  __typename?: 'FieldsContentWithTranslationPlaceModel';
+  title: TextContentModel;
+  uuid: Scalars['String'];
+};
+
+export type FieldsContentWithTranslationPromoModel = {
+  __typename?: 'FieldsContentWithTranslationPromoModel';
+  title: TextContentModel;
+  uuid: Scalars['String'];
+};
+
+export type FieldsContentWithTranslationSubjectModel = {
+  __typename?: 'FieldsContentWithTranslationSubjectModel';
+  name: TextContentModel;
+  uuid: Scalars['String'];
+};
+
+export type FieldsContentWithTranslationsModel = {
+  __typename?: 'FieldsContentWithTranslationsModel';
+  originalFields: Array<Scalars['JSON']>;
+  place?: Maybe<FieldsContentWithTranslationPlaceModel>;
+  promo?: Maybe<FieldsContentWithTranslationPromoModel>;
+  subject?: Maybe<FieldsContentWithTranslationSubjectModel>;
+  translations: Array<FieldsTranslationModel>;
+  uuid: Scalars['String'];
+};
+
+export type FieldsTranslationModel = {
+  __typename?: 'FieldsTranslationModel';
+  fieldsContentId: Scalars['String'];
+  languageId: Scalars['String'];
+  translation: Array<Scalars['JSON']>;
+};
+
 export type ImageModel = {
   __typename?: 'ImageModel';
   cloudinaryId: Scalars['String'];
@@ -768,44 +964,53 @@ export type ImageModel = {
   uuid: Scalars['String'];
 };
 
+export type LanguageModel = {
+  __typename?: 'LanguageModel';
+  locale: Scalars['String'];
+  name: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
-  createCity: City;
-  createPlace: PlaceModel;
-  createPlaceLayer: PlaceLayer;
-  createPlaceRecommendation: PlaceRecommendation;
+  createCity: CityLocalizedModel;
+  createPlace: PlaceLocalizedModel;
+  createPlaceLayer: PlaceLayerLocalizedModel;
+  createPlaceRecommendation: PlaceRecommendationLocalizedModel;
   createPlan: Plan;
-  createPromo: Promo;
+  createPromo: PromoLocalizedModel;
   createPromoPreview: PromoPreview;
-  createSubject: SubjectModel;
-  createUser: UserModel;
-  movePlaceLayerDown: PlaceLayer;
-  movePlaceLayerUp: PlaceLayer;
-  movePlaceRecommendationLeft: PlaceRecommendation;
-  movePlaceRecommendationRight: PlaceRecommendation;
+  createSubject: SubjectLocalizedModel;
+  createUser: UserLocalizedModel;
+  movePlaceLayerDown: PlaceLayerLocalizedModel;
+  movePlaceLayerUp: PlaceLayerLocalizedModel;
+  movePlaceRecommendationLeft: PlaceRecommendationLocalizedModel;
+  movePlaceRecommendationRight: PlaceRecommendationLocalizedModel;
   movePromoPreviewLeft: PromoPreview;
   movePromoPreviewRight: PromoPreview;
   removeAllPromoPreviewOfPlace: Array<PromoPreview>;
-  removeCity: City;
-  removePlace: PlaceModel;
-  removePlaceLayer: PlaceLayer;
-  removePlaceRecommendation: PlaceRecommendation;
+  removeCity: Scalars['String'];
+  removePlace: PlaceLocalizedModel;
+  removePlaceLayer: PlaceLayerLocalizedModel;
+  removePlaceRecommendation: Scalars['String'];
   removePlan: Plan;
-  removePromo: Promo;
+  removePromo: PromoLocalizedModel;
   removePromoPreview: PromoPreview;
-  removeSubject: SubjectModel;
-  removeUser: UserModel;
-  setLinkedRecsToSubject: SubjectModel;
-  setLinkedSubjectsToRecommendation: PlaceRecommendation;
-  updateCity: City;
-  updatePlace: PlaceModel;
-  updatePlaceLayer: PlaceLayer;
-  updatePlaceRecommendation: PlaceRecommendation;
+  removeSubject: Scalars['String'];
+  removeUser: UserLocalizedModel;
+  setLinkedRecsToSubject: SubjectLocalizedModel;
+  setLinkedSubjectsToRecommendation: PlaceRecommendationLocalizedModel;
+  updateCity: CityLocalizedModel;
+  updateFieldsTranslation: FieldsTranslationModel;
+  updateOriginalTextContent: TextContentModel;
+  updatePlace: PlaceLocalizedModel;
+  updatePlaceLayer: PlaceLayerLocalizedModel;
+  updatePlaceRecommendation: PlaceRecommendationLocalizedModel;
   updatePlan: Plan;
-  updatePromo: Promo;
+  updatePromo: PromoLocalizedModel;
   updatePromoPreview: PromoPreview;
-  updateSubject: SubjectModel;
-  updateUser: UserModel;
+  updateSubject: SubjectLocalizedModel;
+  updateTextTranslation: TextTranslationModel;
+  updateUser: UserLocalizedModel;
 };
 
 
@@ -954,6 +1159,16 @@ export type MutationUpdateCityArgs = {
 };
 
 
+export type MutationUpdateFieldsTranslationArgs = {
+  input: UpdateFieldsTranslationInput;
+};
+
+
+export type MutationUpdateOriginalTextContentArgs = {
+  updateTextContentInput: UpdateOriginalTextInput;
+};
+
+
 export type MutationUpdatePlaceArgs = {
   updatePlaceInput: UpdatePlaceInput;
 };
@@ -991,6 +1206,11 @@ export type MutationUpdateSubjectArgs = {
 };
 
 
+export type MutationUpdateTextTranslationArgs = {
+  input: UpdateTextTranslationInput;
+};
+
+
 export type MutationUpdateUserArgs = {
   updateUserInput: UpdateUserInput;
 };
@@ -1002,16 +1222,16 @@ export type NewPromoPreviewItemInput = {
   promoUuid: Scalars['String'];
 };
 
-export type PlaceLayer = {
-  __typename?: 'PlaceLayer';
+export type PlaceLayerLocalizedModel = {
+  __typename?: 'PlaceLayerLocalizedModel';
   fullName: Scalars['String'];
   orderIndex: Scalars['Int'];
   shortName: Scalars['String'];
   uuid: Scalars['String'];
 };
 
-export type PlaceModel = {
-  __typename?: 'PlaceModel';
+export type PlaceLocalizedModel = {
+  __typename?: 'PlaceLocalizedModel';
   address: Scalars['String'];
   code: Scalars['String'];
   fields: Array<Scalars['JSON']>;
@@ -1023,22 +1243,21 @@ export type PlaceModel = {
   plans: Array<Plan>;
   promoPreview: Array<PromoPreview>;
   promoPreviewCrossAxisCount: Scalars['Int'];
-  promos?: Maybe<Array<Promo>>;
-  recs: Array<PlaceRecommendation>;
+  promos?: Maybe<Array<PromoLocalizedModel>>;
+  recs: Array<PlaceRecommendationLocalizedModel>;
   schedule: Scalars['JSON'];
-  subjects?: Maybe<Array<SubjectModel>>;
+  subjectsUuids?: Maybe<Array<Scalars['String']>>;
   timezone: Scalars['String'];
   title: Scalars['String'];
   uuid: Scalars['String'];
 };
 
-export type PlaceRecommendation = {
-  __typename?: 'PlaceRecommendation';
-  children: Array<PlaceRecommendation>;
+export type PlaceRecommendationLocalizedModel = {
+  __typename?: 'PlaceRecommendationLocalizedModel';
   icon: Scalars['String'];
-  linkedSubjects: Array<SubjectModel>;
+  linkedSubjects: Array<RecommendationLinkedSubjectModel>;
   orderIndex: Scalars['Int'];
-  parent?: Maybe<PlaceRecommendation>;
+  parent?: Maybe<PlaceRecommendationLocalizedModel>;
   title: Scalars['String'];
   uuid: Scalars['String'];
 };
@@ -1051,8 +1270,8 @@ export type Plan = {
   version: Scalars['String'];
 };
 
-export type Promo = {
-  __typename?: 'Promo';
+export type PromoLocalizedModel = {
+  __typename?: 'PromoLocalizedModel';
   content: Array<Scalars['JSON']>;
   imageCloudinaryId: Scalars['String'];
   imageUrl: Scalars['String'];
@@ -1074,28 +1293,33 @@ export type PromoPreview = {
 
 export type Query = {
   __typename?: 'Query';
-  cities: Array<City>;
-  citiesOnMap: Array<City>;
-  city: City;
+  cities: Array<CityLocalizedModel>;
+  citiesOnMap: Array<CityLocalizedModel>;
+  city: CityLocalizedModel;
+  existingLanguages: Array<LanguageModel>;
+  fieldsContentTranslationsOfPlace: Array<FieldsContentWithTranslationsModel>;
   findAllPromoPreviewOfPlace: Array<PromoPreview>;
-  place: PlaceModel;
-  placeLayer: PlaceLayer;
-  placeLayers: Array<PlaceLayer>;
-  placeRecommendation: PlaceRecommendation;
-  placeRecommendations: Array<PlaceRecommendation>;
-  placeWithCode: PlaceModel;
-  places: Array<PlaceModel>;
-  placesOnMap: Array<PlaceModel>;
+  place: PlaceLocalizedModel;
+  placeLayer: PlaceLayerLocalizedModel;
+  placeLayers: Array<PlaceLayerLocalizedModel>;
+  placeRecommendation: PlaceRecommendationLocalizedModel;
+  placeRecommendations: Array<PlaceRecommendationLocalizedModel>;
+  placeWithCode: PlaceLocalizedModel;
+  places: Array<PlaceLocalizedModel>;
+  placesOnMap: Array<PlaceLocalizedModel>;
   plan: Plan;
   plansOfPlace: Array<Plan>;
-  promo: Promo;
-  promosOfPlace: Array<Promo>;
-  searchPlaces: Array<PlaceModel>;
-  searchSubjects: Array<SubjectModel>;
-  subject: SubjectModel;
-  subjectsOfPlace: Array<SubjectModel>;
-  user: UserModel;
-  users: Array<UserModel>;
+  promo: PromoLocalizedModel;
+  promosOfPlace: Array<PromoLocalizedModel>;
+  searchPlaces: Array<PlaceLocalizedModel>;
+  searchSubjects: Array<SubjectLocalizedModel>;
+  subject: SubjectLocalizedModel;
+  subjectsOfPlace: Array<SubjectLocalizedModel>;
+  textContent: TextContentModel;
+  textContentTranslationsOfPlace: Array<TextContentWithTranslationsModel>;
+  user: UserLocalizedModel;
+  users: Array<UserLocalizedModel>;
+  validVersion: ValidVersion;
 };
 
 
@@ -1107,6 +1331,11 @@ export type QueryCitiesOnMapArgs = {
 
 export type QueryCityArgs = {
   uuid: Scalars['String'];
+};
+
+
+export type QueryFieldsContentTranslationsOfPlaceArgs = {
+  placeUuid: Scalars['String'];
 };
 
 
@@ -1196,12 +1425,33 @@ export type QuerySubjectsOfPlaceArgs = {
 };
 
 
+export type QueryTextContentArgs = {
+  uuid: Scalars['String'];
+};
+
+
+export type QueryTextContentTranslationsOfPlaceArgs = {
+  placeUuid: Scalars['String'];
+};
+
+
 export type QueryUserArgs = {
   email: Scalars['String'];
 };
 
-export type SubjectModel = {
-  __typename?: 'SubjectModel';
+
+export type QueryValidVersionArgs = {
+  input: ValidVersionInput;
+};
+
+export type RecommendationLinkedSubjectModel = {
+  __typename?: 'RecommendationLinkedSubjectModel';
+  name: Scalars['String'];
+  uuid: Scalars['String'];
+};
+
+export type SubjectLocalizedModel = {
+  __typename?: 'SubjectLocalizedModel';
   fields: Array<Scalars['JSON']>;
   images?: Maybe<Array<ImageModel>>;
   layerUuid: Scalars['String'];
@@ -1210,10 +1460,30 @@ export type SubjectModel = {
   logoUrl: Scalars['String'];
   name: Scalars['String'];
   placeUuid: Scalars['String'];
-  recs?: Maybe<Array<PlaceRecommendation>>;
+  recs?: Maybe<Array<PlaceRecommendationLocalizedModel>>;
   schedule: Scalars['JSON'];
   shortDescription: Scalars['String'];
   uuid: Scalars['String'];
+};
+
+export type TextContentModel = {
+  __typename?: 'TextContentModel';
+  originalText: Scalars['String'];
+  uuid: Scalars['String'];
+};
+
+export type TextContentWithTranslationsModel = {
+  __typename?: 'TextContentWithTranslationsModel';
+  originalText: Scalars['String'];
+  translations: Array<TextTranslationModel>;
+  uuid: Scalars['String'];
+};
+
+export type TextTranslationModel = {
+  __typename?: 'TextTranslationModel';
+  languageId: Scalars['String'];
+  textContentId: Scalars['String'];
+  translation: Scalars['String'];
 };
 
 export type UpdateCityInput = {
@@ -1221,6 +1491,17 @@ export type UpdateCityInput = {
   latitude?: InputMaybe<Scalars['Float']>;
   longitude?: InputMaybe<Scalars['Float']>;
   name?: InputMaybe<Scalars['String']>;
+  uuid: Scalars['String'];
+};
+
+export type UpdateFieldsTranslationInput = {
+  fieldsContentId: Scalars['String'];
+  locale: Scalars['String'];
+  translation: Array<Scalars['JSON']>;
+};
+
+export type UpdateOriginalTextInput = {
+  originalText: Scalars['String'];
   uuid: Scalars['String'];
 };
 
@@ -1294,6 +1575,12 @@ export type UpdateSubjectInput = {
   uuid: Scalars['String'];
 };
 
+export type UpdateTextTranslationInput = {
+  locale: Scalars['String'];
+  textContentId: Scalars['String'];
+  translation: Scalars['String'];
+};
+
 export type UpdateUserInput = {
   addPlaces?: InputMaybe<Array<Scalars['String']>>;
   email?: InputMaybe<Scalars['String']>;
@@ -1308,29 +1595,62 @@ export type UploadImageModel = {
   uuid: Scalars['String'];
 };
 
-export type UserModel = {
-  __typename?: 'UserModel';
+export type UserConnectedPlace = {
+  __typename?: 'UserConnectedPlace';
+  title: Scalars['String'];
+  uuid: Scalars['String'];
+};
+
+export type UserLocalizedModel = {
+  __typename?: 'UserLocalizedModel';
+  connectedPlaces: Array<UserConnectedPlace>;
   email: Scalars['String'];
   mustChangePassword: Scalars['Boolean'];
-  places: Array<PlaceModel>;
   role: Scalars['String'];
+};
+
+export type ValidVersion = {
+  __typename?: 'ValidVersion';
+  /** If this app version is valid */
+  versionValid: Scalars['Boolean'];
+};
+
+export type ValidVersionInput = {
+  /** Platform of app (android/ios) */
+  platform: Scalars['String'];
+  /** Number of app version (ex 2.0.0) */
+  versionNumber: Scalars['String'];
 };
 
 export type GetListOfPlacesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetListOfPlacesQuery = { __typename?: 'Query', places: Array<{ __typename?: 'PlaceModel', uuid: string, title: string, logoUrl: string }> };
+export type GetListOfPlacesQuery = { __typename?: 'Query', places: Array<{ __typename?: 'PlaceLocalizedModel', uuid: string, title: string, logoUrl: string }> };
 
 export type GetPlaceQueryVariables = Exact<{
   uuid: Scalars['String'];
 }>;
 
 
-export type GetPlaceQuery = { __typename?: 'Query', place: { __typename?: 'PlaceModel', title: string, logoUrl: string, address: string, schedule: any, recs: Array<{ __typename?: 'PlaceRecommendation', title: string }>, promos?: Array<{ __typename?: 'Promo', title: string }> | null } };
+export type GetPlaceQuery = { __typename?: 'Query', place: { __typename?: 'PlaceLocalizedModel', title: string, logoUrl: string, address: string, schedule: any, recs: Array<{ __typename?: 'PlaceRecommendationLocalizedModel', title: string }>, promos?: Array<{ __typename?: 'PromoLocalizedModel', title: string }> | null } };
+
+export type GetPlaceLayersQueryVariables = Exact<{
+  placeUuid: Scalars['String'];
+}>;
+
+
+export type GetPlaceLayersQuery = { __typename?: 'Query', placeLayers: Array<{ __typename?: 'PlaceLayerLocalizedModel', uuid: string, fullName: string }> };
 
 export type GetSubjectsOfPlaceQueryVariables = Exact<{
   placeUuid: Scalars['String'];
 }>;
 
 
-export type GetSubjectsOfPlaceQuery = { __typename?: 'Query', subjectsOfPlace: Array<{ __typename?: 'SubjectModel', uuid: string, name: string, layerUuid: string, logoUrl: string, logoBackgroundColor: string, images?: Array<{ __typename?: 'ImageModel', uuid: string, url: string, cloudinaryId: string }> | null }> };
+export type GetSubjectsOfPlaceQuery = { __typename?: 'Query', subjectsOfPlace: Array<{ __typename?: 'SubjectLocalizedModel', uuid: string, name: string, layerUuid: string, logoUrl: string, logoBackgroundColor: string, images?: Array<{ __typename?: 'ImageModel', uuid: string, url: string, cloudinaryId: string }> | null }> };
+
+export type CreateSubjectMutationVariables = Exact<{
+  createSubjectInput: CreateSubjectInput;
+}>;
+
+
+export type CreateSubjectMutation = { __typename?: 'Mutation', createSubject: { __typename?: 'SubjectLocalizedModel', uuid: string } };
