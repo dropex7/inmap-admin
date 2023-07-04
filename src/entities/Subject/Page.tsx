@@ -36,7 +36,7 @@ export function Component() {
         <Button
           shape="round"
           size="large"
-          className="bg-yellow-200"
+          type="primary"
           onClick={handleCreateObject}
         >
           Создать новый объект

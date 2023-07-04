@@ -16,7 +16,7 @@ const documents = {
     "\n  query GetListOfPlaces {\n    places {\n      uuid\n      title\n      logoUrl\n    }\n  }\n": types.GetListOfPlacesDocument,
     "\n  query GetPlace($uuid: String!) {\n    place(uuid: $uuid) {\n      title\n      logoUrl\n      address\n      schedule\n      recs {\n        title\n      }\n      promos {\n        title\n      }\n    }\n  }\n": types.GetPlaceDocument,
     "\n  query GetPlaceLayers($placeUuid: String!) {\n    placeLayers(placeUuid: $placeUuid) {\n      uuid\n      fullName\n    }\n  }\n": types.GetPlaceLayersDocument,
-    "\n  query GetSubjectsOfPlace($placeUuid: String!) {\n    subjectsOfPlace(placeUuid: $placeUuid) {\n      uuid\n      name\n      layerUuid\n      logoUrl\n      logoBackgroundColor\n      images {\n        uuid\n        url\n        cloudinaryId\n      }\n    }\n  }\n": types.GetSubjectsOfPlaceDocument,
+    "\n  query GetSubjectsOfPlace($placeUuid: String!) {\n    subjectsOfPlace(placeUuid: $placeUuid) {\n      uuid\n      name\n      layerName\n      logoUrl\n      logoBackgroundColor\n      images {\n        uuid\n        url\n        cloudinaryId\n      }\n    }\n  }\n": types.GetSubjectsOfPlaceDocument,
     "\n  mutation CreateSubject($createSubjectInput: CreateSubjectInput!) {\n    createSubject(createSubjectInput: $createSubjectInput) {\n      uuid\n    }\n  }\n": types.CreateSubjectDocument,
 };
 
@@ -49,7 +49,7 @@ export function graphql(source: "\n  query GetPlaceLayers($placeUuid: String!) {
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetSubjectsOfPlace($placeUuid: String!) {\n    subjectsOfPlace(placeUuid: $placeUuid) {\n      uuid\n      name\n      layerUuid\n      logoUrl\n      logoBackgroundColor\n      images {\n        uuid\n        url\n        cloudinaryId\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetSubjectsOfPlace($placeUuid: String!) {\n    subjectsOfPlace(placeUuid: $placeUuid) {\n      uuid\n      name\n      layerUuid\n      logoUrl\n      logoBackgroundColor\n      images {\n        uuid\n        url\n        cloudinaryId\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query GetSubjectsOfPlace($placeUuid: String!) {\n    subjectsOfPlace(placeUuid: $placeUuid) {\n      uuid\n      name\n      layerName\n      logoUrl\n      logoBackgroundColor\n      images {\n        uuid\n        url\n        cloudinaryId\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetSubjectsOfPlace($placeUuid: String!) {\n    subjectsOfPlace(placeUuid: $placeUuid) {\n      uuid\n      name\n      layerName\n      logoUrl\n      logoBackgroundColor\n      images {\n        uuid\n        url\n        cloudinaryId\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

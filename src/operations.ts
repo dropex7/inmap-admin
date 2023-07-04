@@ -41,9 +41,10 @@ export const GET_SUBJECTS = gql`
     subjectsOfPlace(placeUuid: $placeUuid) {
       uuid
       name
-      layerUuid
+      layerName
       logoUrl
       logoBackgroundColor
+      shortDescription
       images {
         uuid
         url

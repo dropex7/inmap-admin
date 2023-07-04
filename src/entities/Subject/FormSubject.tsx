@@ -2,6 +2,7 @@
  * Created by MIRZOEV A. on 11.04.2023
  */
 import { Button, ColorPicker, Form, Input, Typography } from "antd";
+import {v4} from 'uuid'
 import BaseFields from "./BaseFields";
 import ImageLoaderField from "../../components/FormFields/ImageLoaderField";
 import React, { useCallback } from "react";
@@ -16,7 +17,8 @@ import {
   ScheduleOption,
 } from "../../components/FormFields/types";
 import { useMutation } from "@apollo/client";
-import { CREATE_SUBJECT } from "../../operations";
+import {CREATE_SUBJECT, GET_SUBJECTS} from "../../operations";
+import {useNavigate} from "react-router";
 
 interface SubjectFormValues {
   name: string;
@@ -33,12 +35,12 @@ const { Title } = Typography;
 
 export function Component() {
   const placeUuid = useRecoilValue(placeAtom);
-
+  const navigate = useNavigate()
   const [createSubject, { error, loading }] =
     useMutation<SubjectFormValues>(CREATE_SUBJECT);
 
   const onFinish = useCallback(
-    ({
+    async ({
       logoBackgroundColor,
       images,
       logo,
@@ -48,19 +50,24 @@ export function Component() {
     }: Omit<SubjectFormValues, "logoBackgroundColor"> & {
       logoBackgroundColor: Color | string;
     }) => {
-      createSubject({
+      await createSubject({
         variables: {
           createSubjectInput: {
             ...values,
             placeUuid,
             schedule: Object.fromEntries(schedule),
-            images: [],
+            images: images?.map((image) => ({uuid: v4(), baseEncodedImage: image.thumbUrl})),
             logo: logo[0].thumbUrl,
             logoBackgroundColor: prepareColor(logoBackgroundColor),
             fields: [],
           },
         },
+        refetchQueries:[
+          GET_SUBJECTS,
+            'GetSubjectsOfPlace'
+        ]
       });
+      navigate('..')
     },
     [placeUuid]
   );

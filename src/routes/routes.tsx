@@ -7,13 +7,6 @@ import PageError from "./PageError";
 
 export const additional: Array<RouteObjectWithHandle> = [
   {
-    path: "login",
-    lazy: () => import("../entities/Login/Page"),
-    handle: {
-      title: "Авторизация",
-    },
-  },
-  {
     path: "place",
     element: <Outlet />,
     handle: {
@@ -133,6 +126,14 @@ const rootRoutes: Array<RouteObjectWithHandle> = [
     children: baseRoutes,
     handle: {
       title: "inMap",
+    },
+  },
+  {
+    path: "login",
+    errorElement: <PageError />,
+    lazy: () => import("../entities/Login/Page"),
+    handle: {
+      title: "Авторизация",
     },
   },
 ];
