@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-export const placeAtom = atom<string | null>({
+export const placeAtom = atom<string | undefined>({
   key: "selectedPlace", // unique ID (with respect to other atoms/selectors)
-  default: null, // default value (aka initial value)
+  default: undefined, // default value (aka initial value)
 });

@@ -1,28 +1,71 @@
 import { createBrowserRouter } from "react-router-dom";
+import App from "../App";
+import PageError from "./PageError";
+import { Outlet } from "react-router";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <PageError />,
+    children: [
+      {
+        path: "subjects",
+        element: <Outlet />,
+        errorElement: <PageError />,
+        children: [
+          {
+            path: ":id",
+            lazy: () => import("../components/PageWrapper"),
+            errorElement: <PageError />,
+            children: [
+              {
+                index: true,
+                lazy: () => import("../pages/Subject/Page"),
+                errorElement: <PageError />,
+              },
+              {
+                path: "create-subject",
+                lazy: () => import("../pages/Subject/FormSubject"),
+                errorElement: <PageError />,
+              },
+            ],
+          },
+          {
+            index: true,
+            lazy: () => import("../components/GlobalSelectPlace"),
+          },
+        ],
+      },
+      {
+        path: "subjects",
+        element: <Outlet />,
+        errorElement: <PageError />,
+        children: [
+          {
+            path: ":id",
+            lazy: () => import("../components/PageWrapper"),
+            errorElement: <PageError />,
+            children: [
+              { index: true, lazy: () => import("../pages/Subject/Page") },
+            ],
+          },
+          {
+            index: true,
+            lazy: () => import("../components/GlobalSelectPlace"),
+          },
+        ],
+      },
+      {
+        path: "*",
+        element: <div className="text-white">Нет такой странички бро</div>,
+      },
+    ],
+  },
+  {
+    path: "login",
+    errorElement: <PageError />,
+    lazy: () => import("../pages/Login/Page"),
+  },
+]);
 
-import routes from "./routes";
-import { IndexRouteObjectWithHandle, RouteObjectWithHandle } from "./types";
-
-function isIndexRoute(
-  route: RouteObjectWithHandle
-): route is IndexRouteObjectWithHandle {
-  return !!route.index;
-}
-
-function wrap(all: Array<RouteObjectWithHandle>): Array<RouteObjectWithHandle> {
-  return all.map((route) => {
-    const isIndex = isIndexRoute(route);
-    const wrapped = isIndex ? undefined : wrap(route.children ?? []);
-
-    return {
-      ...route,
-      element: route.element,
-      lazy: route.lazy,
-      children: wrapped,
-    };
-  });
-}
-
-export default function getRouter() {
-  return createBrowserRouter(wrap(routes));
-}
+export { router };

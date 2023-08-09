@@ -1,10 +1,10 @@
-import {memo} from 'react';
-import {RouterProvider} from 'react-router-dom';
+import { memo } from "react";
+import { RouterProvider } from "react-router-dom";
 
-import getRouter from './router';
+import { router } from "./router";
 
-const RouterProviderWrapper = memo((): JSX.Element => {
-    return <RouterProvider router={getRouter()} />;
+const RouterProviderWrapper = memo(() => {
+  return <RouterProvider router={router} />;
 });
 
 export default RouterProviderWrapper;

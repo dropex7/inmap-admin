@@ -128,13 +128,22 @@ const ScheduleField = memo(({}) => {
             disabled={selectedDays.size === 0}
             type="primary"
             onClick={showModal}
+            size="small"
           >
             Установить время
           </Button>
-          <Button disabled={selectedDays.size === 0} onClick={handleAddOffDays}>
+          <Button
+            size="small"
+            disabled={selectedDays.size === 0}
+            onClick={handleAddOffDays}
+          >
             Установить выходным днем
           </Button>
-          <Button disabled={selectedDays.size > 0} onClick={resetSchedule}>
+          <Button
+            size="small"
+            disabled={selectedDays.size > 0}
+            onClick={resetSchedule}
+          >
             Сбросить
           </Button>
         </div>

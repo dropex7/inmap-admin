@@ -2,10 +2,11 @@
  * Created by MIRZOEV A. on 11.04.2023
  */
 import { Button, ColorPicker, Form, Input, Typography } from "antd";
-import {v4} from 'uuid'
+import { ReactElement, useMemo } from "react";
+import { v4 } from "uuid";
 import BaseFields from "./BaseFields";
 import ImageLoaderField from "../../components/FormFields/ImageLoaderField";
-import React, { useCallback } from "react";
+import React, { ReactNode, useCallback, useState } from "react";
 import ScheduleField from "../../components/FormFields/SheduleField";
 import type { Color } from "antd/es/color-picker";
 import { UploadFile } from "antd/es/upload/interface";
@@ -17,8 +18,10 @@ import {
   ScheduleOption,
 } from "../../components/FormFields/types";
 import { useMutation } from "@apollo/client";
-import {CREATE_SUBJECT, GET_SUBJECTS} from "../../operations";
-import {useNavigate} from "react-router";
+import { CREATE_SUBJECT, GET_SUBJECTS } from "../../operations";
+import { useNavigate } from "react-router";
+import { ExtraField } from "./types";
+import NewFieldForm from "./NewFieldForm";
 
 interface SubjectFormValues {
   name: string;
@@ -35,7 +38,15 @@ const { Title } = Typography;
 
 export function Component() {
   const placeUuid = useRecoilValue(placeAtom);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [extraFields, setExtraFields] = useState<Map<string, ReactElement>>(
+    new Map()
+  );
+
+  const [preparedExtraFields, setPreparedExtraFields] = useState<
+    Array<ExtraField>
+  >([]);
+
   const [createSubject, { error, loading }] =
     useMutation<SubjectFormValues>(CREATE_SUBJECT);
 
@@ -50,26 +61,50 @@ export function Component() {
     }: Omit<SubjectFormValues, "logoBackgroundColor"> & {
       logoBackgroundColor: Color | string;
     }) => {
+      console.log("kek");
       await createSubject({
         variables: {
           createSubjectInput: {
             ...values,
             placeUuid,
             schedule: Object.fromEntries(schedule),
-            images: images?.map((image) => ({uuid: v4(), baseEncodedImage: image.thumbUrl})),
+            images: images?.map((image) => ({
+              uuid: v4(),
+              baseEncodedImage: image.thumbUrl,
+            })),
             logo: logo[0].thumbUrl,
             logoBackgroundColor: prepareColor(logoBackgroundColor),
             fields: [],
           },
         },
-        refetchQueries:[
-          GET_SUBJECTS,
-            'GetSubjectsOfPlace'
-        ]
+        refetchQueries: [GET_SUBJECTS, "GetSubjectsOfPlace"],
       });
-      navigate('..')
+      navigate("..");
     },
     [placeUuid]
+  );
+
+  const addNewField = useCallback(
+    (elementId: string, newField: ReactElement) => {
+      setExtraFields((prev) => {
+        const tempSet = new Map(prev);
+        return tempSet.set(elementId, newField);
+      });
+    },
+    []
+  );
+
+  const removeNewField = useCallback((elementId: string) => {
+    setExtraFields((prev) => {
+      const tempSet = new Map(prev);
+      tempSet.delete(elementId);
+      return tempSet;
+    });
+  }, []);
+
+  const renderElements = useMemo(
+    () => Array.from(extraFields.values()),
+    [extraFields]
   );
 
   // if (loading) return "Submitting...";
@@ -77,7 +112,13 @@ export function Component() {
 
   return (
     <div className="p-6">
-      <Title level={3}>Создание объекта</Title>
+      <div className="flex justify-between pb-3">
+        <Title level={3}>Создание объекта</Title>
+        <NewFieldForm
+          addNewField={addNewField}
+          removeNewField={removeNewField}
+        />
+      </div>
 
       <Form
         name="subjectForm"
@@ -113,21 +154,16 @@ export function Component() {
           </div>
         </div>
 
-        <div className="card p-6">
-          <ScheduleField />
-
-          <Item
-            label="Официальный сайт"
-            name="site"
-            rules={[{ required: true, message: "Введите сайт!" }]}
-          >
-            <Input />
-          </Item>
-        </div>
+        {renderElements}
 
         <Item>
-          <Button type="primary" size="large" htmlType="submit">
-            Создать объект
+          <Button
+            type="primary"
+            size="large"
+            htmlType="submit"
+            className="w-full"
+          >
+            Создать
           </Button>
         </Item>
       </Form>

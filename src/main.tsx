@@ -6,13 +6,18 @@ import { RecoilRoot } from "recoil";
 import RouterProviderWrapper from "./routes/RouterProviderWrapper";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "./utils/apolloClient";
+import { ConfigProvider, theme } from "antd";
+
+const { darkAlgorithm } = theme;
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
-    <RecoilRoot>
-      <ApolloProvider client={client}>
-        <RouterProviderWrapper />
-      </ApolloProvider>
-    </RecoilRoot>
+    <ConfigProvider>
+      <RecoilRoot>
+        <ApolloProvider client={client}>
+          <RouterProviderWrapper />
+        </ApolloProvider>
+      </RecoilRoot>
+    </ConfigProvider>
   </StrictMode>
 );

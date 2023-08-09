@@ -13,17 +13,10 @@ const Header = memo((): JSX.Element | null => {
   const { logout } = useAuth();
 
   return (
-    <header className="flex h-header items-center gap-x-6 bg-gray-900 px-6">
+    <header className="flex h-header items-center gap-x-6 bg-zinc-900 border-b border-opacity-20 border-gray-300 p-6">
       <Link to="/">
-        <img
-          src="/white-among-us.svg"
-          width={45}
-          height={32}
-          alt="Pulse Core"
-        />
+        <img src="/inmap.svg" width={83} height={30} alt="Pulse Core" />
       </Link>
-
-      <Nav />
 
       <span className="flex-auto" />
 

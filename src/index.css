@@ -10,4 +10,13 @@
     @apply bg-blue-50
   }
 }
+
+*, :after, :before {
+  border: 0 solid #e0e0e0;
+}
+
+body{
+  font-family: 'Mont', sans-serif;
+}
+
 @tailwind utilities;

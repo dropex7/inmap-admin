@@ -56,7 +56,8 @@ export type CreatePlaceLayerInput = {
 };
 
 export type CreatePlaceRecommendationInput = {
-  icon: Scalars['String'];
+  icon?: InputMaybe<Scalars['String']>;
+  imageUrl?: InputMaybe<Scalars['String']>;
   parentUuid?: InputMaybe<Scalars['String']>;
   placeUuid: Scalars['String'];
   title: Scalars['String'];
@@ -160,16 +161,16 @@ export type Mutation = {
   movePlaceRecommendationRight: PlaceRecommendationLocalizedModel;
   movePromoPreviewLeft: PromoPreview;
   movePromoPreviewRight: PromoPreview;
-  removeAllPromoPreviewOfPlace: Array<PromoPreview>;
-  removeCity: Scalars['String'];
-  removePlace: PlaceLocalizedModel;
-  removePlaceLayer: PlaceLayerLocalizedModel;
-  removePlaceRecommendation: Scalars['String'];
-  removePlan: Plan;
-  removePromo: PromoLocalizedModel;
-  removePromoPreview: PromoPreview;
-  removeSubject: Scalars['String'];
-  removeUser: UserLocalizedModel;
+  removeAllPromoPreviewOfPlace: RemoveResponse;
+  removeCity: RemoveResponse;
+  removePlace: RemoveResponse;
+  removePlaceLayer: RemoveResponse;
+  removePlaceRecommendation: RemoveResponse;
+  removePlan: RemoveResponse;
+  removePromo: RemoveResponse;
+  removePromoPreview: RemoveResponse;
+  removeSubject: RemoveResponse;
+  removeUser: RemoveResponse;
   setLinkedRecsToSubject: SubjectLocalizedModel;
   setLinkedSubjectsToRecommendation: PlaceRecommendationLocalizedModel;
   updateCity: CityLocalizedModel;
@@ -184,6 +185,7 @@ export type Mutation = {
   updateSubject: SubjectLocalizedModel;
   updateTextTranslation: TextTranslationModel;
   updateUser: UserLocalizedModel;
+  uploadImage: UploadResult;
 };
 
 
@@ -388,6 +390,11 @@ export type MutationUpdateUserArgs = {
   updateUserInput: UpdateUserInput;
 };
 
+
+export type MutationUploadImageArgs = {
+  uploadInput: UploadInput;
+};
+
 export type NewPromoPreviewItemInput = {
   baseEncodedImage: Scalars['String'];
   crossAxisCellCount: Scalars['Int'];
@@ -428,7 +435,8 @@ export type PlaceLocalizedModel = {
 
 export type PlaceRecommendationLocalizedModel = {
   __typename?: 'PlaceRecommendationLocalizedModel';
-  icon: Scalars['String'];
+  icon?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
   linkedSubjects: Array<RecommendationLinkedSubjectModel>;
   orderIndex: Scalars['Int'];
   parent?: Maybe<PlaceRecommendationLocalizedModel>;
@@ -625,6 +633,11 @@ export type RecommendationLinkedSubjectModel = {
   uuid: Scalars['String'];
 };
 
+export type RemoveResponse = {
+  __typename?: 'RemoveResponse';
+  removed: Scalars['Boolean'];
+};
+
 export type SubjectLocalizedModel = {
   __typename?: 'SubjectLocalizedModel';
   fields: Array<Scalars['JSON']>;
@@ -709,6 +722,7 @@ export type UpdatePlaceLayerInput = {
 
 export type UpdatePlaceRecommendationInput = {
   icon?: InputMaybe<Scalars['String']>;
+  imageUrl?: InputMaybe<Scalars['String']>;
   parentUuid?: InputMaybe<Scalars['String']>;
   placeUuid?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
@@ -770,6 +784,19 @@ export type UpdateUserInput = {
 export type UploadImageModel = {
   baseEncodedImage: Scalars['String'];
   uuid: Scalars['String'];
+};
+
+export type UploadInput = {
+  /** file to upload encoded in base64 */
+  base64EncodedData: Scalars['String'];
+  /** uuid of place this file relies to */
+  placeUuid: Scalars['String'];
+};
+
+export type UploadResult = {
+  __typename?: 'UploadResult';
+  /** Url of stored file */
+  url: Scalars['String'];
 };
 
 export type UserConnectedPlace = {
@@ -889,7 +916,8 @@ export type CreatePlaceLayerInput = {
 };
 
 export type CreatePlaceRecommendationInput = {
-  icon: Scalars['String'];
+  icon?: InputMaybe<Scalars['String']>;
+  imageUrl?: InputMaybe<Scalars['String']>;
   parentUuid?: InputMaybe<Scalars['String']>;
   placeUuid: Scalars['String'];
   title: Scalars['String'];
@@ -993,16 +1021,16 @@ export type Mutation = {
   movePlaceRecommendationRight: PlaceRecommendationLocalizedModel;
   movePromoPreviewLeft: PromoPreview;
   movePromoPreviewRight: PromoPreview;
-  removeAllPromoPreviewOfPlace: Array<PromoPreview>;
-  removeCity: Scalars['String'];
-  removePlace: PlaceLocalizedModel;
-  removePlaceLayer: PlaceLayerLocalizedModel;
-  removePlaceRecommendation: Scalars['String'];
-  removePlan: Plan;
-  removePromo: PromoLocalizedModel;
-  removePromoPreview: PromoPreview;
-  removeSubject: Scalars['String'];
-  removeUser: UserLocalizedModel;
+  removeAllPromoPreviewOfPlace: RemoveResponse;
+  removeCity: RemoveResponse;
+  removePlace: RemoveResponse;
+  removePlaceLayer: RemoveResponse;
+  removePlaceRecommendation: RemoveResponse;
+  removePlan: RemoveResponse;
+  removePromo: RemoveResponse;
+  removePromoPreview: RemoveResponse;
+  removeSubject: RemoveResponse;
+  removeUser: RemoveResponse;
   setLinkedRecsToSubject: SubjectLocalizedModel;
   setLinkedSubjectsToRecommendation: PlaceRecommendationLocalizedModel;
   updateCity: CityLocalizedModel;
@@ -1017,6 +1045,7 @@ export type Mutation = {
   updateSubject: SubjectLocalizedModel;
   updateTextTranslation: TextTranslationModel;
   updateUser: UserLocalizedModel;
+  uploadImage: UploadResult;
 };
 
 
@@ -1221,6 +1250,11 @@ export type MutationUpdateUserArgs = {
   updateUserInput: UpdateUserInput;
 };
 
+
+export type MutationUploadImageArgs = {
+  uploadInput: UploadInput;
+};
+
 export type NewPromoPreviewItemInput = {
   baseEncodedImage: Scalars['String'];
   crossAxisCellCount: Scalars['Int'];
@@ -1261,7 +1295,8 @@ export type PlaceLocalizedModel = {
 
 export type PlaceRecommendationLocalizedModel = {
   __typename?: 'PlaceRecommendationLocalizedModel';
-  icon: Scalars['String'];
+  icon?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
   linkedSubjects: Array<RecommendationLinkedSubjectModel>;
   orderIndex: Scalars['Int'];
   parent?: Maybe<PlaceRecommendationLocalizedModel>;
@@ -1458,6 +1493,11 @@ export type RecommendationLinkedSubjectModel = {
   uuid: Scalars['String'];
 };
 
+export type RemoveResponse = {
+  __typename?: 'RemoveResponse';
+  removed: Scalars['Boolean'];
+};
+
 export type SubjectLocalizedModel = {
   __typename?: 'SubjectLocalizedModel';
   fields: Array<Scalars['JSON']>;
@@ -1542,6 +1582,7 @@ export type UpdatePlaceLayerInput = {
 
 export type UpdatePlaceRecommendationInput = {
   icon?: InputMaybe<Scalars['String']>;
+  imageUrl?: InputMaybe<Scalars['String']>;
   parentUuid?: InputMaybe<Scalars['String']>;
   placeUuid?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
@@ -1603,6 +1644,19 @@ export type UpdateUserInput = {
 export type UploadImageModel = {
   baseEncodedImage: Scalars['String'];
   uuid: Scalars['String'];
+};
+
+export type UploadInput = {
+  /** file to upload encoded in base64 */
+  base64EncodedData: Scalars['String'];
+  /** uuid of place this file relies to */
+  placeUuid: Scalars['String'];
+};
+
+export type UploadResult = {
+  __typename?: 'UploadResult';
+  /** Url of stored file */
+  url: Scalars['String'];
 };
 
 export type UserConnectedPlace = {
