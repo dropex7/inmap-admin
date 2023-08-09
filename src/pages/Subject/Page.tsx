@@ -2,11 +2,10 @@ import { useQuery } from "@apollo/client";
 import { GetSubjectsOfPlaceQuery } from "../../generated/graphql";
 import { GET_SUBJECTS } from "../../operations";
 import { useNavigate, useParams } from "react-router";
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import SubjectCard from "./SubjectCard";
-import { Button, Input } from "antd";
-
-const { Search } = Input;
+import SearchBar from "./SearchBar";
+import SubjectInfoView from "./SubjectInfoView";
 
 export function Component() {
   const { id } = useParams();
@@ -15,10 +14,6 @@ export function Component() {
   const { data, error } = useQuery<GetSubjectsOfPlaceQuery>(GET_SUBJECTS, {
     variables: { placeUuid: id },
   });
-
-  const handleCreateObject = useCallback(() => {
-    navigate("create-subject");
-  }, []);
 
   useEffect(() => {
     if (error) {
@@ -32,22 +27,19 @@ export function Component() {
 
   return (
     <section className="flex flex-col gap-4 p-6">
-      <div className="flex justify-between">
-        <Button
-          shape="round"
-          size="large"
-          type="primary"
-          onClick={handleCreateObject}
-        >
-          Создать новый объект
-        </Button>
-        <Search placeholder="input search text" style={{ width: 200 }} />
-      </div>
+      <SearchBar />
 
-      <div className="flex flex-wrap justify-center gap-4 rounded-lg">
-        {data.subjectsOfPlace.map((sub) => (
-          <SubjectCard key={sub.uuid} subject={sub} />
-        ))}
+      <div className="card flex-col gap-6 p-6">
+        <div className="flex gap-6 justify-end">
+          <SubjectInfoView title="Создано объектов" count={20} max={70} />
+          <SubjectInfoView title="Сейчас работают" count={17} max={20} />
+          <SubjectInfoView title="Приостановлено" count={3} max={20} />
+        </div>
+        <div className="flex flex-wrap justify-center gap-4 rounded-lg py-6">
+          {data.subjectsOfPlace.map((sub) => (
+            <SubjectCard key={sub.uuid} subject={sub} />
+          ))}
+        </div>
       </div>
     </section>
   );
