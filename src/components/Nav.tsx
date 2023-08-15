@@ -5,27 +5,27 @@
 import { memo, useEffect, useState } from "react";
 import clsx from "clsx";
 import { NavLink, useLocation } from "react-router-dom";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
+import { ReactComponent as HomeIcon } from "../assets/home.svg";
+import { ReactComponent as OtherIcon } from "../assets/other.svg";
 import { Button } from "antd";
-import { useRecoilValue } from "recoil";
-import { placeAtom } from "../atoms/selectedPlace";
 
 const links = [
-  { path: "home", title: "Главная", iconSrc: "/icons/home.svg" },
-  // { path: "/map", title: "Карта", iconSrc: "/icons/other.svg" },
-  { path: "subjects", title: "Объекты", iconSrc: "/icons/other.svg" },
-  // {
-  //   path: "/recommendation",
-  //   title: "Рекомендации",
-  //   iconSrc: "/icons/other.svg",
-  // },
-  // { path: "/news", title: "Новости и акции", iconSrc: "/icons/other.svg" },
-  // {
-  //   path: "/loyalty",
-  //   title: "Программа лояльности",
-  //   iconSrc: "/icons/other.svg",
-  // },
-  // { path: "/analytics", title: "Аналитика", iconSrc: "/icons/other.svg" },
+  {
+    path: "home",
+    title: "Главная",
+    icon: <HomeIcon />,
+  },
+  {
+    path: "subject",
+    title: "Объекты",
+    icon: <OtherIcon />,
+  },
+  {
+    path: "promo",
+    title: "Новости и акции",
+    icon: <OtherIcon />,
+  },
 ];
 
 const Nav = memo(() => {
@@ -35,7 +35,7 @@ const Nav = memo(() => {
 
   useEffect(() => {
     if (pathname === "/") {
-      navigate("subjects", { replace: true });
+      navigate("subject", { replace: true });
     }
   }, []);
 
@@ -49,19 +49,21 @@ const Nav = memo(() => {
       <nav
         className={clsx("flex flex-col gap-6 py-5", !isOpen && "items-center")}
       >
-        {links.map(({ path, title, iconSrc }) => (
+        {links.map(({ path, title, icon }) => (
           <NavLink
             key={path}
             to={path}
             className={({ isActive }) =>
               clsx(
                 "flex gap-3 px-4 no-underline leading-none",
-                isActive ? "text-white font-bold" : "text-neutral-500"
+                isActive
+                  ? "text-lime-400 font-bold fill-lime-400"
+                  : "text-neutral-500 fill-neutral-500"
               )
             }
           >
-            <div className="flex gap-3 items-center hover:text-blue-300">
-              <img src={iconSrc} width={20} height={20} alt={title} />
+            <div className="flex gap-3 items-center hover:text-lime-300 hover:fill-lime-300">
+              {icon}
               {isOpen && <span>{title}</span>}
             </div>
           </NavLink>

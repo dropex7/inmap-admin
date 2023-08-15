@@ -5,11 +5,11 @@
 import React, { memo } from "react";
 import { Form, Input, Select } from "antd";
 import { useQuery } from "@apollo/client";
-import { GET_PLACE_LAYERS } from "../../operations";
 import { GetPlaceLayersQuery } from "../../generated/graphql";
 import { useRecoilValue } from "recoil";
 import { placeAtom } from "../../atoms/selectedPlace";
 import ScheduleField from "../../components/FormFields/SheduleField";
+import { GET_PLACE_LAYERS } from "../../operations/place/query";
 
 const { Option } = Select;
 

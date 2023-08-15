@@ -16,7 +16,11 @@
 }
 
 body{
-  font-family: 'Mont', sans-serif;
+  /*font-family: 'Mont', sans-serif;*/
+}
+
+.ql-tooltip{
+  left: 0 !important;
 }
 
 @tailwind utilities;

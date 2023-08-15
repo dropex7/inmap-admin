@@ -1,13 +1,12 @@
 /**
  * Created by MIRZOEV A. on 11.04.2023
  */
-import { Button, ColorPicker, Form, Input, Typography } from "antd";
+import { Button, ColorPicker, Form, Typography } from "antd";
 import { ReactElement, useMemo } from "react";
 import { v4 } from "uuid";
 import BaseFields from "./BaseFields";
 import ImageLoaderField from "../../components/FormFields/ImageLoaderField";
-import React, { ReactNode, useCallback, useState } from "react";
-import ScheduleField from "../../components/FormFields/SheduleField";
+import React, { useCallback, useState } from "react";
 import type { Color } from "antd/es/color-picker";
 import { UploadFile } from "antd/es/upload/interface";
 import { prepareColor } from "../../utils/utils";
@@ -18,10 +17,10 @@ import {
   ScheduleOption,
 } from "../../components/FormFields/types";
 import { useMutation } from "@apollo/client";
-import { CREATE_SUBJECT, GET_SUBJECTS } from "../../operations";
 import { useNavigate } from "react-router";
 import { ExtraField } from "./types";
 import NewFieldForm from "./NewFieldForm";
+import { CREATE_SUBJECT, GET_SUBJECTS } from "../../operations/subject/query";
 
 interface SubjectFormValues {
   name: string;

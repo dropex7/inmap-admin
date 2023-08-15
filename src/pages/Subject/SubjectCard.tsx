@@ -38,7 +38,11 @@ const SubjectCard = memo<SubjectCardProps>(
           />
         )}
 
-        <PreviewImage url={backgroundImage?.url ?? noPhoto} alt="image" />
+        <PreviewImage
+          height="200px"
+          url={backgroundImage?.url ?? noPhoto}
+          alt="image"
+        />
 
         <div className="flex flex-col gap-3 p-3">
           <span className="self-end text-gray-500 text-sm">{layerName}</span>

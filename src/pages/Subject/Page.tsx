@@ -1,11 +1,11 @@
 import { useQuery } from "@apollo/client";
 import { GetSubjectsOfPlaceQuery } from "../../generated/graphql";
-import { GET_SUBJECTS } from "../../operations";
 import { useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import SubjectCard from "./SubjectCard";
 import SearchBar from "./SearchBar";
 import SubjectInfoView from "./SubjectInfoView";
+import { GET_SUBJECTS } from "../../operations/subject/query";
 
 export function Component() {
   const { id } = useParams();

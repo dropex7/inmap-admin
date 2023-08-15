@@ -9,7 +9,7 @@ const router = createBrowserRouter([
     errorElement: <PageError />,
     children: [
       {
-        path: "subjects",
+        path: "subject",
         element: <Outlet />,
         errorElement: <PageError />,
         children: [
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "subjects",
+        path: "promo",
         element: <Outlet />,
         errorElement: <PageError />,
         children: [
@@ -46,7 +46,16 @@ const router = createBrowserRouter([
             lazy: () => import("../components/PageWrapper"),
             errorElement: <PageError />,
             children: [
-              { index: true, lazy: () => import("../pages/Subject/Page") },
+              {
+                path: "create-promo",
+                lazy: () => import("../pages/Promo/FormPromo"),
+                errorElement: <PageError />,
+              },
+              {
+                index: true,
+                lazy: () => import("../pages/Promo/Page"),
+                errorElement: <PageError />,
+              },
             ],
           },
           {

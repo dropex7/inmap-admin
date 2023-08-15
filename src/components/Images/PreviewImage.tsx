@@ -4,18 +4,20 @@
 
 import { HTMLProps, memo } from "react";
 import { ImageModel } from "../../generated/graphql";
+import clsx from "clsx";
 
 interface PreviewImageProps extends HTMLProps<HTMLImageElement> {
   url: ImageModel["url"];
   alt: HTMLProps<HTMLImageElement>["alt"];
+  rounded?: boolean;
 }
 
 const PreviewImage = memo<PreviewImageProps>(
-  ({ url, alt, ...rest }): JSX.Element | null => {
+  ({ url, alt, rounded = false, ...rest }): JSX.Element | null => {
     return (
       <img
         src={url}
-        className="h-40 max-w-full object-cover"
+        className={clsx("max-w-full object-cover", rounded && "rounded-md")}
         alt={alt}
         {...rest}
       />
