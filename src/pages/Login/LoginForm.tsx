@@ -2,7 +2,7 @@
  * Created by MIRZOEV A. on 10.04.2023
  */
 
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback } from "react";
 import { Button, Form, Input } from "antd";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -14,10 +14,9 @@ interface LoginValues {
 const { Item, useForm } = Form;
 const { Password } = Input;
 
-const LoginForm = memo((): JSX.Element | null => {
+const LoginForm = memo(() => {
   const [form] = useForm();
   const { login } = useAuth();
-  const [loading, setLoading] = useState(false);
 
   const handleLogin = useCallback(async ({ email, password }: LoginValues) => {
     await login(email, password);

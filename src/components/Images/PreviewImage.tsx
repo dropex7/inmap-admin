@@ -8,12 +8,11 @@ import clsx from "clsx";
 
 interface PreviewImageProps extends HTMLProps<HTMLImageElement> {
   url: ImageModel["url"];
-  alt: HTMLProps<HTMLImageElement>["alt"];
   rounded?: boolean;
 }
 
 const PreviewImage = memo<PreviewImageProps>(
-  ({ url, alt, rounded = false, ...rest }): JSX.Element | null => {
+  ({ url, alt, rounded = false, ...rest }) => {
     return (
       <img
         src={url}

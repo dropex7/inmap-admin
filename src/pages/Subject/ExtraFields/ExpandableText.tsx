@@ -2,7 +2,7 @@
  * Created by MIRZOEV A. on 23.07.2023
  */
 
-import { memo, ReactElement } from "react";
+import { memo } from "react";
 import { Button, Form, Input } from "antd";
 
 interface ExpandableTextProps {
@@ -12,7 +12,6 @@ interface ExpandableTextProps {
 const { Item } = Form;
 
 const ExpandableText = memo<ExpandableTextProps>(({ removeElement }) => {
-  console.log(removeElement);
   return (
     <div className="card p-6 relative">
       <Button danger className="absolute top-2 right-6" onClick={removeElement}>

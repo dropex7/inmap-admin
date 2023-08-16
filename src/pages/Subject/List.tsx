@@ -6,7 +6,7 @@ import { memo } from "react";
 
 interface ListProps {}
 
-const List = memo<ListProps>(({}): JSX.Element | null => {
+const List = memo<ListProps>(({}) => {
   return <>List</>;
 });
 

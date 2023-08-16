@@ -3,9 +3,6 @@
  */
 import "react-quill/dist/quill.snow.css";
 import SearchBar from "./SearchBar";
-import { useQuery } from "@apollo/client";
-import { GET_PROMOS } from "../../operations/promo/query";
-import { useParams } from "react-router";
 import PromoList from "./PromoList";
 
 export function Component() {

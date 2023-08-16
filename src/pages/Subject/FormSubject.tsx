@@ -60,7 +60,6 @@ export function Component() {
     }: Omit<SubjectFormValues, "logoBackgroundColor"> & {
       logoBackgroundColor: Color | string;
     }) => {
-      console.log("kek");
       await createSubject({
         variables: {
           createSubjectInput: {

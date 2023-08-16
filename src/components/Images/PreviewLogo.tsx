@@ -12,7 +12,7 @@ interface PreviewLogoProps extends HTMLProps<HTMLImageElement> {
 }
 
 const PreviewLogo = memo<PreviewLogoProps>(
-  ({ backgroundColor, logoUrl, alt, ...rest }): JSX.Element | null => {
+  ({ backgroundColor, logoUrl, alt, ...rest }) => {
     const colorStyle = useMemo(
       () => ({ background: `#${backgroundColor.slice(2, 8)}` }),
       [backgroundColor]

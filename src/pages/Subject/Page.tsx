@@ -26,16 +26,16 @@ export function Component() {
   }
 
   return (
-    <section className="flex flex-col gap-4 p-6">
+    <section className="flex flex-col gap-4">
       <SearchBar />
 
-      <div className="card flex-col gap-6 p-6">
-        <div className="flex gap-6 justify-end">
+      <div className="card flex-col gap-6">
+        <div className="flex gap-6 justify-end p-3">
           <SubjectInfoView title="Создано объектов" count={20} max={70} />
           <SubjectInfoView title="Сейчас работают" count={17} max={20} />
           <SubjectInfoView title="Приостановлено" count={3} max={20} />
         </div>
-        <div className="flex flex-wrap justify-center gap-4 rounded-lg py-6">
+        <div className="flex flex-wrap justify-center gap-4 rounded-lg py-3">
           {data.subjectsOfPlace.map((sub) => (
             <SubjectCard key={sub.uuid} subject={sub} />
           ))}

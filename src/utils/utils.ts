@@ -1,8 +1,4 @@
-import {
-  DAY_TYPES,
-  SCHEDULE_DAYS,
-  ScheduleOption,
-} from "../components/FormFields/types";
+import { SCHEDULE_DAYS, ScheduleOption } from "../components/FormFields/types";
 import { Color } from "antd/es/color-picker";
 
 const generatedSchedule = Object.keys(SCHEDULE_DAYS).map((day) => [

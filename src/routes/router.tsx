@@ -32,7 +32,7 @@ const router = createBrowserRouter([
           },
           {
             index: true,
-            lazy: () => import("../components/GlobalSelectPlace"),
+            lazy: () => import("../pages/Place/GlobalSelectPlace"),
           },
         ],
       },
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
           },
           {
             index: true,
-            lazy: () => import("../components/GlobalSelectPlace"),
+            lazy: () => import("../pages/Place/GlobalSelectPlace"),
           },
         ],
       },

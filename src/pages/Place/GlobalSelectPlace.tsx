@@ -1,11 +1,11 @@
 import { useQuery } from "@apollo/client";
-import { GetListOfPlacesQuery } from "../generated/graphql";
+import { GetListOfPlacesQuery } from "../../generated/graphql";
 import PlaceCard from "./PlaceCard";
 import { useRecoilValue } from "recoil";
-import { placeAtom } from "../atoms/selectedPlace";
+import { placeAtom } from "../../atoms/selectedPlace";
 import { memo, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
-import { GET_PLACES } from "../operations/place/query";
+import { GET_PLACES } from "../../operations/place/query";
 
 export const Component = memo(() => {
   const { loading, error, data } = useQuery<GetListOfPlacesQuery>(GET_PLACES);
