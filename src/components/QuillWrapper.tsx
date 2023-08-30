@@ -4,10 +4,10 @@
 
 import { memo } from "react";
 import ReactQuill, { UnprivilegedEditor } from "react-quill";
-import { Sources } from "quill";
+import type { Sources } from "quill";
+import "react-quill/dist/quill.snow.css";
 
 interface QuillWrapperProps {
-  value: any;
   onChange: (
     value: string,
     delta: unknown,
@@ -39,11 +39,11 @@ const formats = [
   "image",
 ];
 
-const QuillWrapper = memo<QuillWrapperProps>(({ value, onChange }) => {
+const QuillWrapper = memo<QuillWrapperProps>(({ onChange }) => {
   return (
     <ReactQuill
+      className="h-80"
       theme="snow"
-      value={value}
       onChange={onChange}
       modules={modules}
     />

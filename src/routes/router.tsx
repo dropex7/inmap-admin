@@ -48,7 +48,7 @@ const router = createBrowserRouter([
             children: [
               {
                 path: "create-promo",
-                lazy: () => import("../pages/Promo/FormPromo"),
+                lazy: () => import("../pages/Promo/PromoForm"),
                 errorElement: <PageError />,
               },
               {
