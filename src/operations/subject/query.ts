@@ -17,10 +17,3 @@ export const GET_SUBJECTS = gql`
     }
   }
 `;
-export const CREATE_SUBJECT = gql`
-  mutation CreateSubject($createSubjectInput: CreateSubjectInput!) {
-    createSubject(createSubjectInput: $createSubjectInput) {
-      uuid
-    }
-  }
-`;

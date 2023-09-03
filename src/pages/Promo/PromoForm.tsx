@@ -7,11 +7,11 @@ import { Button, Steps, theme, message, Form, Input } from "antd";
 import PromoMainPart from "./PromoMainPart";
 import PromoDescription from "./PromoDescription";
 import StepActions from "./StepActions";
+import { useRecoilValue } from "recoil";
+import { placeAtom } from "../../atoms/selectedPlace";
 
 export function Component() {
-  const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
-  const [value, setValue] = useState<Record<string, any>>();
   const [mainFormValues, setMainFormValues] = useState({});
 
   const isMainPart = current === 0;

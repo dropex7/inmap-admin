@@ -1,5 +1,6 @@
 import { SCHEDULE_DAYS, ScheduleOption } from "../components/FormFields/types";
 import { Color } from "antd/es/color-picker";
+import { RcFile } from "antd/es/upload";
 
 const generatedSchedule = Object.keys(SCHEDULE_DAYS).map((day) => [
   day,
@@ -33,3 +34,11 @@ function addAlphaToStart(color: string) {
 export function prepareColor(color: Color | string) {
   return isObjectColor(color) ? addAlphaToStart(color.toHex()) : color;
 }
+
+export const getBase64 = (file: RcFile): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });

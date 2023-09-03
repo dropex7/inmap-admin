@@ -20,7 +20,8 @@ import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router";
 import { ExtraField } from "./types";
 import NewFieldForm from "./NewFieldForm";
-import { CREATE_SUBJECT, GET_SUBJECTS } from "../../operations/subject/query";
+import { GET_SUBJECTS } from "../../operations/subject/query";
+import { CREATE_SUBJECT } from "../../operations/subject/mutation";
 
 interface SubjectFormValues {
   name: string;

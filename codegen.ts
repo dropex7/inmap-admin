@@ -7,11 +7,16 @@ const config: CodegenConfig = {
     "src/operations/place/query.ts",
     "src/operations/subject/query.ts",
     "src/operations/promo/query.ts",
+    "src/operations/image/mutation.ts",
   ],
   generates: {
     "src/generated/": {
       preset: "client",
-      plugins: ["typescript", "typescript-operations"],
+      config: {
+        enumsAsTypes: true,
+        futureProofEnums: true,
+      },
+      plugins: [],
     },
   },
 };

@@ -5,6 +5,7 @@
 import React, { memo } from "react";
 import { Input, Form, DatePicker } from "antd";
 import ImageLoaderField from "../../components/FormFields/ImageLoaderField";
+import UploadImageFile from "../../components/FormFields/UploadImageFile";
 
 interface PromoFormProps {}
 

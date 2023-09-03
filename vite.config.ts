@@ -10,6 +10,9 @@ export default defineConfig({
       "@assets": path.resolve(__dirname, "./src/assets"),
     },
   },
+  optimizeDeps: {
+    exclude: ["generated"],
+  },
   plugins: [react(), svgr()],
   server: {
     port: 3000,

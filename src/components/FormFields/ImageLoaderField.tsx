@@ -9,6 +9,12 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload } from "antd";
 import type { RcFile, UploadChangeParam, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
+import { getBase64 } from "../../utils/utils";
+import { useMutation } from "@apollo/client";
+import { UploadInput } from "../../generated/graphql";
+import { UPLOAD_IMAGE } from "../../operations/image/mutation";
+import { useRecoilValue } from "recoil";
+import { placeAtom } from "../../atoms/selectedPlace";
 
 interface Props {
   countOfImages: number;
@@ -25,19 +31,15 @@ const normFile = (e: UploadChangeParam | Array<UploadFile>) => {
   return e.fileList;
 };
 
-export const getBase64 = (file: RcFile): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
-
 const ImageLoaderField = memo<Props>(({ countOfImages, fieldName, label }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const placeUuid = useRecoilValue(placeAtom);
+
+  const [uploadImage, { error, loading }] =
+    useMutation<UploadInput>(UPLOAD_IMAGE);
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -53,8 +55,23 @@ const ImageLoaderField = memo<Props>(({ countOfImages, fieldName, label }) => {
     );
   };
 
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
+  const handleChange: UploadProps["onChange"] = async ({
+    file,
+    fileList,
+  }: any) => {
+    const base64EncodedData = await getBase64(file);
+
+    console.log(base64EncodedData);
+    console.log(placeUuid);
+
+    const result = await uploadImage({
+      variables: {
+        uploadInput: {
+          base64EncodedData,
+          placeUuid,
+        },
+      },
+    });
   };
 
   const uploadButton = (
