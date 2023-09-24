@@ -3,16 +3,34 @@
  */
 
 import React, { useState } from "react";
-import { Button, Steps, theme, message, Form, Input } from "antd";
+import { Steps } from "antd";
 import PromoMainPart from "./PromoMainPart";
 import PromoDescription from "./PromoDescription";
-import StepActions from "./StepActions";
+import { UploadFile } from "antd/es/upload/interface";
+import { useMutation } from "@apollo/client";
+import { CREATE_PROMO } from "../../operations/promo/mutation";
 import { useRecoilValue } from "recoil";
 import { placeAtom } from "../../atoms/selectedPlace";
+import { useNavigate } from "react-router";
+import { GET_PROMOS } from "../../operations/promo/query";
+
+export interface IMainFormValues {
+  title: string;
+  subtitle: string;
+  imageUrl: UploadFile[];
+}
+
+export interface IFullFormValues extends IMainFormValues {
+  content: Record<string, any>;
+}
 
 export function Component() {
+  const placeUuid = useRecoilValue(placeAtom);
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
-  const [mainFormValues, setMainFormValues] = useState({});
+  const [mainFormValues, setMainFormValues] = useState<IMainFormValues>();
+  const [createPromo, { error, loading }] =
+    useMutation<IFullFormValues>(CREATE_PROMO);
 
   const isMainPart = current === 0;
 
@@ -24,39 +42,53 @@ export function Component() {
     setCurrent(current - 1);
   };
 
-  const steps = [
-    {
-      title: "Основная информация",
-      content: <PromoMainPart />,
-    },
-    {
-      title: "Описание",
-      content: <PromoDescription />,
-    },
-  ];
-
-  const items = steps.map((item) => ({ key: item.title, title: item.title }));
-
   const onFinishMainPart = (values: any) => {
     setMainFormValues(values);
     next();
   };
 
-  const onFinish = (values: any) => {
-    console.log({ ...values, ...mainFormValues });
+  const onFinish = async (values: IFullFormValues) => {
+    const fullFormValues: any = {
+      ...values,
+      ...{
+        ...mainFormValues,
+        imageUrl: mainFormValues?.imageUrl?.[0].url,
+      },
+    };
+
+    await createPromo({
+      variables: {
+        createPromoInput: { ...fullFormValues, placeUuid },
+      },
+      refetchQueries: [GET_PROMOS, "GetListOfPromosQuery"],
+      onCompleted: () => {
+        navigate("..");
+      },
+    });
   };
+
+  const steps = [
+    {
+      title: "Основная информация",
+      content: (
+        <PromoMainPart
+          onFinish={onFinishMainPart}
+          initialValues={mainFormValues}
+        />
+      ),
+    },
+    {
+      title: "Описание",
+      content: <PromoDescription toPrev={prev} onFinish={onFinish} />,
+    },
+  ];
+
+  const items = steps.map((item) => ({ key: item.title, title: item.title }));
 
   return (
     <div className="card p-6">
-      <Form
-        labelCol={{ span: 6 }}
-        onFinish={isMainPart ? onFinishMainPart : onFinish}
-      >
-        <Steps current={current} items={items} />
-        <div className="py-10">{steps[current].content}</div>
-
-        <StepActions isMainPart={isMainPart} toPrev={prev} />
-      </Form>
+      <Steps current={current} items={items} />
+      <div className="py-10">{steps[current].content}</div>
     </div>
   );
 }

@@ -11,7 +11,7 @@ import type { RcFile, UploadChangeParam, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
 import { getBase64 } from "../../utils/utils";
 import { useMutation } from "@apollo/client";
-import { UploadInput } from "../../generated/graphql";
+import { UploadImageMutation } from "../../generated/graphql";
 import { UPLOAD_IMAGE } from "../../operations/image/mutation";
 import { useRecoilValue } from "recoil";
 import { placeAtom } from "../../atoms/selectedPlace";
@@ -20,9 +20,10 @@ interface Props {
   countOfImages: number;
   fieldName: string;
   label: string;
+  setIsImageLoading?: (isLoading: boolean) => void;
 }
 
-const { Item } = Form;
+const { Item, useFormInstance } = Form;
 
 const normFile = (e: UploadChangeParam | Array<UploadFile>) => {
   if (Array.isArray(e)) {
@@ -31,87 +32,99 @@ const normFile = (e: UploadChangeParam | Array<UploadFile>) => {
   return e.fileList;
 };
 
-const ImageLoaderField = memo<Props>(({ countOfImages, fieldName, label }) => {
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
-  const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const placeUuid = useRecoilValue(placeAtom);
-
-  const [uploadImage, { error, loading }] =
-    useMutation<UploadInput>(UPLOAD_IMAGE);
-
-  const handleCancel = () => setPreviewOpen(false);
-
-  const handlePreview = async (file: UploadFile) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj as RcFile);
-    }
-
-    setPreviewImage(file.url || (file.preview as string));
-    setPreviewOpen(true);
-    setPreviewTitle(
-      file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
+const ImageLoaderField = memo<Props>(
+  ({ countOfImages, fieldName, label, setIsImageLoading = () => {} }) => {
+    const form = useFormInstance();
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewImage, setPreviewImage] = useState("");
+    const [previewTitle, setPreviewTitle] = useState("");
+    const [fileList, setFileList] = useState<UploadFile[]>(
+      form.getFieldValue(fieldName)
     );
-  };
+    const placeUuid = useRecoilValue(placeAtom);
 
-  const handleChange: UploadProps["onChange"] = async ({
-    file,
-    fileList,
-  }: any) => {
-    const base64EncodedData = await getBase64(file);
+    const [uploadImage, { error, loading }] =
+      useMutation<UploadImageMutation>(UPLOAD_IMAGE);
 
-    console.log(base64EncodedData);
-    console.log(placeUuid);
+    const handleCancel = () => setPreviewOpen(false);
 
-    const result = await uploadImage({
-      variables: {
-        uploadInput: {
-          base64EncodedData,
-          placeUuid,
-        },
-      },
-    });
-  };
+    const handlePreview = async (file: UploadFile) => {
+      if (!file.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj as RcFile);
+      }
 
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
+      setPreviewImage(file.url || (file.preview as string));
+      setPreviewOpen(true);
+      setPreviewTitle("Загруженное изображение");
+    };
 
-  return (
-    <>
-      <Item
-        label={label}
-        name={fieldName}
-        valuePropName="fileList"
-        getValueFromEvent={normFile}
-        rules={[{ required: true, message: `Изображение не добавлено!` }]}
-      >
-        <Upload
-          listType="picture-card"
-          maxCount={countOfImages}
-          fileList={fileList}
-          onPreview={handlePreview}
-          onChange={handleChange}
-          beforeUpload={() => false}
+    const handleChange: UploadProps["onChange"] = async ({
+      file,
+      fileList: newFileList,
+    }: any) => {
+      setIsImageLoading(true);
+      if (file.status === "removed") {
+        setFileList(newFileList);
+      } else {
+        const base64EncodedData = await getBase64(file);
+
+        const { data } = await uploadImage({
+          variables: {
+            uploadInput: {
+              base64EncodedData,
+              placeUuid,
+            },
+          },
+        });
+
+        const newList = [...newFileList].map((file) => ({
+          ...file,
+          url: data?.uploadImage.url,
+        }));
+
+        setFileList(newList);
+        form.setFieldValue(fieldName, newList);
+        setIsImageLoading(false);
+      }
+    };
+
+    const uploadButton = (
+      <div>
+        <PlusOutlined />
+        <div style={{ marginTop: 8 }}>Upload</div>
+      </div>
+    );
+
+    return (
+      <>
+        <Item
+          label={label}
+          name={fieldName}
+          rules={[{ required: true, message: `Изображение не добавлено!` }]}
         >
-          {fileList.length >= countOfImages ? null : uploadButton}
-        </Upload>
-      </Item>
+          <Upload
+            listType="picture-card"
+            maxCount={countOfImages}
+            fileList={fileList}
+            onPreview={handlePreview}
+            onChange={handleChange}
+            beforeUpload={() => false}
+          >
+            {loading || fileList?.length >= countOfImages ? null : uploadButton}
+          </Upload>
+        </Item>
 
-      <Modal
-        open={previewOpen}
-        title={previewTitle}
-        onCancel={handleCancel}
-        onOk={handleCancel}
-      >
-        <img alt="example" style={{ width: "100%" }} src={previewImage} />
-      </Modal>
-    </>
-  );
-});
+        <Modal
+          open={previewOpen}
+          title={previewTitle}
+          onCancel={handleCancel}
+          onOk={handleCancel}
+        >
+          <img alt="example" style={{ width: "100%" }} src={previewImage} />
+        </Modal>
+      </>
+    );
+  }
+);
 
 export default ImageLoaderField;

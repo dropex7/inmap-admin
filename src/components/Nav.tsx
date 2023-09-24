@@ -14,17 +14,17 @@ const links = [
   {
     path: "home",
     title: "Главная",
-    icon: <HomeIcon />,
+    icon: <HomeIcon style={{ minWidth: "20px" }} />,
   },
   {
     path: "subject",
     title: "Объекты",
-    icon: <OtherIcon />,
+    icon: <OtherIcon style={{ minWidth: "20px" }} />,
   },
   {
     path: "promo",
     title: "Новости и акции",
-    icon: <OtherIcon />,
+    icon: <OtherIcon style={{ minWidth: "20px" }} />,
   },
 ];
 

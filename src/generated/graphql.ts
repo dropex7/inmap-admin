@@ -49,7 +49,7 @@ export type CreatePlaceInput = {
   code: Scalars['String'];
   isVisible: Scalars['Boolean'];
   latitude: Scalars['Float'];
-  logoEncoded: Scalars['String'];
+  logoUrl: Scalars['String'];
   longitude: Scalars['Float'];
   schedule: Scalars['JSON'];
   timezone: Scalars['String'];
@@ -78,8 +78,8 @@ export type CreatePlanInput = {
 };
 
 export type CreatePromoInput = {
-  baseEncodedImage: Scalars['String'];
   content: Array<Scalars['JSON']>;
+  imageUrl: Scalars['String'];
   placeUuid: Scalars['String'];
   subtitle: Scalars['String'];
   title: Scalars['String'];
@@ -87,7 +87,7 @@ export type CreatePromoInput = {
 
 export type CreateSubjectInput = {
   fields: Array<Scalars['JSON']>;
-  images: Array<UploadImageModel>;
+  images: Array<Scalars['String']>;
   layerUuid: Scalars['String'];
   logo: Scalars['String'];
   logoBackgroundColor: Scalars['String'];
@@ -153,7 +153,6 @@ export type FieldsTranslationModel = {
 
 export type ImageModel = {
   __typename?: 'ImageModel';
-  cloudinaryId: Scalars['String'];
   url: Scalars['String'];
   uuid: Scalars['String'];
 };
@@ -434,8 +433,8 @@ export type MutationUploadImageArgs = {
 };
 
 export type NewPromoPreviewItemInput = {
-  baseEncodedImage: Scalars['String'];
   crossAxisCellCount: Scalars['Int'];
+  imageUrl: Scalars['String'];
   mainAxisCellCount: Scalars['Int'];
   promoUuid: Scalars['String'];
 };
@@ -465,7 +464,6 @@ export type PlaceLocalizedModel = {
   images?: Maybe<Array<ImageModel>>;
   isVisible: Scalars['Boolean'];
   latitude: Scalars['Float'];
-  logoCloudinaryId: Scalars['String'];
   logoUrl: Scalars['String'];
   longitude: Scalars['Float'];
   plans: Array<Plan>;
@@ -502,7 +500,6 @@ export type Plan = {
 export type PromoLocalizedModel = {
   __typename?: 'PromoLocalizedModel';
   content: Array<Scalars['JSON']>;
-  imageCloudinaryId: Scalars['String'];
   imageUrl: Scalars['String'];
   placeUuid: Scalars['String'];
   subtitle: Scalars['String'];
@@ -513,7 +510,6 @@ export type PromoLocalizedModel = {
 export type PromoPreview = {
   __typename?: 'PromoPreview';
   crossAxisCellCount: Scalars['Int'];
-  imageCloudinaryId: Scalars['String'];
   imageUrl: Scalars['String'];
   mainAxisCellCount: Scalars['Int'];
   promoUuid: Scalars['String'];
@@ -704,7 +700,6 @@ export type SubjectLocalizedModel = {
   layerName: Scalars['String'];
   layerUuid: Scalars['String'];
   logoBackgroundColor: Scalars['String'];
-  logoCloudinaryId: Scalars['String'];
   logoUrl: Scalars['String'];
   name: Scalars['String'];
   placeUuid: Scalars['String'];
@@ -766,11 +761,11 @@ export type UpdatePlaceInput = {
   fields?: InputMaybe<Scalars['JSON']>;
   imagesOrder?: InputMaybe<Array<Scalars['String']>>;
   imagesToDelete?: InputMaybe<Array<Scalars['String']>>;
-  imagesToUpload?: InputMaybe<Array<UploadImageModel>>;
+  imagesToUpload?: InputMaybe<Array<Scalars['String']>>;
   isVisible?: InputMaybe<Scalars['Boolean']>;
   latitude?: InputMaybe<Scalars['Float']>;
   logo?: InputMaybe<Scalars['String']>;
-  logoEncoded?: InputMaybe<Scalars['String']>;
+  logoUrl?: InputMaybe<Scalars['String']>;
   longitude?: InputMaybe<Scalars['Float']>;
   promoPreviewCrossAxisCount?: InputMaybe<Scalars['Int']>;
   schedule?: InputMaybe<Scalars['JSON']>;
@@ -803,8 +798,8 @@ export type UpdatePlanInput = {
 };
 
 export type UpdatePromoInput = {
-  baseEncodedImage?: InputMaybe<Scalars['String']>;
   content?: InputMaybe<Array<Scalars['JSON']>>;
+  imageUrl?: InputMaybe<Scalars['String']>;
   placeUuid?: InputMaybe<Scalars['String']>;
   subtitle?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
@@ -812,17 +807,15 @@ export type UpdatePromoInput = {
 };
 
 export type UpdatePromoPreviewItemInput = {
-  baseEncodedImage?: InputMaybe<Scalars['String']>;
   crossAxisCellCount?: InputMaybe<Scalars['Int']>;
+  imageUrl?: InputMaybe<Scalars['String']>;
   mainAxisCellCount?: InputMaybe<Scalars['Int']>;
   promoUuid?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateSubjectInput = {
   fields?: InputMaybe<Scalars['JSON']>;
-  imagesOrder?: InputMaybe<Array<Scalars['String']>>;
-  imagesToDelete?: InputMaybe<Array<Scalars['String']>>;
-  imagesToUpload?: InputMaybe<Array<UploadImageModel>>;
+  imagesToUpload?: InputMaybe<Array<Scalars['String']>>;
   layerUuid?: InputMaybe<Scalars['String']>;
   logo?: InputMaybe<Scalars['String']>;
   logoBackgroundColor?: InputMaybe<Scalars['String']>;
@@ -845,11 +838,6 @@ export type UpdateUserInput = {
   places?: InputMaybe<Array<Scalars['String']>>;
   removePlaces?: InputMaybe<Array<Scalars['String']>>;
   role?: InputMaybe<Scalars['String']>;
-};
-
-export type UploadImageModel = {
-  baseEncodedImage: Scalars['String'];
-  uuid: Scalars['String'];
 };
 
 export type UploadInput = {
@@ -930,7 +918,7 @@ export type GetSubjectsOfPlaceQueryVariables = Exact<{
 }>;
 
 
-export type GetSubjectsOfPlaceQuery = { __typename?: 'Query', subjectsOfPlace: Array<{ __typename?: 'SubjectLocalizedModel', uuid: string, name: string, layerName: string, logoUrl: string, logoBackgroundColor: string, shortDescription: string, images?: Array<{ __typename?: 'ImageModel', uuid: string, url: string, cloudinaryId: string }> | null }> };
+export type GetSubjectsOfPlaceQuery = { __typename?: 'Query', subjectsOfPlace: Array<{ __typename?: 'SubjectLocalizedModel', uuid: string, name: string, layerName: string, logoUrl: string, logoBackgroundColor: string, shortDescription: string, images?: Array<{ __typename?: 'ImageModel', uuid: string, url: string }> | null }> };
 
 
 export const UploadImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UploadImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uploadInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UploadInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uploadImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"uploadInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uploadInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]} as unknown as DocumentNode<UploadImageMutation, UploadImageMutationVariables>;
@@ -938,4 +926,4 @@ export const GetListOfPlacesDocument = {"kind":"Document","definitions":[{"kind"
 export const GetPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"place"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"uuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"schedule"}},{"kind":"Field","name":{"kind":"Name","value":"recs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"Field","name":{"kind":"Name","value":"promos"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<GetPlaceQuery, GetPlaceQueryVariables>;
 export const GetPlaceLayersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPlaceLayers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"placeLayers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}}]}}]}}]} as unknown as DocumentNode<GetPlaceLayersQuery, GetPlaceLayersQueryVariables>;
 export const GetListOfPromosDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetListOfPromos"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"promosOfPlace"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}}]}}]}}]} as unknown as DocumentNode<GetListOfPromosQuery, GetListOfPromosQueryVariables>;
-export const GetSubjectsOfPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubjectsOfPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subjectsOfPlace"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"layerName"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"logoBackgroundColor"}},{"kind":"Field","name":{"kind":"Name","value":"shortDescription"}},{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"cloudinaryId"}}]}}]}}]}}]} as unknown as DocumentNode<GetSubjectsOfPlaceQuery, GetSubjectsOfPlaceQueryVariables>;
+export const GetSubjectsOfPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubjectsOfPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subjectsOfPlace"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"layerName"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"logoBackgroundColor"}},{"kind":"Field","name":{"kind":"Name","value":"shortDescription"}},{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]} as unknown as DocumentNode<GetSubjectsOfPlaceQuery, GetSubjectsOfPlaceQueryVariables>;

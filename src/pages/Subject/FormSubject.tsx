@@ -3,7 +3,6 @@
  */
 import { Button, ColorPicker, Form, Typography } from "antd";
 import { ReactElement, useMemo } from "react";
-import { v4 } from "uuid";
 import BaseFields from "./BaseFields";
 import ImageLoaderField from "../../components/FormFields/ImageLoaderField";
 import React, { useCallback, useState } from "react";
@@ -67,11 +66,8 @@ export function Component() {
             ...values,
             placeUuid,
             schedule: Object.fromEntries(schedule),
-            images: images?.map((image) => ({
-              uuid: v4(),
-              baseEncodedImage: image.thumbUrl,
-            })),
-            logo: logo[0].thumbUrl,
+            images: images?.map((image) => image.url),
+            logo: logo[0].url,
             logoBackgroundColor: prepareColor(logoBackgroundColor),
             fields: [],
           },

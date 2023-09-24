@@ -12,7 +12,6 @@ export const GET_SUBJECTS = gql`
       images {
         uuid
         url
-        cloudinaryId
       }
     }
   }
