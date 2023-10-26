@@ -65,6 +65,29 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: "home",
+        element: <Outlet />,
+        errorElement: <PageError />,
+        children: [
+          {
+            path: ":id",
+            lazy: () => import("../components/PageWrapper"),
+            errorElement: <PageError />,
+            children: [
+              {
+                index: true,
+                lazy: () => import("../pages/Home/Page"),
+                errorElement: <PageError />,
+              },
+            ],
+          },
+          {
+            index: true,
+            lazy: () => import("../pages/Place/GlobalSelectPlace"),
+          },
+        ],
+      },
+      {
         path: "*",
         element: <div className="text-white">Нет такой странички бро</div>,
       },

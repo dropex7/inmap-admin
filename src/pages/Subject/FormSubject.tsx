@@ -2,7 +2,7 @@
  * Created by MIRZOEV A. on 11.04.2023
  */
 import { Button, ColorPicker, Form, Typography } from "antd";
-import { ReactElement, useMemo } from "react";
+import { ReactElement, useEffect, useMemo } from "react";
 import BaseFields from "./BaseFields";
 import ImageLoaderField from "../../components/FormFields/ImageLoaderField";
 import React, { useCallback, useState } from "react";
@@ -21,6 +21,7 @@ import { ExtraField } from "./types";
 import NewFieldForm from "./NewFieldForm";
 import { GET_SUBJECTS } from "../../operations/subject/query";
 import { CREATE_SUBJECT } from "../../operations/subject/mutation";
+import { ExtraFieldsContext } from "./ExtraFieldsContext";
 
 interface SubjectFormValues {
   name: string;
@@ -32,19 +33,18 @@ interface SubjectFormValues {
   images: Array<UploadFile>;
 }
 
-const { Item } = Form;
+const { Item, useForm } = Form;
 const { Title } = Typography;
 
 export function Component() {
+  const [form] = useForm();
   const placeUuid = useRecoilValue(placeAtom);
   const navigate = useNavigate();
+
   const [extraFields, setExtraFields] = useState<Map<string, ReactElement>>(
     new Map()
   );
-
-  const [preparedExtraFields, setPreparedExtraFields] = useState<
-    Array<ExtraField>
-  >([]);
+  const [fields, setFields] = useState<ExtraField[]>([]);
 
   const [createSubject, { error, loading }] =
     useMutation<SubjectFormValues>(CREATE_SUBJECT);
@@ -69,14 +69,14 @@ export function Component() {
             images: images?.map((image) => image.url),
             logo: logo[0].url,
             logoBackgroundColor: prepareColor(logoBackgroundColor),
-            fields: [],
+            fields,
           },
         },
         refetchQueries: [GET_SUBJECTS, "GetSubjectsOfPlace"],
       });
       navigate("..");
     },
-    [placeUuid]
+    [placeUuid, fields]
   );
 
   const addNewField = useCallback(
@@ -102,6 +102,8 @@ export function Component() {
     [extraFields]
   );
 
+  console.log(fields);
+
   // if (loading) return "Submitting...";
   // if (error) return `Submission error! ${error.message}`;
 
@@ -116,6 +118,7 @@ export function Component() {
       </div>
 
       <Form
+        form={form}
         name="subjectForm"
         layout="vertical"
         className="flex flex-col gap-3"
@@ -149,7 +152,9 @@ export function Component() {
           </div>
         </div>
 
-        {renderElements}
+        <ExtraFieldsContext.Provider value={{ setter: setFields, fields }}>
+          <div className="flex flex-col gap-3">{renderElements}</div>
+        </ExtraFieldsContext.Provider>
 
         <Item>
           <Button

@@ -19,25 +19,25 @@ export const extraFieldText = {
 export interface ExtraField {
   type: EXTRA_FIELD_TYPES;
   data:
-    | ExpandableText
-    | PhoneNumbers
+    | IExpandableText
+    | IPhoneNumbers
     | Website
     | SocialMediaList
     | EmailAddress
     | Notice;
 }
 
-export interface ExpandableText {
+export interface IExpandableText {
   title: string;
   description: string;
 }
 
-export interface PhoneNumber {
+export interface IPhoneNumber {
   phoneNumber: string;
   description: string;
 }
 
-export type PhoneNumbers = Array<PhoneNumber>;
+export type IPhoneNumbers = { phones: Array<IPhoneNumber> };
 
 export type Website = { websiteUrl: string };
 
