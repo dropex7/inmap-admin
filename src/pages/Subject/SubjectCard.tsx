@@ -38,7 +38,7 @@ const SubjectCard = memo<SubjectCardProps>(({ subject }) => {
 
       <PreviewImage
         height="200px"
-        url={backgroundImage?.url ?? noPhoto}
+        url={backgroundImage ?? noPhoto}
         alt="image"
       />
 

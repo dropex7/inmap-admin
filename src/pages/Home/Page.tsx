@@ -29,9 +29,9 @@ export function Component() {
           ref={ref}
           title="Flutter App"
           src="https://inmap-interactive-map-embed.web.app/"
-          width="600"
-          height="600"
-        ></iframe>
+          width="1000"
+          height="1000"
+        />
         <Button onClick={sendMessageToFlutter}>sendMessageToFlutter</Button>
       </div>
     </section>

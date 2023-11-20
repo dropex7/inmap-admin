@@ -9,10 +9,7 @@ export const GET_SUBJECTS = gql`
       logoUrl
       logoBackgroundColor
       shortDescription
-      images {
-        uuid
-        url
-      }
+      images
     }
   }
 `;

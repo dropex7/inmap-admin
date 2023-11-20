@@ -5,9 +5,9 @@
 import React, { memo, ReactElement, useCallback, useState } from "react";
 import { Button, Select } from "antd";
 import { v4 } from "uuid";
-import { EXTRA_FIELD_TYPES, extraFieldText } from "./types";
-import ExpandableText from "./ExtraFields/ExpandableText";
-import PhoneNumbers from "./ExtraFields/PhoneNumbers";
+import { EXTRA_FIELD_TYPES, extraFieldText } from "../types";
+import ExpandableText from "./ExpandableText";
+import PhoneNumbers from "./PhoneNumbers";
 
 interface NewFieldFormProps {
   addNewField: (elementId: string, value: ReactElement) => void;
@@ -22,7 +22,6 @@ const NewFieldForm = memo<NewFieldFormProps>(
 
     const handleAddNewField = useCallback(() => {
       const elementId = v4();
-      console.log(type);
       switch (type) {
         case EXTRA_FIELD_TYPES.EMAIL:
         case EXTRA_FIELD_TYPES.NOTICE:

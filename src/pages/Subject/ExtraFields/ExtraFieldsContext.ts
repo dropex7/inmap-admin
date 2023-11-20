@@ -1,5 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-import { ExtraField } from "./types";
+import { ExtraField } from "../types";
 
 interface IExtraFieldsContext {
   setter: (values: ExtraField[]) => void;

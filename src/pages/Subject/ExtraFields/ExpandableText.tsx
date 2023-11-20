@@ -4,7 +4,7 @@
 
 import React, { memo, useCallback, useContext, useState } from "react";
 import { Button, Form, Input } from "antd";
-import { ExtraFieldsContext } from "../ExtraFieldsContext";
+import { ExtraFieldsContext } from "./ExtraFieldsContext";
 import { EXTRA_FIELD_TYPES, IExpandableText } from "../types";
 
 interface ExpandableTextProps {

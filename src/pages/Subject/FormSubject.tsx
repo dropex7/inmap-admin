@@ -1,11 +1,8 @@
 /**
  * Created by MIRZOEV A. on 11.04.2023
  */
-import { Button, ColorPicker, Form, Typography } from "antd";
-import { ReactElement, useEffect, useMemo } from "react";
-import BaseFields from "./BaseFields";
-import ImageLoaderField from "../../components/FormFields/ImageLoaderField";
-import React, { useCallback, useState } from "react";
+import { Button, Form, Typography } from "antd";
+import React, { useCallback } from "react";
 import type { Color } from "antd/es/color-picker";
 import { UploadFile } from "antd/es/upload/interface";
 import { prepareColor } from "../../utils/utils";
@@ -15,13 +12,18 @@ import {
   SCHEDULE_DAYS,
   ScheduleOption,
 } from "../../components/FormFields/types";
-import { useMutation } from "@apollo/client";
-import { useNavigate } from "react-router";
-import { ExtraField } from "./types";
-import NewFieldForm from "./NewFieldForm";
+import { useMutation, useQuery } from "@apollo/client";
+import { useNavigate, useParams } from "react-router";
 import { GET_SUBJECTS } from "../../operations/subject/query";
 import { CREATE_SUBJECT } from "../../operations/subject/mutation";
-import { ExtraFieldsContext } from "./ExtraFieldsContext";
+import DefaultSubjectTemplate from "./DefaultSubjectTemplate";
+import { Query, TemplateLocalizedModel } from "../../generated/graphql";
+import {
+  GET_TEMPLATE_BY_ID,
+  GET_TEMPLATES,
+} from "../../operations/template/query";
+import TemplateTabs from "../Template/TemplateTabs";
+import { prepareFieldsToSend } from "./helper";
 
 interface SubjectFormValues {
   name: string;
@@ -31,23 +33,31 @@ interface SubjectFormValues {
   site: string;
   schedule: Map<SCHEDULE_DAYS, ScheduleOption>;
   images: Array<UploadFile>;
+  content: Array<any>;
 }
 
 const { Item, useForm } = Form;
 const { Title } = Typography;
 
+type TemplateById = { template: Query["template"] };
+
 export function Component() {
   const [form] = useForm();
+  const { templateId } = useParams();
   const placeUuid = useRecoilValue(placeAtom);
   const navigate = useNavigate();
 
-  const [extraFields, setExtraFields] = useState<Map<string, ReactElement>>(
-    new Map()
-  );
-  const [fields, setFields] = useState<ExtraField[]>([]);
+  const { data } = useQuery<TemplateById>(GET_TEMPLATE_BY_ID, {
+    variables: { uuid: templateId! },
+  });
 
   const [createSubject, { error, loading }] =
     useMutation<SubjectFormValues>(CREATE_SUBJECT);
+
+  const kek = ({ fields }: any) => {
+    console.log("fields", fields);
+    console.log("prepare", prepareFieldsToSend(fields));
+  };
 
   const onFinish = useCallback(
     async ({
@@ -56,6 +66,7 @@ export function Component() {
       logo,
       schedule,
       site,
+      content,
       ...values
     }: Omit<SubjectFormValues, "logoBackgroundColor"> & {
       logoBackgroundColor: Color | string;
@@ -69,52 +80,19 @@ export function Component() {
             images: images?.map((image) => image.url),
             logo: logo[0].url,
             logoBackgroundColor: prepareColor(logoBackgroundColor),
-            fields,
           },
         },
         refetchQueries: [GET_SUBJECTS, "GetSubjectsOfPlace"],
       });
       navigate("..");
     },
-    [placeUuid, fields]
+    [placeUuid]
   );
-
-  const addNewField = useCallback(
-    (elementId: string, newField: ReactElement) => {
-      setExtraFields((prev) => {
-        const tempSet = new Map(prev);
-        return tempSet.set(elementId, newField);
-      });
-    },
-    []
-  );
-
-  const removeNewField = useCallback((elementId: string) => {
-    setExtraFields((prev) => {
-      const tempSet = new Map(prev);
-      tempSet.delete(elementId);
-      return tempSet;
-    });
-  }, []);
-
-  const renderElements = useMemo(
-    () => Array.from(extraFields.values()),
-    [extraFields]
-  );
-
-  console.log(fields);
-
-  // if (loading) return "Submitting...";
-  // if (error) return `Submission error! ${error.message}`;
 
   return (
     <div className="p-6">
       <div className="flex justify-between pb-3">
         <Title level={3}>Создание объекта</Title>
-        <NewFieldForm
-          addNewField={addNewField}
-          removeNewField={removeNewField}
-        />
       </div>
 
       <Form
@@ -122,40 +100,10 @@ export function Component() {
         name="subjectForm"
         layout="vertical"
         className="flex flex-col gap-3"
-        onFinish={onFinish}
+        onFinish={kek}
       >
-        <BaseFields />
-
-        <div className="grid grid-cols-[1fr_2fr] gap-3">
-          <div className="flex card flex-col p-6">
-            <ImageLoaderField
-              fieldName="logo"
-              countOfImages={1}
-              label="Добавьте логотип объекта"
-            />
-            <Item
-              label="Цвет фона логотипа"
-              name="logoBackgroundColor"
-              rules={[
-                { required: true, message: "Выберите цвет фона логотипа!" },
-              ]}
-            >
-              <ColorPicker />
-            </Item>
-          </div>
-          <div className="card p-6">
-            <ImageLoaderField
-              fieldName="images"
-              countOfImages={10}
-              label="Добавьте изображения"
-            />
-          </div>
-        </div>
-
-        <ExtraFieldsContext.Provider value={{ setter: setFields, fields }}>
-          <div className="flex flex-col gap-3">{renderElements}</div>
-        </ExtraFieldsContext.Provider>
-
+        {/*<DefaultSubjectTemplate />*/}
+        <TemplateTabs data={data?.template?.tabs ?? []} />
         <Item>
           <Button
             type="primary"

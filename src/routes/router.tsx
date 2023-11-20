@@ -19,13 +19,25 @@ const router = createBrowserRouter([
             errorElement: <PageError />,
             children: [
               {
-                index: true,
-                lazy: () => import("../pages/Subject/Page"),
+                path: "create-subject",
+                element: <Outlet />,
                 errorElement: <PageError />,
+                children: [
+                  {
+                    index: true,
+                    lazy: () => import("../pages/Template/Page"),
+                    errorElement: <PageError />,
+                  },
+                  {
+                    path: ":templateId",
+                    lazy: () => import("../pages/Subject/FormSubject"),
+                    errorElement: <PageError />,
+                  },
+                ],
               },
               {
-                path: "create-subject",
-                lazy: () => import("../pages/Subject/FormSubject"),
+                index: true,
+                lazy: () => import("../pages/Subject/Page"),
                 errorElement: <PageError />,
               },
             ],

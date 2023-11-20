@@ -5,7 +5,7 @@ import { Outlet, useNavigate, useParams } from "react-router";
 import { useRecoilState } from "recoil";
 import { placeAtom } from "../atoms/selectedPlace";
 import { useEffect } from "react";
-import { PlaceGlobalCtx } from "../pages/Subject/PlaceGlobalCtx";
+import { PlaceGlobalCtx } from "../pages/Place/PlaceGlobalCtx";
 import { LoadingOutlined } from "@ant-design/icons";
 
 export function Component() {
