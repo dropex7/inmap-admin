@@ -18,9 +18,10 @@ import { placeAtom } from "../../atoms/selectedPlace";
 
 interface Props {
   countOfImages: number;
-  fieldName: string;
+  fieldName: any;
   label: string;
   setIsImageLoading?: (isLoading: boolean) => void;
+  isRequired?: boolean;
 }
 
 const { Item, useFormInstance } = Form;
@@ -33,7 +34,13 @@ const normFile = (e: UploadChangeParam | Array<UploadFile>) => {
 };
 
 const ImageLoaderField = memo<Props>(
-  ({ countOfImages, fieldName, label, setIsImageLoading = () => {} }) => {
+  ({
+    countOfImages,
+    fieldName,
+    label,
+    setIsImageLoading = () => {},
+    isRequired = true,
+  }) => {
     const form = useFormInstance();
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
@@ -100,7 +107,9 @@ const ImageLoaderField = memo<Props>(
         <Item
           label={label}
           name={fieldName}
-          rules={[{ required: true, message: `Изображение не добавлено!` }]}
+          rules={[
+            { required: isRequired, message: `Изображение не добавлено!` },
+          ]}
         >
           <Upload
             listType="picture-card"

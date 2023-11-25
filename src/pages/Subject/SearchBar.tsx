@@ -19,7 +19,7 @@ const SearchBar = memo<SearchBarProps>(({}) => {
   return (
     <div className="card flex justify-between p-6">
       <div className="flex items-center gap-3">
-        <Button size="large">ABC</Button>
+        <Button size="large">Фильтры</Button>
         <Input
           size="large"
           addonBefore={<SearchOutlined />}

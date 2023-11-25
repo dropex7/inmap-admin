@@ -21,16 +21,6 @@ export function Component() {
       </div>
 
       <TemplateList data={data?.templates ?? []} />
-
-      {/*<Form*/}
-      {/*  form={form}*/}
-      {/*  name="subjectForm"*/}
-      {/*  layout="vertical"*/}
-      {/*  className="flex flex-col gap-3"*/}
-      {/*  onFinish={onFinish}*/}
-      {/*>*/}
-      {/*  <DefaultSubjectTemplate />*/}
-      {/*</Form>*/}
     </div>
   );
 }

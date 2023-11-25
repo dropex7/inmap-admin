@@ -22,6 +22,7 @@ export const GET_TEMPLATE_BY_ID = gql`
       imageUrl
       tabs {
         uuid
+        name
         fields
       }
     }

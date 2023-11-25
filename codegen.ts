@@ -2,8 +2,8 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   overwrite: true,
-  // schema: "https://dev-backend.inmap.app/graphql",
-  schema: "http://localhost:3001/graphql",
+  schema: "https://dev-backend.inmap.app/graphql",
+  // schema: "http://localhost:3001/graphql",
   documents: [
     "src/operations/place/query.ts",
     "src/operations/subject/query.ts",

@@ -30,7 +30,7 @@ const router = createBrowserRouter([
                   },
                   {
                     path: ":templateId",
-                    lazy: () => import("../pages/Subject/FormSubject"),
+                    lazy: () => import("../pages/Subject/form/Page"),
                     errorElement: <PageError />,
                   },
                 ],
