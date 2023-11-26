@@ -7,6 +7,7 @@ import { memo, useMemo } from "react";
 import { SubjectLocalizedModel } from "../../generated/graphql";
 import PreviewImage from "../../components/Images/PreviewImage";
 import PreviewLogo from "../../components/Images/PreviewLogo";
+import { useNavigate } from "react-router";
 
 interface SubjectCardProps {
   subject: Partial<SubjectLocalizedModel>;
@@ -14,6 +15,7 @@ interface SubjectCardProps {
 
 const SubjectCard = memo<SubjectCardProps>(({ subject }) => {
   const {
+    uuid,
     name,
     logoUrl,
     images,
@@ -21,13 +23,17 @@ const SubjectCard = memo<SubjectCardProps>(({ subject }) => {
     layerName,
     shortDescription,
   } = subject;
+  const navigate = useNavigate();
 
   const backgroundImage = useMemo(() => {
     return images?.[0];
   }, []);
 
   return (
-    <div className="card w-80 flex flex-col rounded-xl">
+    <div
+      className="card w-80 flex flex-col rounded-xl"
+      onClick={() => navigate(uuid)}
+    >
       {logoUrl && logoBackgroundColor && (
         <PreviewLogo
           backgroundColor={logoBackgroundColor}

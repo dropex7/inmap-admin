@@ -19,6 +19,7 @@ const documents = {
     "\n  query GetPlaceLayers($placeUuid: String!) {\n    placeLayers(placeUuid: $placeUuid) {\n      uuid\n      fullName\n    }\n  }\n": types.GetPlaceLayersDocument,
     "\n  query GetListOfPromos($placeUuid: String!) {\n    promosOfPlace(placeUuid: $placeUuid) {\n      uuid\n      title\n      imageUrl\n      subtitle\n    }\n  }\n": types.GetListOfPromosDocument,
     "\n  query GetSubjectsOfPlace($placeUuid: String!) {\n    subjectsOfPlace(placeUuid: $placeUuid) {\n      uuid\n      name\n      layerName\n      logoUrl\n      logoBackgroundColor\n      shortDescription\n      images\n    }\n  }\n": types.GetSubjectsOfPlaceDocument,
+    "\n  query GetSubjectsById($uuid: String!, $placeUuid: String!) {\n    subject(uuid: $uuid, placeUuid: $placeUuid) {\n      uuid\n      name\n      placeUuid\n      layerUuid\n      layerName\n      logoUrl\n      logoBackgroundColor\n      shortDescription\n      images\n      content {\n        templateUuid\n        tabs {\n          templateTabUuid\n          name\n          fields\n        }\n      }\n    }\n  }\n": types.GetSubjectsByIdDocument,
 };
 
 /**
@@ -59,6 +60,10 @@ export function graphql(source: "\n  query GetListOfPromos($placeUuid: String!) 
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query GetSubjectsOfPlace($placeUuid: String!) {\n    subjectsOfPlace(placeUuid: $placeUuid) {\n      uuid\n      name\n      layerName\n      logoUrl\n      logoBackgroundColor\n      shortDescription\n      images\n    }\n  }\n"): (typeof documents)["\n  query GetSubjectsOfPlace($placeUuid: String!) {\n    subjectsOfPlace(placeUuid: $placeUuid) {\n      uuid\n      name\n      layerName\n      logoUrl\n      logoBackgroundColor\n      shortDescription\n      images\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetSubjectsById($uuid: String!, $placeUuid: String!) {\n    subject(uuid: $uuid, placeUuid: $placeUuid) {\n      uuid\n      name\n      placeUuid\n      layerUuid\n      layerName\n      logoUrl\n      logoBackgroundColor\n      shortDescription\n      images\n      content {\n        templateUuid\n        tabs {\n          templateTabUuid\n          name\n          fields\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetSubjectsById($uuid: String!, $placeUuid: String!) {\n    subject(uuid: $uuid, placeUuid: $placeUuid) {\n      uuid\n      name\n      placeUuid\n      layerUuid\n      layerName\n      logoUrl\n      logoBackgroundColor\n      shortDescription\n      images\n      content {\n        templateUuid\n        tabs {\n          templateTabUuid\n          name\n          fields\n        }\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

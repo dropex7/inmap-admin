@@ -1,40 +1,20 @@
+/**
+ * Created by MIRZOEV A. on 26.11.2023
+ */
 import { useQuery } from "@apollo/client";
-import { GetSubjectsOfPlaceQuery } from "../../generated/graphql";
-import { useNavigate, useParams } from "react-router";
-import React, { useEffect } from "react";
-import SubjectCard from "./SubjectCard";
-import SearchBar from "./SearchBar";
-import SubjectInfoView from "./SubjectInfoView";
-import { GET_SUBJECTS } from "../../operations/subject/query";
-import { Spin } from "antd";
-import List from "./List";
+import { GetSubjectsByIdQuery } from "../../generated/graphql";
+import { GET_SUBJECTS_BY_ID } from "../../operations/subject/query";
+import { useParams } from "react-router";
 
 export function Component() {
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const { id, subjectId } = useParams();
 
-  const { data, loading, error } = useQuery<GetSubjectsOfPlaceQuery>(
-    GET_SUBJECTS,
+  const { data, loading, error } = useQuery<GetSubjectsByIdQuery>(
+    GET_SUBJECTS_BY_ID,
     {
-      variables: { placeUuid: id },
+      variables: { placeUuid: id, uuid: subjectId },
     }
   );
 
-  useEffect(() => {
-    if (error) {
-      navigate("..");
-    }
-  }, [error]);
-
-  return (
-    <section className="flex flex-col gap-4">
-      <SearchBar />
-
-      <Spin spinning={loading} tip="Loading" size="large">
-        <div className="card flex-col gap-6">
-          {data && <List data={data} />}
-        </div>
-      </Spin>
-    </section>
-  );
+  return <>{JSON.stringify(data)}</>;
 }

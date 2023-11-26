@@ -36,8 +36,13 @@ const router = createBrowserRouter([
                 ],
               },
               {
-                index: true,
+                path: ":subjectId",
                 lazy: () => import("../pages/Subject/Page"),
+                errorElement: <PageError />,
+              },
+              {
+                index: true,
+                lazy: () => import("../pages/Subject/PageList"),
                 errorElement: <PageError />,
               },
             ],
