@@ -23,8 +23,6 @@ import {
 } from "../../../components/FormFields/types";
 import DefaultFields from "./DefaultFields";
 
-interface SubjectFormProps {}
-
 interface SubjectFormValues {
   name: string;
   shortDescription: string;
@@ -33,15 +31,15 @@ interface SubjectFormValues {
   site: string;
   schedule: Map<SCHEDULE_DAYS, ScheduleOption>;
   images: Array<UploadFile>;
-  fields: Array<any>;
+  tabs: Array<any>;
 }
 
 type TemplateById = { template: Query["template"] };
 
 const { Item } = Form;
 
-const FormSubject = memo<SubjectFormProps>(({}) => {
-  const { templateId } = useParams();
+const FormSubject = memo(() => {
+  const { templateId, id } = useParams();
   const navigate = useNavigate();
   const placeUuid = useRecoilValue(placeAtom);
 
@@ -52,11 +50,6 @@ const FormSubject = memo<SubjectFormProps>(({}) => {
   const [createSubject, { error, loading }] =
     useMutation<SubjectFormValues>(CREATE_SUBJECT);
 
-  const kek = (values: any) => {
-    console.log(values);
-    // console.log(prepareFieldsToSend(values.tabs));
-  };
-
   const onFinish = useCallback(
     async ({
       logoBackgroundColor,
@@ -64,7 +57,7 @@ const FormSubject = memo<SubjectFormProps>(({}) => {
       logo,
       schedule,
       site,
-      fields,
+      tabs,
       ...values
     }: Omit<SubjectFormValues, "logoBackgroundColor"> & {
       logoBackgroundColor: Color | string;
@@ -79,14 +72,14 @@ const FormSubject = memo<SubjectFormProps>(({}) => {
             logo: logo[0].url,
             logoBackgroundColor: prepareColor(logoBackgroundColor),
             content: {
-              ...prepareFieldsToSend(fields),
+              tabs: prepareFieldsToSend(tabs),
               templateUuid: templateId,
             },
           },
         },
         refetchQueries: [GET_SUBJECTS, "GetSubjectsOfPlace"],
       });
-      navigate("..");
+      navigate(`/subject/${id}`);
     },
     [placeUuid]
   );
@@ -96,7 +89,7 @@ const FormSubject = memo<SubjectFormProps>(({}) => {
       name="subjectForm"
       layout="vertical"
       className="flex card flex-col gap-6 p-6"
-      onFinish={kek}
+      onFinish={onFinish}
     >
       <DefaultFields />
       <Form.List name="tabs">

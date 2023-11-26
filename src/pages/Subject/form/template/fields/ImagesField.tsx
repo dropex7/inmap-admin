@@ -8,33 +8,25 @@ import ImageLoaderField from "../../../../../components/FormFields/ImageLoaderFi
 
 interface ImageFieldProps {
   fieldName: string;
+  tabUuid: string;
 }
 
 const { Item } = Form;
 
-const ImagesField = memo<ImageFieldProps>(({ fieldName }) => {
+const ImagesField = memo<ImageFieldProps>(({ fieldName, tabUuid }) => {
   return (
-    <Form.List name={fieldName}>
-      {(fields, operation, meta) => {
-        // console.log(fields);
-        // console.log(operation);
-        // console.log(meta);
-
-        return (
-          <>
-            <Item label="Заголовок над фотографиями" name="title">
-              <Input />
-            </Item>
-            <ImageLoaderField
-              isRequired={false}
-              label="Фотографии"
-              fieldName={[fieldName, "images"]}
-              countOfImages={5}
-            />
-          </>
-        );
-      }}
-    </Form.List>
+    <>
+      <Item label="Заголовок над фотографиями" name="title">
+        <Input />
+      </Item>
+      <ImageLoaderField
+        isRequired={false}
+        label="Фотографии"
+        name="imagesUrls"
+        fieldName={["tabs", tabUuid, fieldName, "imagesUrls"]}
+        countOfImages={5}
+      />
+    </>
   );
 });
 

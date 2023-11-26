@@ -1,3 +1,5 @@
+import { FIELD_TYPES } from "./template/fields/types";
+
 type FormFields = Record<string, any>;
 
 export const createIndexWithZeros = (index: number) => {
@@ -17,6 +19,12 @@ export const prepareFieldsToSend = (tabs: FormFields) => {
       .sort()
       .map((fieldKey) => {
         const [, type] = fieldKey.split("&");
+        if (type === FIELD_TYPES.images) {
+          const imagesUrls = fields[fieldKey]?.imagesUrls?.map(
+            ({ url }: any) => url
+          );
+          return { type, data: { ...fields[fieldKey], imagesUrls } };
+        }
         return { type, data: fields[fieldKey] };
       });
 

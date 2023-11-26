@@ -16,9 +16,10 @@ import EmailAddress from "./fields/EmailAddress";
 interface FieldByTypeProps {
   field: string;
   name: string;
+  tabUuid: string;
 }
 
-const FieldByType = memo<FieldByTypeProps>(({ field, name }) => {
+const FieldByType = memo<FieldByTypeProps>(({ field, name, tabUuid }) => {
   switch (field) {
     case FIELD_TYPES.website_url:
       return (
@@ -45,7 +46,11 @@ const FieldByType = memo<FieldByTypeProps>(({ field, name }) => {
         </FieldWrapper>
       );
     case FIELD_TYPES.images:
-      return <ImagesField fieldName={name} />;
+      return (
+        <FieldWrapper name={name}>
+          <ImagesField fieldName={name} tabUuid={tabUuid} />
+        </FieldWrapper>
+      );
     case FIELD_TYPES.phones:
       return (
         <FieldWrapper name={name}>

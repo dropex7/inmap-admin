@@ -16,20 +16,30 @@ interface TabsProps {
 const TemplateTabs = memo<TabsProps>(({ data }) => {
   return (
     <>
-      {data.map(({ uuid, fields, name }, tabIndex) => (
-        <Form.List name={`${createIndexWithZeros(tabIndex)}${uuid}`}>
-          {() => (
-            <div className="card p-6" key={uuid}>
-              <h3>{name}</h3>
-              {fields.map((field, fieldIndex) => {
-                const name = `${createIndexWithZeros(fieldIndex)}&${field}`;
+      {data.map(({ uuid, fields, name }, tabIndex) => {
+        const tabName = `${createIndexWithZeros(tabIndex)}${uuid}`;
+        return (
+          <Form.List name={tabName}>
+            {() => (
+              <div className="card p-6" key={uuid}>
+                <h3>{name}</h3>
+                {fields.map((field, fieldIndex) => {
+                  const name = `${createIndexWithZeros(fieldIndex)}&${field}`;
 
-                return <FieldByType key={name} field={field} name={name} />;
-              })}
-            </div>
-          )}
-        </Form.List>
-      ))}
+                  return (
+                    <FieldByType
+                      tabUuid={tabName}
+                      key={name}
+                      field={field}
+                      name={name}
+                    />
+                  );
+                })}
+              </div>
+            )}
+          </Form.List>
+        );
+      })}
     </>
   );
 });

@@ -9,7 +9,7 @@ const { useFormInstance, Item } = Form;
 
 const Website = memo(() => {
   return (
-    <Item label="Название сайта" name="website">
+    <Item label="Название сайта" name="websiteUrl">
       <Input />
     </Item>
   );

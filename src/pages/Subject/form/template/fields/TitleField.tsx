@@ -9,7 +9,7 @@ const { Item } = Form;
 
 const TitleField = memo(() => {
   return (
-    <Item label="Заголовок" name="title">
+    <Item label="Заголовок" name="text">
       <Input />
     </Item>
   );
