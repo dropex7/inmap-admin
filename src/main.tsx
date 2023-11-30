@@ -5,18 +5,17 @@ import {StrictMode} from 'react';
 import ReactDOM from 'react-dom/client';
 import {RecoilRoot} from 'recoil';
 
-import './index.css';
+import './global.css';
 import RouterProviderWrapper from './routes/RouterProviderWrapper';
 import {client} from './utils/apolloClient';
-
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <ConfigProvider>
-            <RecoilRoot>
-                <ApolloProvider client={client}>
+        <RecoilRoot>
+            <ApolloProvider client={client}>
+                <ConfigProvider direction="ltr" form={{colon: false}}>
                     <RouterProviderWrapper />
-                </ApolloProvider>
-            </RecoilRoot>
-        </ConfigProvider>
+                </ConfigProvider>
+            </ApolloProvider>
+        </RecoilRoot>
     </StrictMode>,
 );

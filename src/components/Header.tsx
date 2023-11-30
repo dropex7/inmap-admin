@@ -18,7 +18,7 @@ const Header = memo(() => {
     const {data} = useQuery<GetListOfPlacesQuery>(GET_PLACES);
 
     return (
-        <header className="flex items-center gap-x-6 border-b border-gray-300 border-opacity-20 bg-zinc-900 p-6">
+        <header className="flex h-header items-center gap-x-6 border-b border-gray-300 border-opacity-20 bg-zinc-900 p-6">
             <Link to="/">
                 <img alt="inMap" height={30} src="/inmap.svg" width={83} />
             </Link>

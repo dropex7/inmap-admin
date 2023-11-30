@@ -2,6 +2,9 @@
 import plugin from 'tailwindcss/plugin';
 export default {
     content: ['./index.html', './src/**/*.{ts,tsx}'],
+    corePlugins: {
+        preflight: false,
+    },
     plugins: [
         plugin(function ({addComponents, theme}) {
             addComponents({
@@ -18,6 +21,9 @@ export default {
             colors: {
                 accent: 'rgb(var(--color-accent) / <alpha-value>)',
                 primary: 'rgb(var(--color-primary) / <alpha-value>)',
+            },
+            spacing: {
+                header: 'var(--header-height)',
             },
         },
     },

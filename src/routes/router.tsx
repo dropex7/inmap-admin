@@ -29,7 +29,7 @@ const router = createBrowserRouter([
                             },
                             {
                                 errorElement: <PageError />,
-                                lazy: () => import('../pages/Subject/Page'),
+                                lazy: () => import('../pages/Subject/Item/Page'),
                                 path: ':subjectId',
                             },
                             {

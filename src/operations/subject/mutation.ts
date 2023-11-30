@@ -7,3 +7,11 @@ export const CREATE_SUBJECT = gql`
         }
     }
 `;
+
+export const DELETE_SUBJECT = gql`
+    mutation DeleteSubject($uuid: String!, $placeUuid: String!) {
+        removeSubject(uuid: $uuid, placeUuid: $placeUuid) {
+            removed
+        }
+    }
+`;
