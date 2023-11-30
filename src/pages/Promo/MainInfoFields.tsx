@@ -2,12 +2,10 @@
  * Created by MIRZOEV A. on 16.08.2023
  */
 
-import { memo } from "react";
+import {memo} from 'react';
 
-interface MainInfoFieldsProps {}
-
-const MainInfoFields = memo<MainInfoFieldsProps>(({}) => {
-  return <>MainInfoFields</>;
+const MainInfoFields = memo(() => {
+    return <>MainInfoFields</>;
 });
 
 export default MainInfoFields;

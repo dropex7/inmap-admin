@@ -1,10 +1,10 @@
-import { gql } from "@apollo/client";
+import {gql} from '@apollo/client';
 
 export const CREATE_PROMO = gql`
-  mutation CreatePromo($createPromoInput: CreatePromoInput!) {
-    createPromo(createPromoInput: $createPromoInput) {
-      uuid
-      imageUrl
+    mutation CreatePromo($createPromoInput: CreatePromoInput!) {
+        createPromo(createPromoInput: $createPromoInput) {
+            uuid
+            imageUrl
+        }
     }
-  }
 `;

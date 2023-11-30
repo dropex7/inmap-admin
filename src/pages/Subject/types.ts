@@ -1,57 +1,51 @@
 export const enum EXTRA_FIELD_TYPES {
-  EXPANDABLE = "expandable_text",
-  PHONES = "phones",
-  WEBSITE = "website_url",
-  SOCIAL = "social_media",
-  EMAIL = "email_address",
-  NOTICE = "notice",
+    EMAIL = 'email_address',
+    EXPANDABLE = 'expandable_text',
+    NOTICE = 'notice',
+    PHONES = 'phones',
+    SOCIAL = 'social_media',
+    WEBSITE = 'website_url',
 }
 
 export const extraFieldText = {
-  [EXTRA_FIELD_TYPES.EXPANDABLE]: "Раскрывающийся текст",
-  [EXTRA_FIELD_TYPES.PHONES]: "Телефон",
-  [EXTRA_FIELD_TYPES.WEBSITE]: "Веб-сайт",
-  [EXTRA_FIELD_TYPES.SOCIAL]: "Ссылка на социальные сети",
-  [EXTRA_FIELD_TYPES.EMAIL]: "Электронная почта",
-  [EXTRA_FIELD_TYPES.NOTICE]: "Уведомление",
+    [EXTRA_FIELD_TYPES.EMAIL]: 'Электронная почта',
+    [EXTRA_FIELD_TYPES.EXPANDABLE]: 'Раскрывающийся текст',
+    [EXTRA_FIELD_TYPES.NOTICE]: 'Уведомление',
+    [EXTRA_FIELD_TYPES.PHONES]: 'Телефон',
+    [EXTRA_FIELD_TYPES.SOCIAL]: 'Ссылка на социальные сети',
+    [EXTRA_FIELD_TYPES.WEBSITE]: 'Веб-сайт',
 };
 
 export interface ExtraField {
-  type: EXTRA_FIELD_TYPES;
-  data:
-    | IExpandableText
-    | IPhoneNumbers
-    | Website
-    | SocialMediaList
-    | EmailAddress
-    | Notice;
+    data: EmailAddress | IExpandableText | IPhoneNumbers | Notice | SocialMediaList | Website;
+    type: EXTRA_FIELD_TYPES;
 }
 
 export interface IExpandableText {
-  title: string;
-  description: string;
+    description: string;
+    title: string;
 }
 
 export interface IPhoneNumber {
-  phoneNumber: string;
-  description: string;
+    description: string;
+    phoneNumber: string;
 }
 
-export type IPhoneNumbers = { phones: Array<IPhoneNumber> };
+export type IPhoneNumbers = {phones: Array<IPhoneNumber>};
 
-export type Website = { websiteUrl: string };
+export type Website = {websiteUrl: string};
 
 export interface SocialMedia {
-  type: string;
-  url: string;
+    type: string;
+    url: string;
 }
 
-export type SocialMediaList = { socialMediaList: Array<SocialMedia> };
+export type SocialMediaList = {socialMediaList: Array<SocialMedia>};
 
-export type EmailAddress = { emailAddress: string };
+export type EmailAddress = {emailAddress: string};
 
 export interface Notice {
-  color: string;
-  title: string;
-  description: string;
+    color: string;
+    description: string;
+    title: string;
 }

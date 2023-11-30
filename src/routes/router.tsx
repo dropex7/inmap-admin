@@ -1,120 +1,121 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
-import PageError from "./PageError";
-import { Outlet } from "react-router";
+import {Outlet} from 'react-router-dom';
+import {createBrowserRouter} from 'react-router-dom';
+
+import App from '../App';
+import PageError from './PageError';
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    errorElement: <PageError />,
-    children: [
-      {
-        path: "subject",
-        element: <Outlet />,
-        errorElement: <PageError />,
+    {
         children: [
-          {
-            path: ":id",
-            lazy: () => import("../components/PageWrapper"),
-            errorElement: <PageError />,
-            children: [
-              {
-                path: "create-subject",
+            {
+                children: [
+                    {
+                        children: [
+                            {
+                                children: [
+                                    {
+                                        errorElement: <PageError />,
+                                        index: true,
+                                        lazy: () => import('../pages/Template/Page'),
+                                    },
+                                    {
+                                        errorElement: <PageError />,
+                                        lazy: () => import('../pages/Subject/form/Page'),
+                                        path: ':templateId',
+                                    },
+                                ],
+                                element: <Outlet />,
+                                errorElement: <PageError />,
+                                path: 'create-subject',
+                            },
+                            {
+                                errorElement: <PageError />,
+                                lazy: () => import('../pages/Subject/Page'),
+                                path: ':subjectId',
+                            },
+                            {
+                                errorElement: <PageError />,
+                                index: true,
+                                lazy: () => import('../pages/Subject/PageList'),
+                            },
+                        ],
+                        errorElement: <PageError />,
+                        lazy: () => import('../components/PageWrapper'),
+                        path: ':id',
+                    },
+                    {
+                        index: true,
+                        lazy: () => import('../pages/Place/GlobalSelectPlace'),
+                    },
+                ],
                 element: <Outlet />,
                 errorElement: <PageError />,
+                path: 'subject',
+            },
+            {
                 children: [
-                  {
-                    index: true,
-                    lazy: () => import("../pages/Template/Page"),
-                    errorElement: <PageError />,
-                  },
-                  {
-                    path: ":templateId",
-                    lazy: () => import("../pages/Subject/form/Page"),
-                    errorElement: <PageError />,
-                  },
+                    {
+                        children: [
+                            {
+                                errorElement: <PageError />,
+                                lazy: () => import('../pages/Promo/PromoForm'),
+                                path: 'create-promo',
+                            },
+                            {
+                                errorElement: <PageError />,
+                                index: true,
+                                lazy: () => import('../pages/Promo/Page'),
+                            },
+                        ],
+                        errorElement: <PageError />,
+                        lazy: () => import('../components/PageWrapper'),
+                        path: ':id',
+                    },
+                    {
+                        index: true,
+                        lazy: () => import('../pages/Place/GlobalSelectPlace'),
+                    },
                 ],
-              },
-              {
-                path: ":subjectId",
-                lazy: () => import("../pages/Subject/Page"),
+                element: <Outlet />,
                 errorElement: <PageError />,
-              },
-              {
-                index: true,
-                lazy: () => import("../pages/Subject/PageList"),
+                path: 'promo',
+            },
+            {
+                children: [
+                    {
+                        children: [
+                            {
+                                errorElement: <PageError />,
+                                index: true,
+                                lazy: () => import('../pages/Home/Page'),
+                            },
+                        ],
+                        errorElement: <PageError />,
+                        lazy: () => import('../components/PageWrapper'),
+                        path: ':id',
+                    },
+                    {
+                        index: true,
+                        lazy: () => import('../pages/Place/GlobalSelectPlace'),
+                    },
+                ],
+                element: <Outlet />,
                 errorElement: <PageError />,
-              },
-            ],
-          },
-          {
-            index: true,
-            lazy: () => import("../pages/Place/GlobalSelectPlace"),
-          },
+                path: 'home',
+            },
+            {
+                element: <div className="text-white">Нет такой странички бро</div>,
+                path: '*',
+            },
         ],
-      },
-      {
-        path: "promo",
-        element: <Outlet />,
+        element: <App />,
         errorElement: <PageError />,
-        children: [
-          {
-            path: ":id",
-            lazy: () => import("../components/PageWrapper"),
-            errorElement: <PageError />,
-            children: [
-              {
-                path: "create-promo",
-                lazy: () => import("../pages/Promo/PromoForm"),
-                errorElement: <PageError />,
-              },
-              {
-                index: true,
-                lazy: () => import("../pages/Promo/Page"),
-                errorElement: <PageError />,
-              },
-            ],
-          },
-          {
-            index: true,
-            lazy: () => import("../pages/Place/GlobalSelectPlace"),
-          },
-        ],
-      },
-      {
-        path: "home",
-        element: <Outlet />,
+        path: '/',
+    },
+    {
         errorElement: <PageError />,
-        children: [
-          {
-            path: ":id",
-            lazy: () => import("../components/PageWrapper"),
-            errorElement: <PageError />,
-            children: [
-              {
-                index: true,
-                lazy: () => import("../pages/Home/Page"),
-                errorElement: <PageError />,
-              },
-            ],
-          },
-          {
-            index: true,
-            lazy: () => import("../pages/Place/GlobalSelectPlace"),
-          },
-        ],
-      },
-      {
-        path: "*",
-        element: <div className="text-white">Нет такой странички бро</div>,
-      },
-    ],
-  },
-  {
-    path: "login",
-    errorElement: <PageError />,
-    lazy: () => import("../pages/Login/Page"),
-  },
+        lazy: () => import('../pages/Login/Page'),
+        path: 'login',
+    },
 ]);
 
-export { router };
+export {router};

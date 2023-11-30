@@ -3,8 +3,8 @@
  */
 
 import type {PropsWithChildren, ReactPortal} from 'react';
-import {memo} from 'react';
 
+import {memo} from 'react';
 import ReactDOM from 'react-dom';
 
 import useMounted from '../hooks/useMounted';

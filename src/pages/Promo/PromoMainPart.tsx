@@ -2,44 +2,42 @@
  * Created by MIRZOEV A. on 30.08.2023
  */
 
-import React, { memo, useState } from "react";
-import { Input, Form, Button } from "antd";
-import ImageLoaderField from "../../components/FormFields/ImageLoaderField";
-import { IMainFormValues } from "./PromoForm";
+import {Button, Form, Input} from 'antd';
+import {memo, useState} from 'react';
+
+import type {IMainFormValues} from './PromoForm';
+
+import ImageLoaderField from '../../components/FormFields/ImageLoaderField';
 
 interface Props {
-  initialValues?: IMainFormValues;
-  onFinish: (values: IMainFormValues) => void;
+    initialValues?: IMainFormValues;
+    onFinish: (values: IMainFormValues) => void;
 }
 
-const { Item } = Form;
+const {Item} = Form;
 
-const PromoMainPart = memo<Props>(({ onFinish, initialValues }) => {
-  const [isLoading, setIsLoading] = useState(false);
+const PromoMainPart = memo<Props>(({initialValues, onFinish}) => {
+    const [isLoading, setIsLoading] = useState(false);
 
-  return (
-    <Form
-      labelCol={{ span: 6 }}
-      initialValues={initialValues}
-      onFinish={onFinish}
-    >
-      <Item name="title" label="Заголовок">
-        <Input />
-      </Item>
-      <Item name="subtitle" label="Описание">
-        <Input />
-      </Item>
-      <ImageLoaderField
-        setIsImageLoading={setIsLoading}
-        fieldName="imageUrl"
-        countOfImages={1}
-        label="Добавьте изображения"
-      />
-      <Button type="primary" htmlType="submit" disabled={isLoading}>
-        Перейти к описанию
-      </Button>
-    </Form>
-  );
+    return (
+        <Form initialValues={initialValues} labelCol={{span: 6}} onFinish={onFinish}>
+            <Item label="Заголовок" name="title">
+                <Input />
+            </Item>
+            <Item label="Описание" name="subtitle">
+                <Input />
+            </Item>
+            <ImageLoaderField
+                countOfImages={1}
+                fieldName="imageUrl"
+                label="Добавьте изображения"
+                setIsImageLoading={setIsLoading}
+            />
+            <Button disabled={isLoading} htmlType="submit" type="primary">
+                Перейти к описанию
+            </Button>
+        </Form>
+    );
 });
 
 export default PromoMainPart;

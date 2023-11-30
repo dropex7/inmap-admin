@@ -1,27 +1,27 @@
 export enum SCHEDULE_DAYS {
-  "monday" = "monday",
-  "tuesday" = "tuesday",
-  "wednesday" = "wednesday",
-  "thursday" = "thursday",
-  "friday" = "friday",
-  "saturday" = "saturday",
-  "sunday" = "sunday",
+    'friday' = 'friday',
+    'monday' = 'monday',
+    'saturday' = 'saturday',
+    'sunday' = 'sunday',
+    'thursday' = 'thursday',
+    'tuesday' = 'tuesday',
+    'wednesday' = 'wednesday',
 }
 
 export enum DAY_TYPES {
-  "WORKING" = "working",
-  "OFF" = "off",
-  "ALL_DAY" = "allDay",
+    'ALL_DAY' = 'allDay',
+    'OFF' = 'off',
+    'WORKING' = 'working',
 }
 
 export interface ScheduleOption {
-  type: DAY_TYPES | null;
-  open?: {
-    hours: number;
-    minutes: number;
-  };
-  close?: {
-    hours: number;
-    minutes: number;
-  };
+    close?: {
+        hours: number;
+        minutes: number;
+    };
+    open?: {
+        hours: number;
+        minutes: number;
+    };
+    type: DAY_TYPES | null;
 }

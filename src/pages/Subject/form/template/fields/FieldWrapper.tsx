@@ -2,17 +2,17 @@
  * Created by MIRZOEV A. on 22.11.2023
  */
 
-import React, { memo, PropsWithChildren } from "react";
-import { Form } from "antd";
+import type {PropsWithChildren} from 'react';
+
+import {Form} from 'antd';
+import {memo} from 'react';
 
 interface FieldWrapperProps {
-  name: string;
+    name: string;
 }
 
-const FieldWrapper = memo<PropsWithChildren<FieldWrapperProps>>(
-  ({ name, children }) => {
+const FieldWrapper = memo<PropsWithChildren<FieldWrapperProps>>(({children, name}) => {
     return <Form.List name={name}>{() => children}</Form.List>;
-  }
-);
+});
 
 export default FieldWrapper;

@@ -2,33 +2,31 @@
  * Created by MIRZOEV A. on 04.11.2023
  */
 
-import { memo, useCallback, useRef } from "react";
-import { Button } from "antd";
+import {Button} from 'antd';
+import {memo, useCallback, useRef} from 'react';
 
-interface MapProps {}
+const Map = memo(() => {
+    const ref = useRef(null);
 
-const Map = memo<MapProps>(({}) => {
-  const ref = useRef(null);
+    const sendMessageToFlutter = useCallback(() => {
+        if (ref?.current) {
+            //@ts-expect-error TODO
+            ref?.current?.contentWindow?.postMessage(message, '*'); // '*' означает, что сообщение будет отправлено всем окнам.
+        }
+    }, []);
 
-  const sendMessageToFlutter = useCallback(() => {
-    if (ref?.current) {
-      //@ts-ignore
-      ref?.current?.contentWindow?.postMessage(message, "*"); // '*' означает, что сообщение будет отправлено всем окнам.
-    }
-  }, [ref?.current]);
-
-  return (
-    <div className="flex flex-col gap-y-4 rounded-lg border bg-white p-4">
-      <iframe
-        ref={ref}
-        title="Flutter App"
-        src="https://inmap-interactive-map-embed.web.app/"
-        width="1000"
-        height="1000"
-      />
-      <Button onClick={sendMessageToFlutter}>sendMessageToFlutter</Button>
-    </div>
-  );
+    return (
+        <div className="flex flex-col gap-y-4 rounded-lg border bg-white p-4">
+            <iframe
+                height="1000"
+                ref={ref}
+                src="https://inmap-interactive-map-embed.web.app/"
+                title="Flutter App"
+                width="1000"
+            />
+            <Button onClick={sendMessageToFlutter}>sendMessageToFlutter</Button>
+        </div>
+    );
 });
 
 export default Map;

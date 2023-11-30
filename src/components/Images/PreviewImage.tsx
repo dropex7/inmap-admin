@@ -2,26 +2,18 @@
  * Created by MIRZOEV A. on 11.04.2023
  */
 
-import { HTMLProps, memo } from "react";
-import { ImageModel } from "../../generated/graphql";
-import clsx from "clsx";
+import type {HTMLProps} from 'react';
+
+import clsx from 'clsx';
+import {memo} from 'react';
 
 interface PreviewImageProps extends HTMLProps<HTMLImageElement> {
-  url: ImageModel["url"];
-  rounded?: boolean;
+    rounded?: boolean;
+    url: string;
 }
 
-const PreviewImage = memo<PreviewImageProps>(
-  ({ url, alt, rounded = false, ...rest }) => {
-    return (
-      <img
-        src={url}
-        className={clsx("max-w-full object-cover", rounded && "rounded-md")}
-        alt={alt}
-        {...rest}
-      />
-    );
-  }
-);
+const PreviewImage = memo<PreviewImageProps>(({alt, rounded = false, url, ...rest}) => {
+    return <img alt={alt} className={clsx('max-w-full object-cover', rounded && 'rounded-md')} src={url} {...rest} />;
+});
 
 export default PreviewImage;

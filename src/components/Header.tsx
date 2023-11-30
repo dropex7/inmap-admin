@@ -2,33 +2,33 @@
  * Created by MIRZOEV A.on 09.04.2023
  */
 
-import { memo } from "react";
-import { Link } from "react-router-dom";
+import {useQuery} from '@apollo/client';
+import {Button} from 'antd';
+import {memo} from 'react';
+import {Link} from 'react-router-dom';
 
-import { Button } from "antd";
-import { useAuth } from "../hooks/useAuth";
+import type {GetListOfPlacesQuery} from '../generated/graphql';
 
-import { GET_PLACES } from "../operations/place/query";
-import { useQuery } from "@apollo/client";
-import { GetListOfPlacesQuery } from "../generated/graphql";
-import PlaceSelect from "../pages/Place/PlaceSelect";
+import {useAuth} from '../hooks/useAuth';
+import {GET_PLACES} from '../operations/place/query';
+import PlaceSelect from '../pages/Place/PlaceSelect';
 
 const Header = memo(() => {
-  const { logout } = useAuth();
-  const { data } = useQuery<GetListOfPlacesQuery>(GET_PLACES);
+    const {logout} = useAuth();
+    const {data} = useQuery<GetListOfPlacesQuery>(GET_PLACES);
 
-  return (
-    <header className="flex h-header items-center gap-x-6 bg-zinc-900 border-b border-opacity-20 border-gray-300 p-6">
-      <Link to="/">
-        <img src="/inmap.svg" width={83} height={30} alt="inMap" />
-      </Link>
+    return (
+        <header className="flex items-center gap-x-6 border-b border-gray-300 border-opacity-20 bg-zinc-900 p-6">
+            <Link to="/">
+                <img alt="inMap" height={30} src="/inmap.svg" width={83} />
+            </Link>
 
-      <span className="flex-auto" />
+            <span className="flex-auto" />
 
-      <PlaceSelect places={data?.places ?? []} />
-      <Button onClick={() => logout()}>Log out</Button>
-    </header>
-  );
+            <PlaceSelect places={data?.places ?? []} />
+            <Button onClick={() => logout()}>Log out</Button>
+        </header>
+    );
 });
 
 export default Header;
