@@ -4,10 +4,11 @@
 
 import {useMutation} from '@apollo/client';
 import {Button, Popconfirm} from 'antd';
-import {memo} from 'react';
+import {memo, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {DELETE_SUBJECT} from '../../../operations/subject/mutation';
+import {GET_SUBJECTS} from '../../../operations/subject/query';
 
 interface DeleteButtonProps {
     placeUuid: string;
@@ -15,16 +16,25 @@ interface DeleteButtonProps {
 }
 
 const DeleteButton = memo<DeleteButtonProps>(({placeUuid, subjectId}) => {
-    const [deleteSubject, {error}] = useMutation(DELETE_SUBJECT);
+    const [deleteSubject, {data, error}] = useMutation(DELETE_SUBJECT);
     const navigate = useNavigate();
     const handleDelete = () => {
         deleteSubject({
+            refetchQueries: [GET_SUBJECTS, 'GetSubjectsOfPlace'],
             variables: {placeUuid: placeUuid, uuid: subjectId},
         });
-        if (!error) {
+
+        if (data) {
             navigate('..');
         }
     };
+
+    useEffect(() => {
+        if (error) {
+            alert(error.message);
+        }
+    }, [error]);
+
     return (
         <Popconfirm
             cancelText="Отмена"

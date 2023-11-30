@@ -3,10 +3,12 @@ import type {CodegenConfig} from '@graphql-codegen/cli';
 const config: CodegenConfig = {
     // schema: "http://localhost:3001/graphql",
     documents: [
-        'src/operations/place/query.ts',
-        'src/operations/subject/query.ts',
-        'src/operations/promo/query.ts',
         'src/operations/image/mutation.ts',
+        'src/operations/place/query.ts',
+        'src/operations/promo/query.ts',
+        'src/operations/promo/mutation.ts',
+        'src/operations/subject/query.ts',
+        'src/operations/subject/mutation.ts',
     ],
     generates: {
         'src/generated/': {
