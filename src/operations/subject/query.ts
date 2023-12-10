@@ -14,6 +14,20 @@ export const GET_SUBJECTS = gql`
     }
 `;
 
+export const SEARCH_SUBJECTS = gql`
+    query SearchSubjectsOfPlace($searchSubjectsInput: SearchSubjectsInput!) {
+        searchSubjects(searchSubjectsInput: $searchSubjectsInput) {
+            uuid
+            name
+            layerUuid
+            logoUrl
+            logoBackgroundColor
+            shortDescription
+            images
+        }
+    }
+`;
+
 export const GET_SUBJECTS_BY_ID = gql`
     query GetSubjectsById($uuid: String!, $placeUuid: String!) {
         subject(uuid: $uuid, placeUuid: $placeUuid) {

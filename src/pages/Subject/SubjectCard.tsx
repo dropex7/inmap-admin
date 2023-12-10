@@ -5,18 +5,18 @@
 import {memo, useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import type {SubjectLocalizedModel} from '../../generated/graphql';
+import type {SubjectSearchModel} from '../../generated/graphql';
 
 import noPhoto from '../../assets/no-photo-available.png';
 import PreviewImage from '../../components/Images/PreviewImage';
 import PreviewLogo from '../../components/Images/PreviewLogo';
 
 interface SubjectCardProps {
-    subject: Partial<SubjectLocalizedModel>;
+    subject: Partial<SubjectSearchModel>;
 }
 
 const SubjectCard = memo<SubjectCardProps>(({subject}) => {
-    const {images, layerName, logoBackgroundColor, logoUrl, name, shortDescription, uuid} = subject;
+    const {images, logoBackgroundColor, logoUrl, name, shortDescription, uuid} = subject;
     const navigate = useNavigate();
 
     const backgroundImage = useMemo(() => {
@@ -32,7 +32,7 @@ const SubjectCard = memo<SubjectCardProps>(({subject}) => {
             <PreviewImage alt="image" height="200px" url={backgroundImage ?? noPhoto} />
 
             <div className="flex flex-col gap-3 p-3">
-                <span className="self-end text-sm text-gray-500">{layerName}</span>
+                <span className="self-end text-sm text-gray-500">НЕТ ЭТАЖА</span>
                 <strong className="self-start">{name}</strong>
                 <span className="self-start text-sm text-gray-500">{shortDescription}</span>
             </div>

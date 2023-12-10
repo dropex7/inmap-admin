@@ -10,3 +10,15 @@ export const GET_PROMOS = gql`
         }
     }
 `;
+
+export const SEARCH_PROMOS = gql`
+    query SearchPromos($searchPromosInput: SearchPromosInput!) {
+        searchPromos(searchPromosInput: $searchPromosInput) {
+            uuid
+            placeUuid
+            imageUrl
+            title
+            subtitle
+        }
+    }
+`;

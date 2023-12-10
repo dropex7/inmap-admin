@@ -4,13 +4,13 @@
 
 import {memo} from 'react';
 
-import type {GetSubjectsOfPlaceQuery} from '../../generated/graphql';
+import type {SearchSubjectsOfPlaceQuery} from '../../generated/graphql';
 
 import SubjectCard from './SubjectCard';
 import SubjectInfoView from './SubjectInfoView';
 
 interface ListProps {
-    data: GetSubjectsOfPlaceQuery;
+    data: SearchSubjectsOfPlaceQuery;
 }
 
 const List = memo<ListProps>(({data}) => {
@@ -22,7 +22,7 @@ const List = memo<ListProps>(({data}) => {
                 <SubjectInfoView count={3} max={20} title="Приостановлено" />
             </div>
             <div className="flex flex-wrap justify-center gap-4 rounded-lg py-3">
-                {data.subjectsOfPlace.map(sub => (
+                {data.searchSubjects.map(sub => (
                     <SubjectCard key={sub.uuid} subject={sub} />
                 ))}
             </div>

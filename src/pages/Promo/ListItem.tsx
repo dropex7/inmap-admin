@@ -4,13 +4,13 @@
 
 import {memo} from 'react';
 
-import type {PromoLocalizedModel} from '../../generated/graphql';
+import type {PromoSearchModel} from '../../generated/graphql';
 
 import noPhoto from '../../assets/no-photo-available.png';
 import PreviewImage from '../../components/Images/PreviewImage';
 
 interface ListItemProps {
-    promo: Partial<PromoLocalizedModel>;
+    promo: PromoSearchModel;
 }
 
 const ListItem = memo<ListItemProps>(({promo}) => {
