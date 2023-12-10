@@ -11,8 +11,8 @@ import type {GetPlaceLayersQuery} from '../../../generated/graphql';
 
 import {placeAtom} from '../../../atoms/selectedPlace';
 import ImageLoaderField from '../../../components/FormFields/ImageLoaderField';
-import ScheduleField from '../../../components/FormFields/SheduleField';
 import {GET_PLACE_LAYERS} from '../../../operations/place/query';
+import ScheduleFields from '../../../components/Shedule/ScheduleFields';
 
 const {Item} = Form;
 
@@ -53,13 +53,11 @@ const DefaultFields = memo(() => {
                             placeholder="Выберите этаж"
                         />
                     </Item>
+                    <div>
+                        <ScheduleFields />
+                    </div>
                 </div>
                 <div className="flex flex-col gap-3 px-6">
-                    <ScheduleField />
-                </div>
-            </div>
-            <div className="grid grid-cols-[1fr_2fr] gap-3">
-                <div className="card flex flex-col p-6">
                     <ImageLoaderField countOfImages={1} fieldName="logo" label="Добавьте логотип объекта" />
                     <Item
                         label="Цвет фона логотипа"
@@ -69,9 +67,10 @@ const DefaultFields = memo(() => {
                         <ColorPicker />
                     </Item>
                 </div>
-                <div className="card p-6">
-                    <ImageLoaderField countOfImages={10} fieldName="images" label="Добавьте изображения" />
-                </div>
+            </div>
+
+            <div className="card p-6">
+                <ImageLoaderField countOfImages={10} fieldName="images" label="Добавьте изображения" />
             </div>
         </>
     );

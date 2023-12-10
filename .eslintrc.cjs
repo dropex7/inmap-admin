@@ -8,12 +8,12 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
         'plugin:react/recommended',
         'plugin:react-hooks/recommended',
-        'plugin:perfectionist/recommended-natural',
+        // 'plugin:perfectionist/recommended-natural',
         'plugin:tailwindcss/recommended',
     ],
     ignorePatterns: ['dist', '.eslintrc.cjs'],
     parser: '@typescript-eslint/parser',
-    plugins: ['@typescript-eslint', 'react-refresh', 'react','react-hooks', 'perfectionist', 'tailwindcss'],
+    plugins: ['@typescript-eslint', 'react-refresh', 'react','react-hooks', 'tailwindcss'],
     rules: {
         'react-refresh/only-export-components': [2, {allowConstantExport: true}],
 

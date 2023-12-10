@@ -11,24 +11,25 @@ import {memo, useCallback} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useRecoilValue} from 'recoil';
 
-import type {SCHEDULE_DAYS, ScheduleOption} from '../../../components/FormFields/types';
+import type {SCHEDULE_DAYS} from '../../../components/Shedule/types';
 import type {Query} from '../../../generated/graphql';
 
 import {placeAtom} from '../../../atoms/selectedPlace';
 import {CREATE_SUBJECT} from '../../../operations/subject/mutation';
 import {GET_SUBJECTS} from '../../../operations/subject/query';
 import {GET_TEMPLATE_BY_ID} from '../../../operations/template/query';
-import {prepareColor} from '../../../utils/utils';
+import {prepareColor, prepareSchedule} from '../../../utils/utils';
 import DefaultFields from './DefaultFields';
 import {prepareFieldsToSend} from './helper';
 import TemplateTabs from './template/TemplateTabs';
+import type {ScheduleFormInterval} from '../../../components/Shedule/types';
 
 interface SubjectFormValues {
     images: Array<UploadFile>;
     layerUuid: string;
     logo: Array<UploadFile>;
     name: string;
-    schedule: Map<SCHEDULE_DAYS, ScheduleOption>;
+    schedule: Record<SCHEDULE_DAYS, ScheduleFormInterval>;
     shortDescription: string;
     site: string;
     tabs: Array<any>;
@@ -73,7 +74,7 @@ const FormSubject = memo(() => {
                         logo: logo[0].url,
                         logoBackgroundColor: prepareColor(logoBackgroundColor),
                         placeUuid,
-                        schedule: Object.fromEntries(schedule),
+                        schedule: prepareSchedule(schedule),
                     },
                 },
             });

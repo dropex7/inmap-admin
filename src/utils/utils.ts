@@ -1,31 +1,43 @@
 import type {Color} from 'antd/es/color-picker';
 import type {RcFile} from 'antd/es/upload';
 
-import type {ScheduleOption} from '../components/FormFields/types';
+import type {ScheduleInterval, ScheduleIntervalsOption, ScheduleFormInterval} from '../components/Shedule/types';
 
-import {SCHEDULE_DAYS} from '../components/FormFields/types';
+import {DAY_TYPES} from '../components/Shedule/types';
+import type {Dayjs} from 'dayjs';
+import dayjs from 'dayjs';
 
-const generatedSchedule = Object.keys(SCHEDULE_DAYS).map(day => [
-    day,
-    {
-        type: null,
-    },
-]);
-
-export const dayText = {
-    [SCHEDULE_DAYS.friday]: 'Пятница',
-    [SCHEDULE_DAYS.monday]: 'Понедельник',
-    [SCHEDULE_DAYS.saturday]: 'Суббота',
-    [SCHEDULE_DAYS.sunday]: 'Воскресенье',
-    [SCHEDULE_DAYS.thursday]: 'Четверг',
-    [SCHEDULE_DAYS.tuesday]: 'Вторник',
-    [SCHEDULE_DAYS.wednesday]: 'Среда',
+export const prepareSchedule = (
+    schedule: Record<string, ScheduleFormInterval>,
+): Record<string, ScheduleIntervalsOption> => {
+    const preparedScheduleValue: Record<string, ScheduleIntervalsOption> = {};
+    for (const dayKey in schedule) {
+        if (schedule[dayKey].type === DAY_TYPES.WORKING) {
+            preparedScheduleValue[dayKey] = {
+                type: schedule[dayKey].type,
+                intervals: schedule[dayKey].intervals?.map(({interval}) => prepareScheduleInterval(interval)),
+            };
+        } else {
+            preparedScheduleValue[dayKey] = schedule[dayKey] as ScheduleIntervalsOption;
+        }
+    }
+    return preparedScheduleValue;
 };
 
-export const scheduleOptions = new Map<SCHEDULE_DAYS, ScheduleOption>(
-    // @ts-expect-error TODO
-    generatedSchedule,
-);
+export const prepareScheduleInterval = (interval: [Dayjs | undefined, Dayjs | undefined]): ScheduleInterval => {
+    const [start, end] = interval;
+
+    return {
+        close: {
+            hours: end ? end.hour() : dayjs().hour(),
+            minutes: end ? end.minute() : dayjs().minute(),
+        },
+        open: {
+            hours: start ? start.hour() : dayjs().hour(),
+            minutes: start ? start.minute() : dayjs().minute(),
+        },
+    };
+};
 
 const isObjectColor = (c: Color | string): c is Color => typeof c !== 'string';
 
