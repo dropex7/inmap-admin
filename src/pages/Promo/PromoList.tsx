@@ -3,7 +3,7 @@
  */
 
 import {useLazyQuery} from '@apollo/client';
-import {memo, useEffect} from 'react';
+import {memo, useCallback, useEffect, useMemo} from 'react';
 import {useParams} from 'react-router-dom';
 
 import type {PaginationParams} from '../../components/Pagination/types';
@@ -12,7 +12,7 @@ import type {SearchPromosQuery} from '../../generated/graphql';
 import usePaginationFilter from '../../hooks/pagination/usePaginationFilter';
 import usePaginationParams from '../../hooks/pagination/usePaginationParams';
 import {SEARCH_PROMOS} from '../../operations/promo/query';
-import ListItem from './ListItem';
+import PromoTable from './PromoTable';
 
 interface PromoListProps {
     url: string;
@@ -21,12 +21,29 @@ interface PromoListProps {
 const PromoList = memo<PromoListProps>(({url}) => {
     const {id} = useParams();
     // TODO Сделать пагинацию
-    const [pageParams] = usePaginationParams(url);
+    const [pageParams, setParams] = usePaginationParams(url);
     const [filter] = usePaginationFilter<PaginationParams>(url);
 
     const [loadList, {data, error}] = useLazyQuery<SearchPromosQuery>(SEARCH_PROMOS, {
         variables: {searchPromosInput: {...pageParams, ...filter, placeUuid: id}},
     });
+
+    const changePage = useCallback(
+        (newPage: number) => {
+            setParams({...pageParams, offset: (newPage - 1) * pageParams.limit});
+        },
+        [pageParams, setParams],
+    );
+
+    const paginationSettings = useMemo(
+        () => ({
+            defaultPageSize: pageParams.limit,
+            total: data?.searchPromos.total,
+            showSizeChanger: false,
+            onChange: changePage,
+        }),
+        [changePage, data?.searchPromos.total, pageParams.limit],
+    );
 
     useEffect(() => {
         loadList({variables: {searchSubjectsInput: {...pageParams, ...filter, placeUuid: id}}});
@@ -36,17 +53,11 @@ const PromoList = memo<PromoListProps>(({url}) => {
         return <>{error.message}</>;
     }
 
-    return (
-        <div className="card flex flex-col gap-6 p-6">
-            <span className="text-base font-bold">Действующие предложения и новости</span>
-            <div className="grid grid-cols-[2fr_1fr_1fr] items-center">
-                <div />
-                <span className="text-center text-sm leading-none text-neutral-500">Дата</span>
-                <span className="text-center text-sm leading-none text-neutral-500">Объекты</span>
-            </div>
-            {data?.searchPromos.map(promo => <ListItem key={promo.uuid} promo={promo} />)}
-        </div>
-    );
+    if (!data) {
+        return null;
+    }
+
+    return <PromoTable pagination={paginationSettings} data={data.searchPromos.items} />;
 });
 
 export default PromoList;

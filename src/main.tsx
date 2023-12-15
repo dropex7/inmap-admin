@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom/client';
 import {RecoilRoot} from 'recoil';
 import ruRU from 'antd/es/locale/ru_RU';
 import './global.css';
-import RouterProviderWrapper from './routes/RouterProviderWrapper';
+import RouterProviderWrapper from './router/RouterProviderWrapper';
 import {client} from './utils/apolloClient';
 import {validateMessagesWithLabels} from './utils/validateMessages';
 

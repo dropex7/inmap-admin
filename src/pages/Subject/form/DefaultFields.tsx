@@ -10,7 +10,7 @@ import {useRecoilValue} from 'recoil';
 import type {GetPlaceLayersQuery} from '../../../generated/graphql';
 
 import {placeAtom} from '../../../atoms/selectedPlace';
-import ImageLoaderField from '../../../components/FormFields/ImageLoaderField';
+import ImageLoaderField from '../../../components/ImageLoader/ImageLoaderField';
 import {GET_PLACE_LAYERS} from '../../../operations/place/query';
 import ScheduleFields from '../../../components/Shedule/ScheduleFields';
 

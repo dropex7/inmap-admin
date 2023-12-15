@@ -6,7 +6,7 @@ import {memo} from 'react';
 import {Outlet} from 'react-router-dom';
 
 import Header from './Header';
-import Nav from './Nav';
+import Nav from '../Navigation/Nav';
 
 const Layout = memo(() => {
     return (

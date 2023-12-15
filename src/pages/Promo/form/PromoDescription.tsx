@@ -8,7 +8,7 @@ import type {UnprivilegedEditor} from 'react-quill';
 import {Button, Form} from 'antd';
 import {memo, useCallback} from 'react';
 
-import QuillWrapper from '../../components/QuillWrapper';
+import QuillWrapper from '../../../components/Quill/QuillWrapper';
 
 interface PromoDescriptionProps {
     onFinish: (values: any) => void;

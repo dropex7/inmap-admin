@@ -17,13 +17,16 @@ export const GET_SUBJECTS = gql`
 export const SEARCH_SUBJECTS = gql`
     query SearchSubjectsOfPlace($searchSubjectsInput: SearchSubjectsInput!) {
         searchSubjects(searchSubjectsInput: $searchSubjectsInput) {
-            uuid
-            name
-            layerUuid
-            logoUrl
-            logoBackgroundColor
-            shortDescription
-            images
+            total
+            items {
+                uuid
+                name
+                layerUuid
+                logoUrl
+                logoBackgroundColor
+                shortDescription
+                images
+            }
         }
     }
 `;

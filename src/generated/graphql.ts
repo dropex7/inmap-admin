@@ -514,6 +514,7 @@ export type PlaceLocalizedModel = {
   promos?: Maybe<Array<PromoLocalizedModel>>;
   recs: Array<PlaceRecommendationLocalizedModel>;
   schedule: Scalars['ScheduleWeek'];
+  selectedPlanKey?: Maybe<Scalars['String']>;
   subjectsUuids?: Maybe<Array<Scalars['String']>>;
   timezone: Scalars['String'];
   title: Scalars['String'];
@@ -542,6 +543,12 @@ export type PlaceSearchModel = {
   schedule: Scalars['ScheduleWeek'];
   title: Scalars['String'];
   uuid: Scalars['String'];
+};
+
+export type PlacesSearchResModel = {
+  __typename?: 'PlacesSearchResModel';
+  items: Array<PlaceSearchModel>;
+  total: Scalars['Float'];
 };
 
 export type Plan = {
@@ -580,6 +587,12 @@ export type PromoSearchModel = {
   uuid: Scalars['String'];
 };
 
+export type PromosSearchResModel = {
+  __typename?: 'PromosSearchResModel';
+  items: Array<PromoSearchModel>;
+  total: Scalars['Float'];
+};
+
 export type Query = {
   __typename?: 'Query';
   cities: Array<CityLocalizedModel>;
@@ -603,10 +616,10 @@ export type Query = {
   plansOfPlace: Array<Plan>;
   promo: PromoLocalizedModel;
   promosOfPlace: Array<PromoLocalizedModel>;
-  searchPlaces: Array<PlaceSearchModel>;
-  searchPlacesAll: Array<PlaceSearchModel>;
-  searchPromos: Array<PromoSearchModel>;
-  searchSubjects: Array<SubjectSearchModel>;
+  searchPlaces: PlacesSearchResModel;
+  searchPlacesAll: PlacesSearchResModel;
+  searchPromos: PromosSearchResModel;
+  searchSubjects: SubjectsSearchResModel;
   subject: SubjectLocalizedModel;
   subjectsOfPlace: Array<SubjectLocalizedModel>;
   template: TemplateLocalizedModel;
@@ -824,6 +837,12 @@ export type SubjectSearchModel = {
   uuid: Scalars['String'];
 };
 
+export type SubjectsSearchResModel = {
+  __typename?: 'SubjectsSearchResModel';
+  items: Array<SubjectSearchModel>;
+  total: Scalars['Float'];
+};
+
 export type TemplateLocalizedModel = {
   __typename?: 'TemplateLocalizedModel';
   /** Image to show in templates list */
@@ -907,6 +926,7 @@ export type UpdatePlaceInput = {
   longitude?: InputMaybe<Scalars['Float']>;
   promoPreviewCrossAxisCount?: InputMaybe<Scalars['Int']>;
   schedule?: InputMaybe<Scalars['ScheduleWeek']>;
+  selectedPlanKey?: InputMaybe<Scalars['String']>;
   timezone?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
   uuid: Scalars['String'];
@@ -1070,7 +1090,7 @@ export type SearchPromosQueryVariables = Exact<{
 }>;
 
 
-export type SearchPromosQuery = { __typename?: 'Query', searchPromos: Array<{ __typename?: 'PromoSearchModel', uuid: string, placeUuid: string, imageUrl: string, title: string, subtitle: string }> };
+export type SearchPromosQuery = { __typename?: 'Query', searchPromos: { __typename?: 'PromosSearchResModel', total: number, items: Array<{ __typename?: 'PromoSearchModel', uuid: string, placeUuid: string, imageUrl: string, title: string, subtitle: string }> } };
 
 export type CreateSubjectMutationVariables = Exact<{
   createSubjectInput: CreateSubjectInput;
@@ -1099,7 +1119,7 @@ export type SearchSubjectsOfPlaceQueryVariables = Exact<{
 }>;
 
 
-export type SearchSubjectsOfPlaceQuery = { __typename?: 'Query', searchSubjects: Array<{ __typename?: 'SubjectSearchModel', uuid: string, name: string, layerUuid: string, logoUrl: string, logoBackgroundColor: any, shortDescription: string, images: Array<string> }> };
+export type SearchSubjectsOfPlaceQuery = { __typename?: 'Query', searchSubjects: { __typename?: 'SubjectsSearchResModel', total: number, items: Array<{ __typename?: 'SubjectSearchModel', uuid: string, name: string, layerUuid: string, logoUrl: string, logoBackgroundColor: any, shortDescription: string, images: Array<string> }> } };
 
 export type GetSubjectsByIdQueryVariables = Exact<{
   uuid: Scalars['String'];
@@ -1116,9 +1136,9 @@ export const GetPlaceDocument = {"kind":"Document","definitions":[{"kind":"Opera
 export const GetPlaceLayersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPlaceLayers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"placeLayers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"fullName"}}]}}]}}]} as unknown as DocumentNode<GetPlaceLayersQuery, GetPlaceLayersQueryVariables>;
 export const CreatePromoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePromo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createPromoInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatePromoInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPromo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createPromoInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createPromoInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]} as unknown as DocumentNode<CreatePromoMutation, CreatePromoMutationVariables>;
 export const GetListOfPromosDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetListOfPromos"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"promosOfPlace"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}}]}}]}}]} as unknown as DocumentNode<GetListOfPromosQuery, GetListOfPromosQueryVariables>;
-export const SearchPromosDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchPromos"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"searchPromosInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SearchPromosInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchPromos"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"searchPromosInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"searchPromosInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"placeUuid"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}}]}}]}}]} as unknown as DocumentNode<SearchPromosQuery, SearchPromosQueryVariables>;
+export const SearchPromosDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchPromos"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"searchPromosInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SearchPromosInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchPromos"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"searchPromosInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"searchPromosInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"total"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"placeUuid"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}}]}}]}}]}}]} as unknown as DocumentNode<SearchPromosQuery, SearchPromosQueryVariables>;
 export const CreateSubjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateSubject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createSubjectInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateSubjectInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createSubject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createSubjectInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createSubjectInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}}]}}]}}]} as unknown as DocumentNode<CreateSubjectMutation, CreateSubjectMutationVariables>;
 export const DeleteSubjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteSubject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeSubject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"uuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}}},{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removed"}}]}}]}}]} as unknown as DocumentNode<DeleteSubjectMutation, DeleteSubjectMutationVariables>;
 export const GetSubjectsOfPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubjectsOfPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subjectsOfPlace"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"layerName"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"logoBackgroundColor"}},{"kind":"Field","name":{"kind":"Name","value":"shortDescription"}},{"kind":"Field","name":{"kind":"Name","value":"images"}}]}}]}}]} as unknown as DocumentNode<GetSubjectsOfPlaceQuery, GetSubjectsOfPlaceQueryVariables>;
-export const SearchSubjectsOfPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchSubjectsOfPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"searchSubjectsInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SearchSubjectsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchSubjects"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"searchSubjectsInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"searchSubjectsInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"layerUuid"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"logoBackgroundColor"}},{"kind":"Field","name":{"kind":"Name","value":"shortDescription"}},{"kind":"Field","name":{"kind":"Name","value":"images"}}]}}]}}]} as unknown as DocumentNode<SearchSubjectsOfPlaceQuery, SearchSubjectsOfPlaceQueryVariables>;
+export const SearchSubjectsOfPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchSubjectsOfPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"searchSubjectsInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SearchSubjectsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchSubjects"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"searchSubjectsInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"searchSubjectsInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"total"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"layerUuid"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"logoBackgroundColor"}},{"kind":"Field","name":{"kind":"Name","value":"shortDescription"}},{"kind":"Field","name":{"kind":"Name","value":"images"}}]}}]}}]}}]} as unknown as DocumentNode<SearchSubjectsOfPlaceQuery, SearchSubjectsOfPlaceQueryVariables>;
 export const GetSubjectsByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubjectsById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"uuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}}},{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"placeUuid"}},{"kind":"Field","name":{"kind":"Name","value":"layerUuid"}},{"kind":"Field","name":{"kind":"Name","value":"layerName"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"logoBackgroundColor"}},{"kind":"Field","name":{"kind":"Name","value":"shortDescription"}},{"kind":"Field","name":{"kind":"Name","value":"images"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"templateUuid"}},{"kind":"Field","name":{"kind":"Name","value":"tabs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"templateTabUuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"fields"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetSubjectsByIdQuery, GetSubjectsByIdQueryVariables>;

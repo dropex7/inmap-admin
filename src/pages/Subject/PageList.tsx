@@ -1,6 +1,6 @@
 import {useLazyQuery} from '@apollo/client';
-import {Spin} from 'antd';
-import {useEffect} from 'react';
+import {Pagination, Spin} from 'antd';
+import {useCallback, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 
 import type {PaginationParams} from '../../components/Pagination/types';
@@ -17,13 +17,19 @@ const url = SEARCH_SUBJECTS.loc?.source.body ?? 'url';
 
 export function Component() {
     const {id} = useParams();
-    // TODO Сделать пагинацию
-    const [pageParams] = usePaginationParams(url);
+    const [pageParams, setParams] = usePaginationParams(url);
     const [filter] = usePaginationFilter<PaginationParams>(url);
 
     const [loadList, {data, error, loading}] = useLazyQuery<SearchSubjectsOfPlaceQuery>(SEARCH_SUBJECTS, {
         variables: {searchSubjectsInput: {...pageParams, ...filter, placeUuid: id}},
     });
+
+    const changePage = useCallback(
+        (newPage: number) => {
+            setParams({...pageParams, offset: (newPage - 1) * pageParams.limit});
+        },
+        [pageParams, setParams],
+    );
 
     useEffect(() => {
         loadList({variables: {searchSubjectsInput: {...pageParams, ...filter, placeUuid: id}}});
@@ -41,7 +47,20 @@ export function Component() {
             </div>
 
             <Spin size="large" spinning={loading} tip="Loading">
-                <div className="card flex-col gap-6">{data && <List data={data} />}</div>
+                <div className="card flex flex-col gap-6 p-6">
+                    {data && (
+                        <>
+                            <Pagination
+                                defaultCurrent={pageParams.offset / pageParams.limit + 1}
+                                onChange={changePage}
+                                defaultPageSize={pageParams.limit}
+                                total={data.searchSubjects.total}
+                                showSizeChanger={false}
+                            />
+                            <List data={data} />
+                        </>
+                    )}
+                </div>
             </Spin>
         </section>
     );

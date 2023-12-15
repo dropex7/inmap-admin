@@ -27,16 +27,16 @@ const LoginForm = memo(() => {
     );
 
     return (
-        <Form form={form} layout="vertical" onFinish={handleLogin} requiredMark={false} size="large">
-            <Item name="email" rules={[{required: true, whitespace: true}]}>
+        <Form form={form} layout="vertical" onFinish={handleLogin} requiredMark={false}>
+            <Item label="Электронная почта" name="email" rules={[{required: true, whitespace: true}]}>
                 <Input autoComplete="email" placeholder="Почта" />
             </Item>
 
-            <Item name="password" rules={[{required: true, whitespace: true}]}>
+            <Item label="Пароль" name="password" rules={[{required: true, whitespace: true}]}>
                 <Password autoComplete="current-password" placeholder="Пароль" />
             </Item>
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-end">
                 <Button htmlType="submit" type="primary">
                     Войти
                 </Button>

@@ -18,11 +18,11 @@ const PreviewLogo = memo<PreviewLogoProps>(({alt, backgroundColor, logoUrl, ...r
     const colorStyle = useMemo(() => ({background: `#${backgroundColor.slice(2, 8)}`}), [backgroundColor]);
     return (
         <img
+            {...rest}
             alt={alt}
             className={'h-9 w-80 max-w-full rounded-t-xl object-contain'}
             src={logoUrl}
             style={colorStyle}
-            {...rest}
         />
     );
 });

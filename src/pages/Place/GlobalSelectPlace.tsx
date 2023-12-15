@@ -10,7 +10,7 @@ import {GET_PLACES} from '../../operations/place/query';
 import PlaceCard from './PlaceCard';
 
 export const Component = memo(() => {
-    const {data, error, loading} = useQuery<GetListOfPlacesQuery>(GET_PLACES);
+    const {data, error} = useQuery<GetListOfPlacesQuery>(GET_PLACES);
     const navigate = useNavigate();
     const placeId = useRecoilValue(placeAtom);
     const firstTimeRender = useRef(false);
@@ -22,8 +22,6 @@ export const Component = memo(() => {
         }
     }, [navigate, placeId]);
 
-    if (placeId) return null;
-    if (loading) return <>Loading...</>;
     if (error) return <>Error! ${error.message}</>;
 
     return (

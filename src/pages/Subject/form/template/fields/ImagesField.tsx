@@ -5,7 +5,7 @@
 import {Form, Input} from 'antd';
 import {memo} from 'react';
 
-import ImageLoaderField from '../../../../../components/FormFields/ImageLoaderField';
+import ImageLoaderField from '../../../../../components/ImageLoader/ImageLoaderField';
 
 interface ImageFieldProps {
     fieldName: string;

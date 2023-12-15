@@ -6,7 +6,7 @@ import {Button} from 'antd';
 import {memo, useCallback} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-const LinkToCreate = memo(() => {
+const NavigateToCreate = memo(() => {
     const navigate = useNavigate();
 
     const handleCreatePromo = useCallback(() => {
@@ -20,4 +20,4 @@ const LinkToCreate = memo(() => {
     );
 });
 
-export default LinkToCreate;
+export default NavigateToCreate;
