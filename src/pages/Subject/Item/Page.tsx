@@ -3,20 +3,29 @@
  */
 import {useQuery} from '@apollo/client';
 import {Button, Descriptions} from 'antd';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 
 import type {GetSubjectsByIdQuery} from '../../../generated/graphql';
 
 import {GET_SUBJECTS_BY_ID} from '../../../operations/subject/query';
 import DeleteButton from './DeleteButton';
+import {useCallback} from 'react';
+import {useRecoilValue} from 'recoil';
+import {placeAtom} from '../../../atoms/selectedPlace';
 
 const {Item} = Descriptions;
 export function Component() {
-    const {id, subjectId} = useParams();
+    const navigate = useNavigate();
+    const placeUuid = useRecoilValue(placeAtom);
+    const {subjectId} = useParams();
 
     const {data} = useQuery<GetSubjectsByIdQuery>(GET_SUBJECTS_BY_ID, {
-        variables: {placeUuid: id, uuid: subjectId},
+        variables: {placeUuid, uuid: subjectId},
     });
+
+    const toChangeSubject = useCallback(() => {
+        navigate('change-subject');
+    }, [navigate]);
 
     if (!data?.subject) {
         return <>Loading...</>;
@@ -29,8 +38,10 @@ export function Component() {
             <div className="flex justify-between">
                 <h3>{subject.name ?? 'Объект'}</h3>
                 <div className="flex gap-3">
-                    <Button type="primary">Редактировать</Button>
-                    <DeleteButton placeUuid={id!} subjectId={subject.uuid} />
+                    <Button type="primary" onClick={toChangeSubject}>
+                        Редактировать
+                    </Button>
+                    <DeleteButton placeUuid={placeUuid!} subjectId={subject.uuid} />
                 </div>
             </div>
             <Descriptions column={1}>

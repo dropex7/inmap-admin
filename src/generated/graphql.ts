@@ -12,8 +12,6 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** Color parser */
-  Color: any;
   /** Fields parser */
   FieldModel: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
@@ -88,6 +86,7 @@ export type CreatePromoInput = {
   content: Array<Scalars['JSON']>;
   imageUrl: Scalars['String'];
   placeUuid: Scalars['String'];
+  subjectsUuids: Array<Scalars['String']>;
   subtitle: Scalars['String'];
   title: Scalars['String'];
 };
@@ -97,9 +96,9 @@ export type CreateSubjectInput = {
   images: Array<Scalars['String']>;
   layerUuid: Scalars['String'];
   logo: Scalars['String'];
-  logoBackgroundColor: Scalars['Color'];
   name: Scalars['String'];
   placeUuid: Scalars['String'];
+  promosUuids: Array<Scalars['String']>;
   schedule: Scalars['ScheduleWeek'];
   shortDescription: Scalars['String'];
 };
@@ -202,7 +201,6 @@ export type Mutation = {
   createPlaceRecommendation: PlaceRecommendationLocalizedModel;
   createPlan: Plan;
   createPromo: PromoLocalizedModel;
-  createPromoPreview: PromoPreview;
   createSubject: SubjectLocalizedModel;
   createTemplate: TemplateLocalizedModel;
   createUser: UserLocalizedModel;
@@ -210,9 +208,6 @@ export type Mutation = {
   movePlaceLayerUp: PlaceLayerLocalizedModel;
   movePlaceRecommendationLeft: PlaceRecommendationLocalizedModel;
   movePlaceRecommendationRight: PlaceRecommendationLocalizedModel;
-  movePromoPreviewLeft: PromoPreview;
-  movePromoPreviewRight: PromoPreview;
-  removeAllPromoPreviewOfPlace: RemoveResponse;
   removeCity: RemoveResponse;
   removeParking: RemoveResponse;
   removePlace: RemoveResponse;
@@ -220,7 +215,6 @@ export type Mutation = {
   removePlaceRecommendation: RemoveResponse;
   removePlan: RemoveResponse;
   removePromo: RemoveResponse;
-  removePromoPreview: RemoveResponse;
   removeSubject: RemoveResponse;
   removeUser: RemoveResponse;
   setLinkedRecsToSubject: SubjectLocalizedModel;
@@ -234,7 +228,6 @@ export type Mutation = {
   updatePlaceRecommendation: PlaceRecommendationLocalizedModel;
   updatePlan: Plan;
   updatePromo: PromoLocalizedModel;
-  updatePromoPreview: PromoPreview;
   updateSubject: SubjectLocalizedModel;
   updateTemplate: TemplateLocalizedModel;
   updateTextTranslation: TextTranslationModel;
@@ -278,12 +271,6 @@ export type MutationCreatePromoArgs = {
 };
 
 
-export type MutationCreatePromoPreviewArgs = {
-  input: NewPromoPreviewItemInput;
-  placeUuid: Scalars['String'];
-};
-
-
 export type MutationCreateSubjectArgs = {
   createSubjectInput: CreateSubjectInput;
 };
@@ -319,21 +306,6 @@ export type MutationMovePlaceRecommendationRightArgs = {
 };
 
 
-export type MutationMovePromoPreviewLeftArgs = {
-  uuid: Scalars['String'];
-};
-
-
-export type MutationMovePromoPreviewRightArgs = {
-  uuid: Scalars['String'];
-};
-
-
-export type MutationRemoveAllPromoPreviewOfPlaceArgs = {
-  placeUuid: Scalars['String'];
-};
-
-
 export type MutationRemoveCityArgs = {
   uuid: Scalars['String'];
 };
@@ -366,11 +338,6 @@ export type MutationRemovePlanArgs = {
 
 
 export type MutationRemovePromoArgs = {
-  uuid: Scalars['String'];
-};
-
-
-export type MutationRemovePromoPreviewArgs = {
   uuid: Scalars['String'];
 };
 
@@ -443,12 +410,6 @@ export type MutationUpdatePromoArgs = {
 };
 
 
-export type MutationUpdatePromoPreviewArgs = {
-  input: UpdatePromoPreviewItemInput;
-  uuid: Scalars['String'];
-};
-
-
 export type MutationUpdateSubjectArgs = {
   placeUuid: Scalars['String'];
   updateSubjectInput: UpdateSubjectInput;
@@ -472,13 +433,6 @@ export type MutationUpdateUserArgs = {
 
 export type MutationUploadImageArgs = {
   uploadInput: UploadInput;
-};
-
-export type NewPromoPreviewItemInput = {
-  crossAxisCellCount: Scalars['Int'];
-  imageUrl: Scalars['String'];
-  mainAxisCellCount: Scalars['Int'];
-  promoUuid: Scalars['String'];
 };
 
 export type ParkingLocalizedModel = {
@@ -509,8 +463,6 @@ export type PlaceLocalizedModel = {
   logoUrl: Scalars['String'];
   longitude: Scalars['Float'];
   plans: Array<Plan>;
-  promoPreview: Array<PromoPreview>;
-  promoPreviewCrossAxisCount: Scalars['Int'];
   promos?: Maybe<Array<PromoLocalizedModel>>;
   recs: Array<PlaceRecommendationLocalizedModel>;
   schedule: Scalars['ScheduleWeek'];
@@ -569,15 +521,6 @@ export type PromoLocalizedModel = {
   uuid: Scalars['String'];
 };
 
-export type PromoPreview = {
-  __typename?: 'PromoPreview';
-  crossAxisCellCount: Scalars['Int'];
-  imageUrl: Scalars['String'];
-  mainAxisCellCount: Scalars['Int'];
-  promoUuid: Scalars['String'];
-  uuid: Scalars['String'];
-};
-
 export type PromoSearchModel = {
   __typename?: 'PromoSearchModel';
   imageUrl: Scalars['String'];
@@ -600,7 +543,6 @@ export type Query = {
   city: CityLocalizedModel;
   existingLanguages: Array<LanguageModel>;
   fieldsContentTranslationsOfPlace: Array<FieldsContentWithTranslationsModel>;
-  findAllPromoPreviewOfPlace: Array<PromoPreview>;
   parking: ParkingLocalizedModel;
   parkingWithPlaceUuid?: Maybe<ParkingLocalizedModel>;
   place: PlaceLocalizedModel;
@@ -615,12 +557,14 @@ export type Query = {
   plan: Plan;
   plansOfPlace: Array<Plan>;
   promo: PromoLocalizedModel;
+  promosLinkedToSubject: Array<PromoLocalizedModel>;
   promosOfPlace: Array<PromoLocalizedModel>;
   searchPlaces: PlacesSearchResModel;
   searchPlacesAll: PlacesSearchResModel;
   searchPromos: PromosSearchResModel;
   searchSubjects: SubjectsSearchResModel;
   subject: SubjectLocalizedModel;
+  subjectsLinkedToPromo: Array<SubjectLocalizedModel>;
   subjectsOfPlace: Array<SubjectLocalizedModel>;
   template: TemplateLocalizedModel;
   templates: Array<TemplateLocalizedModel>;
@@ -644,11 +588,6 @@ export type QueryCityArgs = {
 
 
 export type QueryFieldsContentTranslationsOfPlaceArgs = {
-  placeUuid: Scalars['String'];
-};
-
-
-export type QueryFindAllPromoPreviewOfPlaceArgs = {
   placeUuid: Scalars['String'];
 };
 
@@ -716,6 +655,12 @@ export type QueryPromoArgs = {
 };
 
 
+export type QueryPromosLinkedToSubjectArgs = {
+  placeUuid: Scalars['String'];
+  subjectUuid: Scalars['String'];
+};
+
+
 export type QueryPromosOfPlaceArgs = {
   placeUuid: Scalars['String'];
 };
@@ -744,6 +689,12 @@ export type QuerySearchSubjectsArgs = {
 export type QuerySubjectArgs = {
   placeUuid: Scalars['String'];
   uuid: Scalars['String'];
+};
+
+
+export type QuerySubjectsLinkedToPromoArgs = {
+  placeUuid: Scalars['String'];
+  promoUuid: Scalars['String'];
 };
 
 
@@ -814,7 +765,6 @@ export type SubjectLocalizedModel = {
   images: Array<Scalars['String']>;
   layerName: Scalars['String'];
   layerUuid: Scalars['String'];
-  logoBackgroundColor: Scalars['Color'];
   logoUrl: Scalars['String'];
   name: Scalars['String'];
   placeUuid: Scalars['String'];
@@ -828,7 +778,6 @@ export type SubjectSearchModel = {
   __typename?: 'SubjectSearchModel';
   images: Array<Scalars['String']>;
   layerUuid: Scalars['String'];
-  logoBackgroundColor: Scalars['Color'];
   logoUrl: Scalars['String'];
   name: Scalars['String'];
   placeUuid: Scalars['String'];
@@ -917,7 +866,7 @@ export type UpdateParkingInput = {
 export type UpdatePlaceInput = {
   address?: InputMaybe<Scalars['String']>;
   code?: InputMaybe<Scalars['String']>;
-  fields?: InputMaybe<Scalars['JSON']>;
+  fields?: InputMaybe<Array<Scalars['JSON']>>;
   images?: InputMaybe<Array<Scalars['String']>>;
   isVisible?: InputMaybe<Scalars['Boolean']>;
   latitude?: InputMaybe<Scalars['Float']>;
@@ -959,16 +908,10 @@ export type UpdatePromoInput = {
   content?: InputMaybe<Array<Scalars['JSON']>>;
   imageUrl?: InputMaybe<Scalars['String']>;
   placeUuid?: InputMaybe<Scalars['String']>;
+  subjectsUuids?: InputMaybe<Array<Scalars['String']>>;
   subtitle?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
   uuid: Scalars['String'];
-};
-
-export type UpdatePromoPreviewItemInput = {
-  crossAxisCellCount?: InputMaybe<Scalars['Int']>;
-  imageUrl?: InputMaybe<Scalars['String']>;
-  mainAxisCellCount?: InputMaybe<Scalars['Int']>;
-  promoUuid?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateSubjectInput = {
@@ -976,8 +919,8 @@ export type UpdateSubjectInput = {
   images?: InputMaybe<Array<Scalars['String']>>;
   layerUuid?: InputMaybe<Scalars['String']>;
   logo?: InputMaybe<Scalars['String']>;
-  logoBackgroundColor?: InputMaybe<Scalars['Color']>;
   name?: InputMaybe<Scalars['String']>;
+  promosUuids?: InputMaybe<Array<Scalars['String']>>;
   schedule?: InputMaybe<Scalars['ScheduleWeek']>;
   shortDescription?: InputMaybe<Scalars['String']>;
   uuid: Scalars['String'];
@@ -1112,14 +1055,14 @@ export type GetSubjectsOfPlaceQueryVariables = Exact<{
 }>;
 
 
-export type GetSubjectsOfPlaceQuery = { __typename?: 'Query', subjectsOfPlace: Array<{ __typename?: 'SubjectLocalizedModel', uuid: string, name: string, layerName: string, logoUrl: string, logoBackgroundColor: any, shortDescription: string, images: Array<string> }> };
+export type GetSubjectsOfPlaceQuery = { __typename?: 'Query', subjectsOfPlace: Array<{ __typename?: 'SubjectLocalizedModel', uuid: string, name: string, layerName: string, logoUrl: string, shortDescription: string, images: Array<string> }> };
 
 export type SearchSubjectsOfPlaceQueryVariables = Exact<{
   searchSubjectsInput: SearchSubjectsInput;
 }>;
 
 
-export type SearchSubjectsOfPlaceQuery = { __typename?: 'Query', searchSubjects: { __typename?: 'SubjectsSearchResModel', total: number, items: Array<{ __typename?: 'SubjectSearchModel', uuid: string, name: string, layerUuid: string, logoUrl: string, logoBackgroundColor: any, shortDescription: string, images: Array<string> }> } };
+export type SearchSubjectsOfPlaceQuery = { __typename?: 'Query', searchSubjects: { __typename?: 'SubjectsSearchResModel', total: number, items: Array<{ __typename?: 'SubjectSearchModel', uuid: string, name: string, layerUuid: string, logoUrl: string, shortDescription: string, images: Array<string> }> } };
 
 export type GetSubjectsByIdQueryVariables = Exact<{
   uuid: Scalars['String'];
@@ -1127,7 +1070,7 @@ export type GetSubjectsByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetSubjectsByIdQuery = { __typename?: 'Query', subject: { __typename?: 'SubjectLocalizedModel', uuid: string, name: string, placeUuid: string, layerUuid: string, layerName: string, logoUrl: string, logoBackgroundColor: any, shortDescription: string, images: Array<string>, content?: { __typename?: 'TemplatedContentLocalizedModel', templateUuid: string, tabs: Array<{ __typename?: 'TemplatedContentTabLocalizedModel', templateTabUuid: string, name: string, fields: Array<any> }> } | null } };
+export type GetSubjectsByIdQuery = { __typename?: 'Query', subject: { __typename?: 'SubjectLocalizedModel', uuid: string, name: string, placeUuid: string, layerUuid: string, layerName: string, logoUrl: string, shortDescription: string, images: Array<string>, content?: { __typename?: 'TemplatedContentLocalizedModel', templateUuid: string, tabs: Array<{ __typename?: 'TemplatedContentTabLocalizedModel', templateTabUuid: string, name: string, fields: Array<any> }> } | null } };
 
 
 export const UploadImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UploadImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uploadInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UploadInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uploadImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"uploadInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uploadInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]} as unknown as DocumentNode<UploadImageMutation, UploadImageMutationVariables>;
@@ -1139,6 +1082,6 @@ export const GetListOfPromosDocument = {"kind":"Document","definitions":[{"kind"
 export const SearchPromosDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchPromos"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"searchPromosInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SearchPromosInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchPromos"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"searchPromosInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"searchPromosInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"total"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"placeUuid"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}}]}}]}}]}}]} as unknown as DocumentNode<SearchPromosQuery, SearchPromosQueryVariables>;
 export const CreateSubjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateSubject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createSubjectInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateSubjectInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createSubject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createSubjectInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createSubjectInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}}]}}]}}]} as unknown as DocumentNode<CreateSubjectMutation, CreateSubjectMutationVariables>;
 export const DeleteSubjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteSubject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeSubject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"uuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}}},{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removed"}}]}}]}}]} as unknown as DocumentNode<DeleteSubjectMutation, DeleteSubjectMutationVariables>;
-export const GetSubjectsOfPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubjectsOfPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subjectsOfPlace"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"layerName"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"logoBackgroundColor"}},{"kind":"Field","name":{"kind":"Name","value":"shortDescription"}},{"kind":"Field","name":{"kind":"Name","value":"images"}}]}}]}}]} as unknown as DocumentNode<GetSubjectsOfPlaceQuery, GetSubjectsOfPlaceQueryVariables>;
-export const SearchSubjectsOfPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchSubjectsOfPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"searchSubjectsInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SearchSubjectsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchSubjects"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"searchSubjectsInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"searchSubjectsInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"total"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"layerUuid"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"logoBackgroundColor"}},{"kind":"Field","name":{"kind":"Name","value":"shortDescription"}},{"kind":"Field","name":{"kind":"Name","value":"images"}}]}}]}}]}}]} as unknown as DocumentNode<SearchSubjectsOfPlaceQuery, SearchSubjectsOfPlaceQueryVariables>;
-export const GetSubjectsByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubjectsById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"uuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}}},{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"placeUuid"}},{"kind":"Field","name":{"kind":"Name","value":"layerUuid"}},{"kind":"Field","name":{"kind":"Name","value":"layerName"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"logoBackgroundColor"}},{"kind":"Field","name":{"kind":"Name","value":"shortDescription"}},{"kind":"Field","name":{"kind":"Name","value":"images"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"templateUuid"}},{"kind":"Field","name":{"kind":"Name","value":"tabs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"templateTabUuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"fields"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetSubjectsByIdQuery, GetSubjectsByIdQueryVariables>;
+export const GetSubjectsOfPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubjectsOfPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subjectsOfPlace"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"layerName"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"shortDescription"}},{"kind":"Field","name":{"kind":"Name","value":"images"}}]}}]}}]} as unknown as DocumentNode<GetSubjectsOfPlaceQuery, GetSubjectsOfPlaceQueryVariables>;
+export const SearchSubjectsOfPlaceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchSubjectsOfPlace"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"searchSubjectsInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SearchSubjectsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchSubjects"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"searchSubjectsInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"searchSubjectsInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"total"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"layerUuid"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"shortDescription"}},{"kind":"Field","name":{"kind":"Name","value":"images"}}]}}]}}]}}]} as unknown as DocumentNode<SearchSubjectsOfPlaceQuery, SearchSubjectsOfPlaceQueryVariables>;
+export const GetSubjectsByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubjectsById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"uuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uuid"}}},{"kind":"Argument","name":{"kind":"Name","value":"placeUuid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"placeUuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"placeUuid"}},{"kind":"Field","name":{"kind":"Name","value":"layerUuid"}},{"kind":"Field","name":{"kind":"Name","value":"layerName"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"shortDescription"}},{"kind":"Field","name":{"kind":"Name","value":"images"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"templateUuid"}},{"kind":"Field","name":{"kind":"Name","value":"tabs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"templateTabUuid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"fields"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetSubjectsByIdQuery, GetSubjectsByIdQueryVariables>;

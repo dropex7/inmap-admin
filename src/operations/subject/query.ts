@@ -7,7 +7,6 @@ export const GET_SUBJECTS = gql`
             name
             layerName
             logoUrl
-            logoBackgroundColor
             shortDescription
             images
         }
@@ -23,7 +22,6 @@ export const SEARCH_SUBJECTS = gql`
                 name
                 layerUuid
                 logoUrl
-                logoBackgroundColor
                 shortDescription
                 images
             }
@@ -40,7 +38,6 @@ export const GET_SUBJECTS_BY_ID = gql`
             layerUuid
             layerName
             logoUrl
-            logoBackgroundColor
             shortDescription
             images
             content {

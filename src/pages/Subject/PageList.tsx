@@ -1,7 +1,6 @@
 import {useLazyQuery} from '@apollo/client';
 import {Pagination, Spin} from 'antd';
 import {useCallback, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
 
 import type {PaginationParams} from '../../components/Pagination/types';
 import type {SearchSubjectsOfPlaceQuery} from '../../generated/graphql';
@@ -12,16 +11,18 @@ import usePaginationParams from '../../hooks/pagination/usePaginationParams';
 import {SEARCH_SUBJECTS} from '../../operations/subject/query';
 import LinkToCreate from './LinkToCreate';
 import List from './List';
+import {useRecoilValue} from 'recoil';
+import {placeAtom} from '../../atoms/selectedPlace';
 
 const url = SEARCH_SUBJECTS.loc?.source.body ?? 'url';
 
 export function Component() {
-    const {id} = useParams();
+    const placeUuid = useRecoilValue(placeAtom);
     const [pageParams, setParams] = usePaginationParams(url);
     const [filter] = usePaginationFilter<PaginationParams>(url);
 
     const [loadList, {data, error, loading}] = useLazyQuery<SearchSubjectsOfPlaceQuery>(SEARCH_SUBJECTS, {
-        variables: {searchSubjectsInput: {...pageParams, ...filter, placeUuid: id}},
+        variables: {searchSubjectsInput: {...pageParams, ...filter, placeUuid}},
     });
 
     const changePage = useCallback(
@@ -32,8 +33,8 @@ export function Component() {
     );
 
     useEffect(() => {
-        loadList({variables: {searchSubjectsInput: {...pageParams, ...filter, placeUuid: id}}});
-    }, [filter, id, loadList, pageParams]);
+        loadList({variables: {searchSubjectsInput: {...pageParams, ...filter, placeUuid}}});
+    }, [filter, placeUuid, loadList, pageParams]);
 
     if (error) {
         return <>{error.message}</>;

@@ -3,30 +3,36 @@
  */
 import {LoadingOutlined} from '@ant-design/icons';
 import {useEffect} from 'react';
-import {Outlet, useParams} from 'react-router-dom';
+import {Outlet} from 'react-router-dom';
 import {useRecoilState} from 'recoil';
 
 import {placeAtom} from '../atoms/selectedPlace';
 import {PlaceGlobalCtx} from '../pages/Place/PlaceGlobalCtx';
+import {useQuery} from '@apollo/client';
+import type {GetListOfPlacesQuery} from '../generated/graphql';
+import {GET_PLACES} from '../operations/place/query';
 
 export function Component() {
-    const {id} = useParams<{id: string}>();
     const [placeId, setPlaceId] = useRecoilState(placeAtom);
-
-    const hasPlace = !!placeId && placeId === id;
+    const {data, error, loading} = useQuery<GetListOfPlacesQuery>(GET_PLACES);
 
     useEffect(() => {
-        if (!hasPlace && id) {
-            setPlaceId(id);
+        if (!placeId && data) {
+            setPlaceId(data.places[0].uuid);
         }
-    }, [id, setPlaceId, hasPlace]);
+    }, [data, placeId, setPlaceId]);
 
-    if (!hasPlace)
+    if (loading) {
         return (
             <div className="flex flex-auto flex-col items-center justify-center">
                 <LoadingOutlined />
             </div>
         );
+    }
+
+    if (error) {
+        return <div className="flex flex-auto flex-col items-center justify-center">Ошибка</div>;
+    }
 
     return (
         <PlaceGlobalCtx.Provider value={placeId}>

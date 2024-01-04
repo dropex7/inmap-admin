@@ -16,7 +16,7 @@ interface SubjectCardProps {
 }
 
 const SubjectCard = memo<SubjectCardProps>(({subject}) => {
-    const {images, logoBackgroundColor, logoUrl, name, shortDescription, uuid} = subject;
+    const {images, logoUrl, name, shortDescription, uuid} = subject;
     const navigate = useNavigate();
 
     const backgroundImage = useMemo(() => {
@@ -25,9 +25,7 @@ const SubjectCard = memo<SubjectCardProps>(({subject}) => {
 
     return (
         <div className="card flex w-80 flex-col rounded-xl" onClick={() => navigate(uuid!)}>
-            {logoUrl && logoBackgroundColor && (
-                <PreviewLogo alt="image" backgroundColor={logoBackgroundColor} logoUrl={logoUrl} />
-            )}
+            {logoUrl && <PreviewLogo alt="image" logoUrl={logoUrl} />}
 
             <PreviewImage alt="image" height="200px" url={backgroundImage ?? noPhoto} />
 
