@@ -9,8 +9,7 @@ export default {
         plugin(function ({addComponents, theme}) {
             addComponents({
                 '.card': {
-                    backgroundColor: theme('colors.white'),
-                    borderRadius: theme('borderRadius.lg'),
+                    backgroundColor: theme('colors.darkBackground'),
                     boxShadow: theme('boxShadow.sm'),
                 },
             });
@@ -21,6 +20,7 @@ export default {
             colors: {
                 accent: 'rgb(var(--color-accent) / <alpha-value>)',
                 primary: 'rgb(var(--color-primary) / <alpha-value>)',
+                darkBackground: '#272A30',
             },
             spacing: {
                 header: 'var(--header-height)',

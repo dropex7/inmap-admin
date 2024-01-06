@@ -33,7 +33,7 @@ const PlaceSelect = memo<PlaceSelectProps>(({places}) => {
 
     return (
         <Select
-            className="w-60"
+            className="w-60 bg-transparent"
             defaultValue={selectedSubject?.uuid}
             onChange={handleChange}
             optionLabelProp="label"

@@ -25,7 +25,7 @@ const Header = memo(() => {
 
             <div className="flex gap-5">
                 <PlaceSelect places={data?.places ?? []} />
-                <Button onClick={() => logout()}>Log out</Button>
+                <Button onClick={() => logout()}>Выйти</Button>
             </div>
         </header>
     );

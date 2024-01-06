@@ -14,7 +14,7 @@ const Layout = memo(() => {
             <Header />
             <div className="flex">
                 <Nav />
-                <div className="h-[calc(100vh-64px)] w-full self-end overflow-scroll p-6">
+                <div className="h-[calc(100vh-64px)] w-full self-end overflow-scroll bg-black">
                     <Outlet />
                 </div>
             </div>

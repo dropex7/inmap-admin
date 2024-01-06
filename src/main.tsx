@@ -1,5 +1,5 @@
 import {ApolloProvider} from '@apollo/client';
-import {ConfigProvider} from 'antd';
+import {ConfigProvider, theme} from 'antd';
 import 'antd/dist/reset.css';
 import {StrictMode} from 'react';
 import ReactDOM from 'react-dom/client';
@@ -16,6 +16,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <ApolloProvider client={client}>
                 <ConfigProvider
                     direction="ltr"
+                    theme={{
+                        algorithm: theme.darkAlgorithm,
+                    }}
                     locale={ruRU}
                     form={{colon: false, validateMessages: validateMessagesWithLabels}}
                 >

@@ -2,33 +2,41 @@
  * Created by MIRZOEV A. on 04.11.2023
  */
 
-import {memo, useEffect, useRef} from 'react';
-import {encodedPlan} from '../../pages/Home/testPlan';
+import type {PropsWithChildren} from 'react';
+import {memo, useContext, useEffect} from 'react';
+import {useGetMessageFromMap} from '../../hooks/useGetMessageFromMap';
+import {MapContext} from '../../pages/Map/MapContext';
+import {useRecoilValue} from 'recoil';
+import {placeAtom} from '../../atoms/selectedPlace';
+import {useQuery} from '@apollo/client';
+import {GET_PLACE} from '../../operations/place/query';
+import type {GetPlaceQuery} from '../../generated/graphql';
+import {getLoadPlanMessage} from '../../utils/widgetMessages';
 
-const message = {
-    data: {
-        encodedPlan,
-    },
-    type: 'open-plan',
-};
+const Map = memo<PropsWithChildren>(() => {
+    const {ref} = useContext(MapContext);
+    const placeUuid = useRecoilValue(placeAtom);
 
-const Map = memo(() => {
-    const ref = useRef<HTMLIFrameElement>(null);
+    const {data} = useQuery<GetPlaceQuery>(GET_PLACE, {
+        variables: {uuid: placeUuid},
+    });
+
+    const {isReady} = useGetMessageFromMap();
 
     useEffect(() => {
-        if (ref?.current?.contentWindow) {
-            ref.current.contentWindow.postMessage(message, '*'); // '*' означает, что сообщение будет отправлено всем окнам.
+        if (ref?.current?.contentWindow && isReady && data?.place.selectedPlanKey) {
+            ref.current.contentWindow.postMessage(getLoadPlanMessage(placeUuid!, data.place.selectedPlanKey), '*'); // '*' означает, что сообщение будет отправлено всем окнам.
         }
-    }, [ref]);
+    }, [ref, isReady, data, placeUuid]);
 
     return (
-        <div className="flex flex-col gap-y-4 rounded-lg border bg-white p-4">
+        <div className="flex h-full w-full flex-col gap-y-4 rounded-lg bg-white">
             <iframe
-                height="500"
+                width="100%"
+                height="100%"
                 ref={ref}
                 src="https://inmap-interactive-map-embed.web.app/"
                 title="Flutter App"
-                width="1000"
             />
         </div>
     );

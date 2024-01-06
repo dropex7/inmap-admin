@@ -70,12 +70,12 @@ export const authorizedAppRoutes = [
             {
                 errorElement: <PageError />,
                 index: true,
-                lazy: () => import('../pages/Home/Page'),
+                lazy: () => import('../pages/Map/Page'),
             },
         ],
         lazy: () => import('../components/PageWrapper'),
         errorElement: <PageError />,
-        path: 'home',
+        path: 'map',
     },
     {
         element: <div className="text-white">Нет такой странички бро</div>,

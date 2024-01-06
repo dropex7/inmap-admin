@@ -1,11 +1,12 @@
-import {ReactComponent as HomeIcon} from '../../assets/home.svg';
 import {ReactComponent as OtherIcon} from '../../assets/other.svg';
+import {ReactComponent as MapIcon} from '../../assets/map.svg';
+import {ReactComponent as NewsIcon} from '../../assets/news.svg';
 
 export const navLinks = [
     {
-        icon: <HomeIcon style={{minWidth: '20px'}} />,
-        path: 'home',
-        title: 'Главная',
+        icon: <MapIcon style={{minWidth: '20px'}} />,
+        path: 'map',
+        title: 'Карта',
     },
     {
         icon: <OtherIcon style={{minWidth: '20px'}} />,
@@ -13,7 +14,7 @@ export const navLinks = [
         title: 'Объекты',
     },
     {
-        icon: <OtherIcon style={{minWidth: '20px'}} />,
+        icon: <NewsIcon style={{minWidth: '20px'}} />,
         path: 'promo',
         title: 'Новости и акции',
     },
