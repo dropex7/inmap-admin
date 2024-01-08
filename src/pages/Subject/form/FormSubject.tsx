@@ -55,6 +55,7 @@ const FormSubject = memo<FormProps>(({item}) => {
     });
 
     const [createSubject] = useMutation<SubjectFormValues>(CREATE_SUBJECT);
+    // const [updateSubject] = useMutation<any>(UPDATE_SUBJECT);
 
     const initialValues = useMemo(
         () =>
@@ -112,7 +113,7 @@ const FormSubject = memo<FormProps>(({item}) => {
 
             <Item>
                 <Button className="w-full" htmlType="submit" size="large" type="primary">
-                    Создать
+                    {isCreate ? 'Создать' : 'Сохранить изменения'}
                 </Button>
             </Item>
         </Form>

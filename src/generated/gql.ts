@@ -21,6 +21,7 @@ const documents = {
     "\n    query GetListOfPromos($placeUuid: String!) {\n        promosOfPlace(placeUuid: $placeUuid) {\n            uuid\n            title\n            imageUrl\n            subtitle\n        }\n    }\n": types.GetListOfPromosDocument,
     "\n    query SearchPromos($searchPromosInput: SearchPromosInput!) {\n        searchPromos(searchPromosInput: $searchPromosInput) {\n            total\n            items {\n                uuid\n                placeUuid\n                imageUrl\n                title\n                subtitle\n            }\n        }\n    }\n": types.SearchPromosDocument,
     "\n    mutation CreateSubject($createSubjectInput: CreateSubjectInput!) {\n        createSubject(createSubjectInput: $createSubjectInput) {\n            uuid\n        }\n    }\n": types.CreateSubjectDocument,
+    "\n    mutation UpdateSubject($updateSubjectInput: UpdateSubjectInput!, $placeUuid: String!) {\n        updateSubject(updateSubjectInput: $updateSubjectInput, placeUuid: $placeUuid) {\n            uuid\n        }\n    }\n": types.UpdateSubjectDocument,
     "\n    mutation DeleteSubject($uuid: String!, $placeUuid: String!) {\n        removeSubject(uuid: $uuid, placeUuid: $placeUuid) {\n            removed\n        }\n    }\n": types.DeleteSubjectDocument,
     "\n    query GetSubjectsOfPlace($placeUuid: String!) {\n        subjectsOfPlace(placeUuid: $placeUuid) {\n            uuid\n            name\n            layerName\n            logoUrl\n            shortDescription\n            images\n        }\n    }\n": types.GetSubjectsOfPlaceDocument,
     "\n    query SearchSubjectsOfPlace($searchSubjectsInput: SearchSubjectsInput!) {\n        searchSubjects(searchSubjectsInput: $searchSubjectsInput) {\n            total\n            items {\n                uuid\n                name\n                layerUuid\n                logoUrl\n                shortDescription\n                images\n            }\n        }\n    }\n": types.SearchSubjectsOfPlaceDocument,
@@ -73,6 +74,10 @@ export function graphql(source: "\n    query SearchPromos($searchPromosInput: Se
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n    mutation CreateSubject($createSubjectInput: CreateSubjectInput!) {\n        createSubject(createSubjectInput: $createSubjectInput) {\n            uuid\n        }\n    }\n"): (typeof documents)["\n    mutation CreateSubject($createSubjectInput: CreateSubjectInput!) {\n        createSubject(createSubjectInput: $createSubjectInput) {\n            uuid\n        }\n    }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    mutation UpdateSubject($updateSubjectInput: UpdateSubjectInput!, $placeUuid: String!) {\n        updateSubject(updateSubjectInput: $updateSubjectInput, placeUuid: $placeUuid) {\n            uuid\n        }\n    }\n"): (typeof documents)["\n    mutation UpdateSubject($updateSubjectInput: UpdateSubjectInput!, $placeUuid: String!) {\n        updateSubject(updateSubjectInput: $updateSubjectInput, placeUuid: $placeUuid) {\n            uuid\n        }\n    }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

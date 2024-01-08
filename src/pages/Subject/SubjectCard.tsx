@@ -24,15 +24,15 @@ const SubjectCard = memo<SubjectCardProps>(({subject}) => {
     }, [images]);
 
     return (
-        <div className="card flex w-80 flex-col rounded-xl" onClick={() => navigate(uuid!)}>
+        <div className="card flex w-80 flex-col rounded-xl border" onClick={() => navigate(uuid!)}>
             {logoUrl && <PreviewLogo alt="image" logoUrl={logoUrl} />}
 
-            <PreviewImage alt="image" height="200px" url={backgroundImage ?? noPhoto} />
+            <PreviewImage alt="image" height="200px" rounded url={backgroundImage ?? noPhoto} />
 
             <div className="flex flex-col gap-3 p-3">
-                <span className="self-end text-sm text-gray-500">НЕТ ЭТАЖА</span>
-                <strong className="self-start">{name}</strong>
-                <span className="self-start text-sm text-gray-500">{shortDescription}</span>
+                <span className="self-end text-sm text-white">НЕТ ЭТАЖА</span>
+                <strong className="self-start text-white">{name}</strong>
+                <span className="self-start text-sm text-white">{shortDescription}</span>
             </div>
         </div>
     );

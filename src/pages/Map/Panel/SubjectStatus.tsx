@@ -4,9 +4,9 @@
 
 import {memo, useContext} from 'react';
 import {Alert} from 'antd';
-import {MapContext} from './MapContext';
+import {MapContext} from '../MapContext';
 
-const SelectedObjectStatus = memo(() => {
+const SubjectStatus = memo(() => {
     const {selectedObject} = useContext(MapContext);
 
     const alertMessage = selectedObject
@@ -18,4 +18,4 @@ const SelectedObjectStatus = memo(() => {
     return <Alert message={alertMessage} type="info" showIcon />;
 });
 
-export default SelectedObjectStatus;
+export default SubjectStatus;

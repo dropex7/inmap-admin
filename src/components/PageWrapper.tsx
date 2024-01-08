@@ -1,41 +1,37 @@
 /**
  * Created by MIRZOEV A. on 09.08.2023
  */
-import {LoadingOutlined} from '@ant-design/icons';
-import {useEffect} from 'react';
 import {Outlet} from 'react-router-dom';
-import {useRecoilState} from 'recoil';
+import {useRecoilValue} from 'recoil';
 
 import {placeAtom} from '../atoms/selectedPlace';
-import {PlaceGlobalCtx} from '../pages/Place/PlaceGlobalCtx';
 import {useQuery} from '@apollo/client';
-import type {GetListOfPlacesQuery} from '../generated/graphql';
-import {GET_PLACES} from '../operations/place/query';
+import {GET_PLACE} from '../operations/place/query';
+import type {GetPlaceQuery} from '../generated/graphql';
+import {PlaceGlobalCtx} from '../pages/Place/PlaceGlobalCtx';
 
 export function Component() {
-    const [placeId, setPlaceId] = useRecoilState(placeAtom);
-    const {data, error, loading} = useQuery<GetListOfPlacesQuery>(GET_PLACES);
+    const placeId = useRecoilValue(placeAtom);
 
-    useEffect(() => {
-        if (!placeId && data) {
-            setPlaceId(data.places[0].uuid);
-        }
-    }, [data, placeId, setPlaceId]);
-
-    if (loading) {
-        return (
-            <div className="flex flex-auto flex-col items-center justify-center">
-                <LoadingOutlined />
-            </div>
-        );
-    }
+    const {
+        data: placeResponse,
+        error,
+        loading,
+    } = useQuery<GetPlaceQuery>(GET_PLACE, {
+        variables: {uuid: placeId},
+        skip: !placeId,
+    });
 
     if (error) {
         return <div className="flex flex-auto flex-col items-center justify-center">Ошибка</div>;
     }
 
+    if (!placeResponse || loading) {
+        return <>Place is loading</>;
+    }
+
     return (
-        <PlaceGlobalCtx.Provider value={placeId}>
+        <PlaceGlobalCtx.Provider value={placeResponse.place}>
             <Outlet />
         </PlaceGlobalCtx.Provider>
     );

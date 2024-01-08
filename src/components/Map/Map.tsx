@@ -8,26 +8,21 @@ import {useGetMessageFromMap} from '../../hooks/useGetMessageFromMap';
 import {MapContext} from '../../pages/Map/MapContext';
 import {useRecoilValue} from 'recoil';
 import {placeAtom} from '../../atoms/selectedPlace';
-import {useQuery} from '@apollo/client';
-import {GET_PLACE} from '../../operations/place/query';
-import type {GetPlaceQuery} from '../../generated/graphql';
 import {getLoadPlanMessage} from '../../utils/widgetMessages';
+import {PlaceGlobalCtx} from '../../pages/Place/PlaceGlobalCtx';
 
 const Map = memo<PropsWithChildren>(() => {
     const {ref} = useContext(MapContext);
     const placeUuid = useRecoilValue(placeAtom);
-
-    const {data} = useQuery<GetPlaceQuery>(GET_PLACE, {
-        variables: {uuid: placeUuid},
-    });
+    const place = useContext(PlaceGlobalCtx);
 
     const {isReady} = useGetMessageFromMap();
 
     useEffect(() => {
-        if (ref?.current?.contentWindow && isReady && data?.place.selectedPlanKey) {
-            ref.current.contentWindow.postMessage(getLoadPlanMessage(placeUuid!, data.place.selectedPlanKey), '*'); // '*' означает, что сообщение будет отправлено всем окнам.
+        if (ref?.current?.contentWindow && isReady) {
+            ref.current.contentWindow.postMessage(getLoadPlanMessage(placeUuid, place.selectedPlanKey), '*'); // '*' означает, что сообщение будет отправлено всем окнам.
         }
-    }, [ref, isReady, data, placeUuid]);
+    }, [ref, isReady, placeUuid, place.selectedPlanKey]);
 
     return (
         <div className="flex h-full w-full flex-col gap-y-4 rounded-lg bg-white">

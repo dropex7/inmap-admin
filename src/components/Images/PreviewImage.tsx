@@ -13,7 +13,7 @@ interface PreviewImageProps extends HTMLProps<HTMLImageElement> {
 }
 
 const PreviewImage = memo<PreviewImageProps>(({alt, rounded = false, url, ...rest}) => {
-    return <img {...rest} alt={alt} className={clsx('max-w-full object-cover', rounded && 'rounded-md')} src={url} />;
+    return <img {...rest} alt={alt} className={clsx('max-w-full object-cover', rounded && 'rounded-lg')} src={url} />;
 });
 
 export default PreviewImage;
