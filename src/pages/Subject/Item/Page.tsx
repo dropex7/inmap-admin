@@ -36,7 +36,7 @@ export function Component() {
     return (
         <div className="card flex flex-col gap-6 p-6">
             <div className="flex justify-between">
-                <h3>{subject.name ?? 'Объект'}</h3>
+                <h3 className="text-white">{subject.name ?? 'Объект'}</h3>
                 <div className="flex gap-3">
                     <Button type="primary" onClick={toChangeSubject}>
                         Редактировать

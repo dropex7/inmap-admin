@@ -1,40 +1,33 @@
 /**
- * Created by MIRZOEV A. on 20.11.2023
+ * Created by MIRZOEV A. on 08.01.2024
  */
 
 import {Form} from 'antd';
 import {memo} from 'react';
-
 import type {LocalizedTemplateTabModel} from '../../../../generated/graphql';
+import TemplateFields from '../TemplateFields';
 
-import {createIndexWithZeros} from '../helper';
-import FieldByType from './FieldByType';
-
-interface TabsProps {
+interface NewTemplateProps {
     data: Array<LocalizedTemplateTabModel>;
 }
 
-const TemplateTabs = memo<TabsProps>(({data}) => {
+const TemplateTabs = memo<NewTemplateProps>(({data}) => {
     return (
-        <>
-            {data.map(({fields, name, uuid}, tabIndex) => {
-                const tabName = `${createIndexWithZeros(tabIndex)}${uuid}`;
-                return (
-                    <Form.List key={tabName} name={tabName}>
-                        {() => (
-                            <div className="card p-6" key={uuid}>
-                                <h3>{name}</h3>
-                                {fields.map((field, fieldIndex) => {
-                                    const name = `${createIndexWithZeros(fieldIndex)}&${field}`;
-
-                                    return <FieldByType field={field} key={name} name={name} tabUuid={tabName} />;
-                                })}
-                            </div>
-                        )}
-                    </Form.List>
-                );
-            })}
-        </>
+        <Form.List name="tabs">
+            {() => (
+                <div style={{display: 'flex', rowGap: 16, flexDirection: 'column'}}>
+                    {data.map(({uuid, name, fields}, index) => (
+                        <TemplateFields
+                            templateTabUuid={uuid}
+                            fields={fields}
+                            key={uuid}
+                            name={name}
+                            tabIndex={index}
+                        />
+                    ))}
+                </div>
+            )}
+        </Form.List>
     );
 });
 

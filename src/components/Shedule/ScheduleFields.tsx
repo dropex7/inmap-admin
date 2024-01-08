@@ -4,16 +4,15 @@
 
 import {memo, useCallback} from 'react';
 
-import FieldWrapper from '../../pages/Subject/form/template/fields/FieldWrapper';
 import {SCHEDULE_DAYS} from './types';
 import ScheduleItem from './ScheduleItem';
-import {Button, Modal} from 'antd';
+import {Button, Form, Modal} from 'antd';
 import useOpen from '../../hooks/useOpen';
 
 const items = Object.keys(SCHEDULE_DAYS).map(key => (
-    <FieldWrapper key={key} name={key}>
-        <ScheduleItem name={key} />
-    </FieldWrapper>
+    <Form.List key={key} name={key}>
+        {() => <ScheduleItem name={key} />}
+    </Form.List>
 ));
 
 const ScheduleFields = memo(() => {
@@ -39,9 +38,7 @@ const ScheduleFields = memo(() => {
                     </Button>,
                 ]}
             >
-                <FieldWrapper name="schedule">
-                    <div className="grid grid-cols-2 gap-6 p-6">{items}</div>
-                </FieldWrapper>
+                <Form.List name="schedule">{() => <div className="grid grid-cols-2 gap-6 p-6">{items}</div>}</Form.List>
             </Modal>
         </>
     );

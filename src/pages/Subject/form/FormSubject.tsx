@@ -15,18 +15,19 @@ import type {SCHEDULE_DAYS} from '../../../components/Shedule/types';
 import type {Query} from '../../../generated/graphql';
 
 import {placeAtom} from '../../../atoms/selectedPlace';
-import {CREATE_SUBJECT} from '../../../operations/subject/mutation';
-import {GET_SUBJECTS} from '../../../operations/subject/query';
+import {CREATE_SUBJECT, UPDATE_SUBJECT} from '../../../operations/subject/mutation';
+import {GET_SUBJECTS, GET_SUBJECTS_BY_ID} from '../../../operations/subject/query';
 import {GET_TEMPLATE_BY_ID} from '../../../operations/template/query';
-import {prepareColor, prepareSchedule} from '../../../utils/utils';
+import {prepareSchedule} from '../../../utils/utils';
 import DefaultFields from './DefaultFields';
 import {prepareFieldsToSend} from './helper';
-import TemplateTabs from './template/TemplateTabs';
 import type {ScheduleFormInterval} from '../../../components/Shedule/types';
-import type {SubjectLocalizedModel} from '../../../generated/graphql';
+import type {GetSubjectsByIdQuery} from '../../../generated/graphql';
+import {prepareDataForForm} from './prepareDataForForm';
+import TemplateTabs from './template/TemplateTabs';
 
 interface FormProps {
-    item?: Partial<SubjectLocalizedModel>;
+    item?: GetSubjectsByIdQuery['subject'];
 }
 
 interface SubjectFormValues {
@@ -52,53 +53,66 @@ const FormSubject = memo<FormProps>(({item}) => {
 
     const {data} = useQuery<TemplateById>(GET_TEMPLATE_BY_ID, {
         variables: {uuid: isCreate ? templateId! : item?.content?.templateUuid},
+        skip: isCreate ? false : !item?.content?.templateUuid,
     });
 
     const [createSubject] = useMutation<SubjectFormValues>(CREATE_SUBJECT);
-    // const [updateSubject] = useMutation<any>(UPDATE_SUBJECT);
+    const [updateSubject] = useMutation<SubjectFormValues>(UPDATE_SUBJECT);
 
-    const initialValues = useMemo(
-        () =>
-            isCreate
-                ? undefined
-                : {
-                      ...item,
-                      logo: [item?.logoUrl],
-                  },
-        [isCreate, item],
-    );
+    const initialValues = useMemo(() => (isCreate ? undefined : prepareDataForForm(item)), [isCreate, item]);
+
+    // console.log(initialValues);
 
     const onFinish = useCallback(
         async ({
             images,
             logo,
-            logoBackgroundColor,
             schedule,
             tabs,
             ...values
         }: Omit<SubjectFormValues, 'logoBackgroundColor'> & {
             logoBackgroundColor: Color | string;
         }) => {
-            await createSubject({
-                refetchQueries: [GET_SUBJECTS, 'GetSubjectsOfPlace'],
-                variables: {
-                    createSubjectInput: {
-                        ...values,
-                        content: {
-                            tabs: prepareFieldsToSend(tabs),
-                            templateUuid: templateId,
+            if (isCreate) {
+                await createSubject({
+                    refetchQueries: [GET_SUBJECTS, 'GetSubjectsOfPlace'],
+                    variables: {
+                        createSubjectInput: {
+                            ...values,
+                            content: {
+                                tabs: prepareFieldsToSend(tabs),
+                                templateUuid: templateId,
+                            },
+                            images: images?.map(image => image.url),
+                            logo: logo[0].url,
+                            placeUuid,
+                            schedule: prepareSchedule(schedule),
                         },
-                        images: images?.map(image => image.url),
-                        logo: logo[0].url,
-                        logoBackgroundColor: prepareColor(logoBackgroundColor),
-                        placeUuid,
-                        schedule: prepareSchedule(schedule),
                     },
-                },
-            });
-            navigate(`/subject`);
+                });
+                navigate(`/subject`);
+            } else {
+                await updateSubject({
+                    refetchQueries: [GET_SUBJECTS, GET_SUBJECTS_BY_ID],
+                    variables: {
+                        updateSubjectInput: {
+                            ...values,
+                            uuid: item?.uuid,
+                            // content: {
+                            //     tabs: prepareFieldsToSend(tabs),
+                            //     templateUuid: templateId,
+                            // },
+                            images: images?.map(image => image.url),
+                            logo: logo[0].url,
+                            schedule,
+                        },
+                        placeUuid,
+                    },
+                });
+                navigate(`..`);
+            }
         },
-        [createSubject, navigate, placeUuid, templateId],
+        [createSubject, isCreate, item?.uuid, navigate, placeUuid, templateId, updateSubject],
     );
 
     return (
@@ -109,7 +123,8 @@ const FormSubject = memo<FormProps>(({item}) => {
             onFinish={onFinish}
         >
             <DefaultFields />
-            <Form.List name="tabs">{() => <TemplateTabs data={data?.template?.tabs ?? []} />}</Form.List>
+            {/*{data?.template && <Form.List name="tabs">{() => <TemplateTabs data={data.template.tabs} />}</Form.List>}*/}
+            {data?.template && <TemplateTabs data={data.template.tabs} />}
 
             <Item>
                 <Button className="w-full" htmlType="submit" size="large" type="primary">

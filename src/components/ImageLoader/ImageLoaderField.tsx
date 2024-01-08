@@ -21,7 +21,7 @@ import {getBase64} from '../../utils/utils';
 
 interface Props {
     countOfImages: number;
-    fieldName: Array<string> | string;
+    fieldName: Array<string | number> | string;
     isRequired?: boolean;
     label: string;
     name?: string;
@@ -70,10 +70,13 @@ const ImageLoaderField = memo<Props>(
                     },
                 });
 
-                const newList = [...newFileList].map(file => ({
-                    ...file,
-                    url: data?.uploadImage.url,
-                }));
+                const newList = [
+                    ...fileList,
+                    {
+                        ...file,
+                        url: data?.uploadImage.url,
+                    },
+                ];
 
                 setFileList(newList);
                 form.setFieldValue(fieldName, newList);

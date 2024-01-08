@@ -4,9 +4,7 @@
 
 import {memo} from 'react';
 
-import DividerField from './fields/DividerField';
 import EmailAddress from './fields/EmailAddress';
-import FieldWrapper from './fields/FieldWrapper';
 import ImagesField from './fields/ImagesField';
 import PhonesField from './fields/PhonesField';
 import SocialMediaField from './fields/SocialMediaField';
@@ -15,59 +13,27 @@ import Website from './fields/Website';
 import {FIELD_TYPES} from './fields/types';
 
 interface FieldByTypeProps {
-    field: string;
-    name: string;
-    tabUuid: string;
+    fieldType: string;
+    fieldIndex: number;
+    tabIndex: number;
 }
 
-const FieldByType = memo<FieldByTypeProps>(({field, name, tabUuid}) => {
-    switch (field) {
+const FieldByType = memo<FieldByTypeProps>(({fieldType, fieldIndex, tabIndex}) => {
+    switch (fieldType) {
         case FIELD_TYPES.website_url:
-            return (
-                <FieldWrapper name={name}>
-                    <Website />
-                </FieldWrapper>
-            );
+            return <Website />;
         case FIELD_TYPES.email_address:
-            return (
-                <FieldWrapper name={name}>
-                    <EmailAddress />
-                </FieldWrapper>
-            );
+            return <EmailAddress />;
         case FIELD_TYPES.title:
-            return (
-                <FieldWrapper name={name}>
-                    <TitleField />
-                </FieldWrapper>
-            );
+            return <TitleField />;
         case FIELD_TYPES.social_media:
-            return (
-                <FieldWrapper name={name}>
-                    <SocialMediaField />
-                </FieldWrapper>
-            );
+            return <SocialMediaField />;
         case FIELD_TYPES.images:
-            return (
-                <FieldWrapper name={name}>
-                    <ImagesField fieldName={name} tabUuid={tabUuid} />
-                </FieldWrapper>
-            );
+            return <ImagesField tabIndex={tabIndex} fieldIndex={fieldIndex} />;
         case FIELD_TYPES.phones:
-            return (
-                <FieldWrapper name={name}>
-                    <PhonesField />
-                </FieldWrapper>
-            );
-        case FIELD_TYPES.top_block_divider:
-            return <DividerField name={name} type={FIELD_TYPES.top_block_divider} />;
-        case FIELD_TYPES.bottom_block_divider:
-            return <DividerField name={name} type={FIELD_TYPES.bottom_block_divider} />;
-        case FIELD_TYPES.block_divider:
-            return <DividerField name={name} type={FIELD_TYPES.block_divider} />;
-        case FIELD_TYPES.empty_divider:
-            return <DividerField name={name} type={FIELD_TYPES.empty_divider} />;
+            return <PhonesField />;
         default:
-            return <>{name}</>;
+            return <>{fieldType}</>;
     }
 });
 

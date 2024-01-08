@@ -7,14 +7,14 @@ import {memo} from 'react';
 
 import ImageLoaderField from '../../../../../components/ImageLoader/ImageLoaderField';
 
-interface ImageFieldProps {
-    fieldName: string;
-    tabUuid: string;
+interface ImagesFieldProps {
+    fieldIndex: number;
+    tabIndex: number;
 }
 
 const {Item} = Form;
 
-const ImagesField = memo<ImageFieldProps>(({fieldName, tabUuid}) => {
+const ImagesField = memo<ImagesFieldProps>(({fieldIndex, tabIndex}) => {
     return (
         <>
             <Item label="Заголовок над фотографиями" name="title">
@@ -22,7 +22,7 @@ const ImagesField = memo<ImageFieldProps>(({fieldName, tabUuid}) => {
             </Item>
             <ImageLoaderField
                 countOfImages={5}
-                fieldName={['tabs', tabUuid, fieldName, 'imagesUrls']}
+                fieldName={['tabs', tabIndex, 'fields', fieldIndex, 'imagesUrls']}
                 isRequired={false}
                 label="Фотографии"
                 name="imagesUrls"

@@ -33,37 +33,38 @@ const options = Object.entries(SocialMediaTypes).map(([_, value]) => ({
 
 const SocialMediaField = memo(() => {
     return (
-        <Form.List name="socialMediaList">
-            {(fields, {add, remove}) => (
-                <div className="flex flex-col gap-2">
-                    <strong>Социальные сети</strong>
-                    {fields.map(({key, name, ...restField}) => (
-                        <Space align="baseline" key={key} style={{display: 'flex'}}>
-                            <Form.Item
-                                {...restField}
-                                name={[name, 'type']}
-                                rules={[{message: 'Выберите тип', required: true}]}
-                            >
-                                <Select options={options} placeholder="Тип социальной сети" style={{width: 200}} />
-                            </Form.Item>
-                            <Form.Item
-                                {...restField}
-                                name={[name, 'url']}
-                                rules={[{message: 'Введите ссылку', required: true}]}
-                            >
-                                <Input placeholder="Ссылка" />
-                            </Form.Item>
-                            <MinusCircleOutlined onClick={() => remove(name)} />
-                        </Space>
-                    ))}
-                    <Form.Item>
-                        <Button block icon={<PlusOutlined />} onClick={() => add()} type="dashed">
-                            Добавить социальную сеть
-                        </Button>
-                    </Form.Item>
-                </div>
-            )}
-        </Form.List>
+        <Form.Item label="Социальные сети">
+            <Form.List name="socialMediaList">
+                {(fields, {add, remove}) => (
+                    <div className="flex flex-col gap-2">
+                        {fields.map(({key, name, ...restField}) => (
+                            <Space align="baseline" key={key} style={{display: 'flex'}}>
+                                <Form.Item
+                                    {...restField}
+                                    name={[name, 'type']}
+                                    rules={[{message: 'Выберите тип', required: true}]}
+                                >
+                                    <Select options={options} placeholder="Тип социальной сети" style={{width: 200}} />
+                                </Form.Item>
+                                <Form.Item
+                                    {...restField}
+                                    name={[name, 'url']}
+                                    rules={[{message: 'Введите ссылку', required: true}]}
+                                >
+                                    <Input placeholder="Ссылка" />
+                                </Form.Item>
+                                <MinusCircleOutlined onClick={() => remove(name)} />
+                            </Space>
+                        ))}
+                        <Form.Item>
+                            <Button block icon={<PlusOutlined />} onClick={() => add()} type="dashed">
+                                Добавить социальную сеть
+                            </Button>
+                        </Form.Item>
+                    </div>
+                )}
+            </Form.List>
+        </Form.Item>
     );
 });
 
