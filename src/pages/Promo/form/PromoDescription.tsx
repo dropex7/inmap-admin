@@ -20,7 +20,7 @@ const {Item, useForm} = Form;
 const PromoDescription = memo<PromoDescriptionProps>(({onFinish, toPrev}) => {
     const [form] = useForm();
     const onChange = useCallback(
-        (value: string, delta: unknown, source: Sources, editor: UnprivilegedEditor) => {
+        (_: string, __: unknown, ___: Sources, editor: UnprivilegedEditor) => {
             form.setFieldValue('content', editor.getContents());
         },
         [form],

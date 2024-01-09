@@ -1,6 +1,6 @@
-import {ReactComponent as OtherIcon} from '../../assets/other.svg';
-import {ReactComponent as MapIcon} from '../../assets/map.svg';
-import {ReactComponent as NewsIcon} from '../../assets/news.svg';
+import OtherIcon from '@assets/other.svg?react';
+import MapIcon from '@assets/map.svg?react';
+import NewsIcon from '@assets/news.svg?react';
 
 export const navLinks = [
     {
