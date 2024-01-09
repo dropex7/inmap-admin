@@ -17,7 +17,7 @@ const TemplateFields = memo<TemplateFieldsProps>(({tabIndex, name, fields, templ
     return (
         <Card size="small" title={name}>
             <Form.Item name={[tabIndex, 'templateTabUuid']} initialValue={templateTabUuid} noStyle />
-            <Form.Item label="Fields">
+            <Form.Item>
                 <Form.List name={[tabIndex, 'fields']}>
                     {() => (
                         <>

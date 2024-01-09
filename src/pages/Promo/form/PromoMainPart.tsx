@@ -3,7 +3,7 @@
  */
 
 import {Button, Form, Input} from 'antd';
-import {memo, useState} from 'react';
+import {memo} from 'react';
 
 import type {IMainFormValues} from './PromoForm';
 
@@ -17,8 +17,6 @@ interface Props {
 const {Item} = Form;
 
 const PromoMainPart = memo<Props>(({initialValues, onFinish}) => {
-    const [isLoading, setIsLoading] = useState(false);
-
     return (
         <Form initialValues={initialValues} labelCol={{span: 6}} onFinish={onFinish}>
             <Item label="Заголовок" name="title">
@@ -27,13 +25,8 @@ const PromoMainPart = memo<Props>(({initialValues, onFinish}) => {
             <Item label="Описание" name="subtitle">
                 <Input />
             </Item>
-            <ImageLoaderField
-                countOfImages={1}
-                fieldName="imageUrl"
-                label="Добавьте изображения"
-                setIsImageLoading={setIsLoading}
-            />
-            <Button disabled={isLoading} htmlType="submit" type="primary">
+            <ImageLoaderField countOfImages={1} fieldName="imageUrl" label="Добавьте изображения" />
+            <Button htmlType="submit" type="primary">
                 Перейти к описанию
             </Button>
         </Form>

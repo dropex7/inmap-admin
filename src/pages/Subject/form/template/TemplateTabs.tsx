@@ -4,7 +4,7 @@
 
 import {Form} from 'antd';
 import {memo} from 'react';
-import type {LocalizedTemplateTabModel} from '../../../../generated/graphql';
+import type {LocalizedTemplateTabModel} from '@/generated/graphql';
 import TemplateFields from '../TemplateFields';
 
 interface NewTemplateProps {

@@ -20,6 +20,7 @@
     "@types/quill": "^2.0.14",
     "@types/uuid": "^9.0.7",
     "antd": "^5.12.8",
+    "antd-img-crop": "^4.21.0",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.5",
     "clsx": "^2.1.0",

@@ -33,7 +33,7 @@ const FieldByType = memo<FieldByTypeProps>(({fieldType, fieldIndex, tabIndex}) =
         case FIELD_TYPES.phones:
             return <PhonesField />;
         default:
-            return <>{fieldType}</>;
+            return null;
     }
 });
 

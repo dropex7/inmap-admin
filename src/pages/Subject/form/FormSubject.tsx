@@ -3,7 +3,6 @@
  */
 
 import type {Color} from 'antd/es/color-picker';
-import type {UploadFile} from 'antd/es/upload/interface';
 
 import {useMutation, useQuery} from '@apollo/client';
 import {Button, Form} from 'antd';
@@ -11,29 +10,30 @@ import {memo, useCallback, useMemo} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useRecoilValue} from 'recoil';
 
-import type {SCHEDULE_DAYS} from '../../../components/Shedule/types';
-import type {Query} from '../../../generated/graphql';
+import type {SCHEDULE_DAYS} from '@/components/Shedule/types';
+import type {Query} from '@/generated/graphql';
 
-import {placeAtom} from '../../../atoms/selectedPlace';
-import {CREATE_SUBJECT, UPDATE_SUBJECT} from '../../../operations/subject/mutation';
-import {GET_SUBJECTS, GET_SUBJECTS_BY_ID} from '../../../operations/subject/query';
-import {GET_TEMPLATE_BY_ID} from '../../../operations/template/query';
-import {prepareSchedule} from '../../../utils/utils';
+import {placeAtom} from '@/atoms/selectedPlace';
+import {CREATE_SUBJECT, UPDATE_SUBJECT} from '@/operations/subject/mutation';
+import {GET_SUBJECTS, GET_SUBJECTS_BY_ID} from '@/operations/subject/query';
+import {GET_TEMPLATE_BY_ID} from '@/operations/template/query';
+import {prepareSchedule} from '@/utils/utils';
 import DefaultFields from './DefaultFields';
 import {prepareFieldsToSend} from './helper';
-import type {ScheduleFormInterval} from '../../../components/Shedule/types';
-import type {GetSubjectsByIdQuery} from '../../../generated/graphql';
+import type {ScheduleFormInterval} from '@/components/Shedule/types';
+import type {GetSubjectsByIdQuery} from '@/generated/graphql';
 import {prepareDataForForm} from './prepareDataForForm';
 import TemplateTabs from './template/TemplateTabs';
+import type {ImageType} from '@/components/ImageLoader/ImageLoaderField.tsx';
 
 interface FormProps {
     item?: GetSubjectsByIdQuery['subject'];
 }
 
 interface SubjectFormValues {
-    images: Array<UploadFile>;
+    images: Array<ImageType>;
     layerUuid: string;
-    logo: Array<UploadFile>;
+    logo: Array<ImageType>;
     name: string;
     schedule: Record<SCHEDULE_DAYS, ScheduleFormInterval>;
     shortDescription: string;
@@ -83,8 +83,8 @@ const FormSubject = memo<FormProps>(({item}) => {
                                 tabs: prepareFieldsToSend(tabs),
                                 templateUuid: templateId,
                             },
-                            images: images?.map(image => image.url),
-                            logo: logo[0].url,
+                            images: images?.map(image => image.originFileObj?.url),
+                            logo: logo[0].originFileObj?.url,
                             placeUuid,
                             schedule: prepareSchedule(schedule),
                         },
@@ -121,9 +121,9 @@ const FormSubject = memo<FormProps>(({item}) => {
             className="card flex flex-col gap-6 p-6"
             layout="vertical"
             onFinish={onFinish}
+            // onValuesChange={(_, values) => console.log(values)}
         >
             <DefaultFields />
-            {/*{data?.template && <Form.List name="tabs">{() => <TemplateTabs data={data.template.tabs} />}</Form.List>}*/}
             {data?.template && <TemplateTabs data={data.template.tabs} />}
 
             <Item>
