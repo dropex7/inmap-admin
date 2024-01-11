@@ -2,13 +2,6 @@ import {FIELD_TYPES} from './template/fields/types';
 
 type FormFields = Record<string, any>;
 
-export const createIndexWithZeros = (index: number) => {
-    const totalSymbols = 5;
-    const indexLength = index.toString().length;
-    const diff = totalSymbols - indexLength;
-    return '0'.repeat(diff) + index;
-};
-
 const getIndexWithoutZeros = (value: string) => {
     return value.slice(5, value.length);
 };
