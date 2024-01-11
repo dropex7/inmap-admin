@@ -20,7 +20,7 @@ export const prepareFieldsToSend = (tabs: FormFields) => {
             .map(fieldKey => {
                 const [, type] = fieldKey.split('&');
                 if (type === FIELD_TYPES.images) {
-                    const imagesUrls = fields[fieldKey]?.imagesUrls?.map(({url}: any) => url);
+                    const imagesUrls = fields[fieldKey]?.imagesUrls?.map(({url}: {url: string}) => url);
                     return {data: {...fields[fieldKey], imagesUrls}, type};
                 }
                 return {data: fields[fieldKey], type};

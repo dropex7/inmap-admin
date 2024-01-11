@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
-import type {FlutterMessage} from '../components/Map/types';
-import {FLUTTER_MESSAGE} from '../components/Map/types';
+import type {FlutterMessage} from '@/components/Map/types';
+import {FLUTTER_MESSAGE} from '@/components/Map/types';
 
 export function useGetMessageFromMap() {
     const [isReady, setIsReady] = useState(false);

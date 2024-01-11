@@ -5,7 +5,7 @@
 import {memo} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import type {TemplateLocalizedModel} from '../../generated/graphql';
+import type {TemplateLocalizedModel} from '@/generated/graphql';
 
 interface TemplateListProps {
     data: Array<TemplateLocalizedModel>;

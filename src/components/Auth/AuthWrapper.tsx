@@ -5,7 +5,7 @@
 import {memo, useEffect} from 'react';
 import {Outlet, useNavigate} from 'react-router-dom';
 import Layout from '../Layout/Layout';
-import {useAuth} from '../../hooks/useAuth';
+import {useAuth} from '@/hooks/useAuth';
 import {onAuthStateChanged} from 'firebase/auth';
 
 const AuthWrapper = memo(() => {

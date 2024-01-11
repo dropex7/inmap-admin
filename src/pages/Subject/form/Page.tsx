@@ -6,10 +6,10 @@ import {useNavigate, useParams} from 'react-router-dom';
 
 import FormSubject from './FormSubject';
 import {useQuery} from '@apollo/client';
-import type {GetSubjectsByIdQuery} from '../../../generated/graphql';
-import {GET_SUBJECTS_BY_ID} from '../../../operations/subject/query';
+import type {GetSubjectsByIdQuery} from '@/generated/graphql';
+import {GET_SUBJECTS_BY_ID} from '@/operations/subject/query';
 import {useRecoilValue} from 'recoil';
-import {placeAtom} from '../../../atoms/selectedPlace';
+import {placeAtom} from '@/atoms/selectedPlace';
 
 const {Title} = Typography;
 

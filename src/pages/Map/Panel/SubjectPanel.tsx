@@ -6,12 +6,12 @@ import {memo, useCallback, useContext} from 'react';
 import SubjectStatus from './SubjectStatus';
 import {MapContext} from '../MapContext';
 import {useRecoilValue} from 'recoil';
-import {placeAtom} from '../../../atoms/selectedPlace';
+import {placeAtom} from '@/atoms/selectedPlace';
 import {useQuery} from '@apollo/client';
-import type {GetSubjectsByIdQuery} from '../../../generated/graphql';
-import {GET_SUBJECTS_BY_ID} from '../../../operations/subject/query';
+import type {GetSubjectsByIdQuery} from '@/generated/graphql';
+import {GET_SUBJECTS_BY_ID} from '@/operations/subject/query';
 import {Button} from 'antd';
-import {getSyncPlanMessage} from '../../../utils/widgetMessages';
+import {getSyncPlanMessage} from '@/utils/widgetMessages';
 import {PlaceGlobalCtx} from '../../Place/PlaceGlobalCtx';
 import SubjectInfo from './SubjectInfo';
 

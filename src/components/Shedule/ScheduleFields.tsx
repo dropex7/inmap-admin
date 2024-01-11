@@ -7,7 +7,7 @@ import {memo, useCallback} from 'react';
 import {SCHEDULE_DAYS} from './types';
 import ScheduleItem from './ScheduleItem';
 import {Button, Form, Modal} from 'antd';
-import useOpen from '../../hooks/useOpen';
+import useOpen from '@/hooks/useOpen';
 
 const items = Object.keys(SCHEDULE_DAYS).map(key => (
     <Form.List key={key} name={key}>

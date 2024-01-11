@@ -3,9 +3,10 @@
  */
 
 import {memo} from 'react';
+import type {GetSubjectsByIdQuery} from '@/generated/graphql.ts';
 
 interface SubjectInfoProps {
-    subject: any;
+    subject: GetSubjectsByIdQuery['subject'];
 }
 
 const SubjectInfo = memo<SubjectInfoProps>(({subject}) => {

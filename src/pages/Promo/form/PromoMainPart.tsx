@@ -7,7 +7,7 @@ import {memo} from 'react';
 
 import type {IMainFormValues} from './PromoForm';
 
-import ImageLoaderField from '../../../components/ImageLoader/ImageLoaderField';
+import ImageLoaderField from '@/components/ImageLoader/ImageLoaderField';
 
 interface Props {
     initialValues?: IMainFormValues;

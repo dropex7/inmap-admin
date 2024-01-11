@@ -5,15 +5,15 @@
 import {useLazyQuery} from '@apollo/client';
 import {memo, useCallback, useEffect, useMemo} from 'react';
 
-import type {PaginationParams} from '../../components/Pagination/types';
-import type {SearchPromosQuery} from '../../generated/graphql';
+import type {PaginationParams} from '@/components/Pagination/types';
+import type {SearchPromosQuery} from '@/generated/graphql';
 
-import usePaginationFilter from '../../hooks/pagination/usePaginationFilter';
-import usePaginationParams from '../../hooks/pagination/usePaginationParams';
-import {SEARCH_PROMOS} from '../../operations/promo/query';
+import usePaginationFilter from '@/hooks/pagination/usePaginationFilter';
+import usePaginationParams from '@/hooks/pagination/usePaginationParams';
+import {SEARCH_PROMOS} from '@/operations/promo/query';
 import PromoTable from './PromoTable';
 import {useRecoilValue} from 'recoil';
-import {placeAtom} from '../../atoms/selectedPlace';
+import {placeAtom} from '@/atoms/selectedPlace';
 
 interface PromoListProps {
     url: string;

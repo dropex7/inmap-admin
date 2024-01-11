@@ -2,7 +2,7 @@ import type {Key} from 'react';
 
 import {atomFamily, selectorFamily} from 'recoil';
 
-import type {PaginationParams} from '../components/Pagination/types';
+import type {PaginationParams} from '@/components/Pagination/types';
 
 // presets
 

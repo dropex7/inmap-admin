@@ -7,12 +7,12 @@ import {Form, Input, Select} from 'antd';
 import {memo} from 'react';
 import {useRecoilValue} from 'recoil';
 
-import type {GetPlaceLayersQuery} from '../../../generated/graphql';
+import type {GetPlaceLayersQuery} from '@/generated/graphql';
 
-import {placeAtom} from '../../../atoms/selectedPlace';
-import ImageLoaderField from '../../../components/ImageLoader/ImageLoaderField';
-import {GET_PLACE_LAYERS} from '../../../operations/place/query';
-import ScheduleFields from '../../../components/Shedule/ScheduleFields';
+import {placeAtom} from '@/atoms/selectedPlace';
+import ImageLoaderField from '@/components/ImageLoader/ImageLoaderField';
+import {GET_PLACE_LAYERS} from '@/operations/place/query';
+import ScheduleFields from '@/components/Shedule/ScheduleFields';
 
 const {Item} = Form;
 

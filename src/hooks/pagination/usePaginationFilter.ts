@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
 import {useRecoilState, useResetRecoilState} from 'recoil';
 
-import {paginationFilterSelector} from '../../atoms/pagination';
+import {paginationFilterSelector} from '@/atoms/pagination';
 
 function usePaginationFilter<T = unknown>(url: string): [T, (filter: Partial<T>) => void, () => void] {
     const [filterS, setFS] = useRecoilState(paginationFilterSelector(url));

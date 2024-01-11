@@ -7,7 +7,7 @@ import {Button, Form, Radio, TimePicker} from 'antd';
 import {memo} from 'react';
 import type {SCHEDULE_DAYS} from './types';
 import {DAY_TYPES, scheduleText} from './types';
-import {ONLY_TIME_WITHOUT_SECONDS} from '../../utils/dateFormats';
+import {ONLY_TIME_WITHOUT_SECONDS} from '@/utils/dateFormats';
 
 interface ScheduleItemProps {
     name: string;

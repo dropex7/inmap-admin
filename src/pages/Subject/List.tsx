@@ -4,7 +4,7 @@
 
 import {memo} from 'react';
 
-import type {SearchSubjectsOfPlaceQuery} from '../../generated/graphql';
+import type {SearchSubjectsOfPlaceQuery} from '@/generated/graphql';
 
 import SubjectCard from './SubjectCard';
 

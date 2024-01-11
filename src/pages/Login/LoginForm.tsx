@@ -5,7 +5,7 @@
 import {Button, Form, Input} from 'antd';
 import {memo, useCallback} from 'react';
 
-import {useAuth} from '../../hooks/useAuth';
+import {useAuth} from '@/hooks/useAuth';
 
 interface LoginValues {
     email: string;

@@ -4,13 +4,13 @@
 
 import {memo, useCallback, useContext, useState} from 'react';
 import {useRecoilValue} from 'recoil';
-import {placeAtom} from '../../../atoms/selectedPlace';
+import {placeAtom} from '@/atoms/selectedPlace';
 import {useQuery} from '@apollo/client';
-import type {GetPlaceLayersQuery} from '../../../generated/graphql';
-import {GET_PLACE_LAYERS} from '../../../operations/place/query';
+import type {GetPlaceLayersQuery} from '@/generated/graphql';
+import {GET_PLACE_LAYERS} from '@/operations/place/query';
 import {Radio, Space} from 'antd';
 import {MapContext} from '../MapContext';
-import {getSelectLayerMessage} from '../../../utils/widgetMessages';
+import {getSelectLayerMessage} from '@/utils/widgetMessages';
 
 const {Group, Button} = Radio;
 

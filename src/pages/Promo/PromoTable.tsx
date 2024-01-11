@@ -7,7 +7,7 @@ import noPhoto from '../../assets/no-photo-available.png';
 import PreviewImage from '../../components/Images/PreviewImage';
 import type {ColumnsType, TableProps} from 'antd/es/table';
 import {Table} from 'antd';
-import type {PromoSearchModel} from '../../generated/graphql';
+import type {PromoSearchModel} from '@/generated/graphql';
 
 interface PromoTableProps extends TableProps<PromoSearchModel> {
     data: Array<PromoSearchModel>;

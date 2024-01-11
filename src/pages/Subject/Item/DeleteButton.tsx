@@ -7,8 +7,8 @@ import {Button, Popconfirm} from 'antd';
 import {memo, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import {DELETE_SUBJECT} from '../../../operations/subject/mutation';
-import {GET_SUBJECTS} from '../../../operations/subject/query';
+import {DELETE_SUBJECT} from '@/operations/subject/mutation';
+import {GET_SUBJECTS} from '@/operations/subject/query';
 
 interface DeleteButtonProps {
     placeUuid: string;

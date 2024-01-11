@@ -6,9 +6,9 @@ import {Select, Space} from 'antd';
 import {memo, useCallback, useEffect} from 'react';
 import {useRecoilState} from 'recoil';
 
-import type {GetListOfPlacesQuery} from '../../generated/graphql';
+import type {GetListOfPlacesQuery} from '@/generated/graphql';
 
-import {placeAtom} from '../../atoms/selectedPlace';
+import {placeAtom} from '@/atoms/selectedPlace';
 
 interface PlaceSelectProps {
     places: GetListOfPlacesQuery['places'];

@@ -6,7 +6,7 @@ import type {HTMLProps} from 'react';
 
 import {memo} from 'react';
 
-import type {SubjectLocalizedModel} from '../../generated/graphql';
+import type {SubjectLocalizedModel} from '@/generated/graphql';
 
 interface PreviewLogoProps extends HTMLProps<HTMLImageElement> {
     alt: HTMLProps<HTMLImageElement>['alt'];

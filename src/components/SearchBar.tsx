@@ -8,8 +8,8 @@ import {memo, useEffect, useState} from 'react';
 
 import type {PaginationParams} from './Pagination/types';
 
-import usePaginationFilter from '../hooks/pagination/usePaginationFilter';
-import {useDebounce} from '../hooks/useDebounce';
+import usePaginationFilter from '@/hooks/pagination/usePaginationFilter';
+import {useDebounce} from '@/hooks/useDebounce';
 
 interface SearchBarProps {
     placeholder?: string;

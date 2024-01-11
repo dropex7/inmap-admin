@@ -4,9 +4,9 @@
 import {useQuery} from '@apollo/client';
 import {Typography} from 'antd';
 
-import type {TemplateLocalizedModel} from '../../generated/graphql';
+import type {TemplateLocalizedModel} from '@/generated/graphql';
 
-import {GET_TEMPLATES} from '../../operations/template/query';
+import {GET_TEMPLATES} from '@/operations/template/query';
 import TemplateList from './TemplateList';
 
 const {Title} = Typography;

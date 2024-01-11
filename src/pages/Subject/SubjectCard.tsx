@@ -5,11 +5,11 @@
 import {memo, useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import type {SubjectSearchModel} from '../../generated/graphql';
+import type {SubjectSearchModel} from '@/generated/graphql';
 
-import noPhoto from '../../assets/no-photo-available.png';
-import PreviewImage from '../../components/Images/PreviewImage';
-import PreviewLogo from '../../components/Images/PreviewLogo';
+import noPhoto from '@/assets/no-photo-available.png';
+import PreviewImage from '@/components/Images/PreviewImage';
+import PreviewLogo from '@/components/Images/PreviewLogo';
 
 interface SubjectCardProps {
     subject: Partial<SubjectSearchModel>;

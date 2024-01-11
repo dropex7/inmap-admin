@@ -10,9 +10,9 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useRecoilValue} from 'recoil';
 
-import {placeAtom} from '../../../atoms/selectedPlace';
-import {CREATE_PROMO} from '../../../operations/promo/mutation';
-import {GET_PROMOS} from '../../../operations/promo/query';
+import {placeAtom} from '@/atoms/selectedPlace';
+import {CREATE_PROMO} from '@/operations/promo/mutation';
+import {GET_PROMOS} from '@/operations/promo/query';
 import PromoDescription from './PromoDescription';
 import PromoMainPart from './PromoMainPart';
 

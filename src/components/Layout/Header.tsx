@@ -7,11 +7,11 @@ import {Button} from 'antd';
 import {memo} from 'react';
 import {Link} from 'react-router-dom';
 
-import type {GetListOfPlacesQuery} from '../../generated/graphql';
+import type {GetListOfPlacesQuery} from '@/generated/graphql';
 
-import {useAuth} from '../../hooks/useAuth';
-import {GET_PLACES} from '../../operations/place/query';
-import PlaceSelect from '../../pages/Place/PlaceSelect';
+import {useAuth} from '@/hooks/useAuth';
+import {GET_PLACES} from '@/operations/place/query';
+import PlaceSelect from '@/pages/Place/PlaceSelect';
 
 const Header = memo(() => {
     const {logout} = useAuth();

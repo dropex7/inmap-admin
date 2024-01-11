@@ -3,8 +3,8 @@
  */
 import 'react-quill/dist/quill.snow.css';
 
-import SearchBar from '../../components/SearchBar';
-import {SEARCH_PROMOS} from '../../operations/promo/query';
+import SearchBar from '@/components/SearchBar';
+import {SEARCH_PROMOS} from '@/operations/promo/query';
 import NavigateToCreate from './NavigateToCreate';
 import PromoList from './PromoList';
 

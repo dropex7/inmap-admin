@@ -4,10 +4,10 @@
 
 import {memo} from 'react';
 
-import type {PromoSearchModel} from '../../generated/graphql';
+import type {PromoSearchModel} from '@/generated/graphql';
 
-import noPhoto from '../../assets/no-photo-available.png';
-import PreviewImage from '../../components/Images/PreviewImage';
+import noPhoto from '@/assets/no-photo-available.png';
+import PreviewImage from '@/components/Images/PreviewImage';
 
 interface ListItemProps {
     promo: PromoSearchModel;

@@ -5,13 +5,13 @@ import {useQuery} from '@apollo/client';
 import {Button, Descriptions} from 'antd';
 import {useNavigate, useParams} from 'react-router-dom';
 
-import type {GetSubjectsByIdQuery} from '../../../generated/graphql';
+import type {GetSubjectsByIdQuery} from '@/generated/graphql';
 
-import {GET_SUBJECTS_BY_ID} from '../../../operations/subject/query';
+import {GET_SUBJECTS_BY_ID} from '@/operations/subject/query';
 import DeleteButton from './DeleteButton';
 import {useCallback} from 'react';
 import {useRecoilValue} from 'recoil';
-import {placeAtom} from '../../../atoms/selectedPlace';
+import {placeAtom} from '@/atoms/selectedPlace';
 
 const {Item} = Descriptions;
 export function Component() {
