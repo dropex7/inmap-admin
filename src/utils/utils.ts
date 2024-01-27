@@ -1,9 +1,9 @@
 import type {Color} from 'antd/es/color-picker';
 import type {RcFile} from 'antd/es/upload';
 
-import type {ScheduleInterval, ScheduleIntervalsOption, ScheduleFormInterval} from '../components/Shedule/types';
+import type {ScheduleInterval, ScheduleIntervalsOption, ScheduleFormInterval} from '@/components/Schedule/types';
 
-import {DAY_TYPES} from '../components/Shedule/types';
+import {DAY_TYPES} from '@/components/Schedule/types';
 import type {Dayjs} from 'dayjs';
 import dayjs from 'dayjs';
 

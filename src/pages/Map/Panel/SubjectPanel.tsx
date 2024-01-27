@@ -22,16 +22,17 @@ const SubjectPanel = memo(() => {
 
     const {data} = useQuery<GetSubjectsByIdQuery>(GET_SUBJECTS_BY_ID, {
         variables: {placeUuid, uuid: selectedObject?.originUuid},
+        skip: !selectedObject?.originUuid,
     });
 
     const handleSavePlan = useCallback(() => {
         if (ref?.current?.contentWindow) {
-            ref.current.contentWindow.postMessage(getSyncPlanMessage(placeUuid, place.selectedPlanKey), '*');
+            ref.current.contentWindow.postMessage(getSyncPlanMessage(placeUuid, place.selectedPlan?.key), '*');
         }
-    }, [place.selectedPlanKey, placeUuid, ref]);
+    }, [place.selectedPlan?.key, placeUuid, ref]);
 
     return (
-        <div className="card flex w-96 flex-col gap-3 p-3">
+        <div className="flex w-96 flex-col gap-3 p-3">
             <SubjectStatus />
             {data && (
                 <>

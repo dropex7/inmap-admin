@@ -1,11 +1,12 @@
 import {gql} from '@apollo/client';
 
 export const GET_PROMOS = gql`
-    query GetListOfPromos($placeUuid: String!) {
-        promosOfPlace(placeUuid: $placeUuid) {
+    query GetListOfPromos($placeUuid: String!, $subjectUuid: String!) {
+        promos(placeUuid: $placeUuid, subjectUuid: $subjectUuid) {
             uuid
             title
-            imageUrl
+            subtitle
+            smallImageUrl
             subtitle
         }
     }
@@ -18,7 +19,8 @@ export const SEARCH_PROMOS = gql`
             items {
                 uuid
                 placeUuid
-                imageUrl
+                smallImageUrl
+                largeImageUrl
                 title
                 subtitle
             }

@@ -20,13 +20,14 @@ const Map = memo<PropsWithChildren>(() => {
 
     useEffect(() => {
         if (ref?.current?.contentWindow && isReady) {
-            ref.current.contentWindow.postMessage(getLoadPlanMessage(placeUuid, place.selectedPlanKey), '*'); // '*' означает, что сообщение будет отправлено всем окнам.
+            ref.current.contentWindow.postMessage(getLoadPlanMessage(placeUuid, place.selectedPlan?.key), '*'); // '*' означает, что сообщение будет отправлено всем окнам.
         }
-    }, [ref, isReady, placeUuid, place.selectedPlanKey]);
+    }, [ref, isReady, placeUuid, place.selectedPlan?.key]);
 
     return (
-        <div className="flex h-full w-full flex-col gap-y-4 rounded-lg bg-white">
+        <div className="flex h-full w-full flex-col gap-y-4">
             <iframe
+                className="rounded-r-xl"
                 width="100%"
                 height="100%"
                 ref={ref}

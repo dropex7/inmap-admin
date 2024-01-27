@@ -1,13 +1,13 @@
 import type {Dayjs} from 'dayjs';
 
 export enum SCHEDULE_DAYS {
-    'sunday' = 'sunday',
     'monday' = 'monday',
     'tuesday' = 'tuesday',
     'friday' = 'friday',
     'wednesday' = 'wednesday',
     'thursday' = 'thursday',
     'saturday' = 'saturday',
+    'sunday' = 'sunday',
 }
 
 export const scheduleText: Record<SCHEDULE_DAYS, string> = {
@@ -43,7 +43,9 @@ export interface ScheduleIntervalsOption {
     type: DAY_TYPES;
 }
 
+export type FormScheduleInterval = Array<{interval: [Dayjs | undefined, Dayjs | undefined]}>;
+
 export interface ScheduleFormInterval {
     type: DAY_TYPES;
-    intervals?: Array<{interval: [Dayjs | undefined, Dayjs | undefined]}>;
+    intervals?: FormScheduleInterval;
 }

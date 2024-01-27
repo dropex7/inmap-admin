@@ -1,4 +1,5 @@
 import type {GetSubjectsByIdQuery} from '@/generated/graphql';
+import {DAY_TYPES, SCHEDULE_DAYS} from '@/components/Schedule/types.ts';
 
 export const prepareDataForForm = (subject: GetSubjectsByIdQuery['subject']) => {
     const {content, logoUrl, images} = subject;
@@ -17,3 +18,15 @@ function createFileFromUrl(url: string, index: number) {
         url,
     };
 }
+
+export const defaultScheduleValues = () => {
+    const defaultSchedule: Record<string, any> = {};
+
+    Object.values(SCHEDULE_DAYS).forEach(day => {
+        defaultSchedule[day] = {
+            type: DAY_TYPES.OFF,
+        };
+    });
+
+    return defaultSchedule;
+};

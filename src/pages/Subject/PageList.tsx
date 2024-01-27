@@ -1,7 +1,7 @@
 import {useLazyQuery} from '@apollo/client';
-import {Pagination, Spin} from 'antd';
+import {Empty, Pagination, Spin} from 'antd';
 import {useCallback, useEffect} from 'react';
-
+import EmptyIcon from '@/assets/empty.svg?react';
 import type {PaginationParams} from '@/components/Pagination/types';
 import type {SearchSubjectsOfPlaceQuery} from '@/generated/graphql';
 
@@ -40,29 +40,40 @@ export function Component() {
         return <>{error.message}</>;
     }
 
+    if (loading) {
+        return (
+            <div className="flex h-full items-center justify-center">
+                <Spin tip="Loading" size="large" />;
+            </div>
+        );
+    }
+
     return (
-        <section className="flex flex-col gap-4">
-            <div className="card flex justify-between p-6">
+        <section className="flex h-full flex-col divide-y divide-zinc-800 rounded-lg bg-zinc-900">
+            <div className="flex justify-between p-6">
                 <SearchBar placeholder="Поиск объектов" url={url} />
                 <LinkToCreate />
             </div>
 
-            <Spin size="large" spinning={loading} tip="Loading">
-                <div className="card flex flex-col gap-6 p-6">
-                    {data && (
-                        <>
-                            <Pagination
-                                defaultCurrent={pageParams.offset / pageParams.limit + 1}
-                                onChange={changePage}
-                                defaultPageSize={pageParams.limit}
-                                total={data.searchSubjects.total}
-                                showSizeChanger={false}
-                            />
-                            <List data={data} />
-                        </>
-                    )}
+            {data && data.searchSubjects.total !== 0 ? (
+                <div className="flex flex-col gap-6 p-6">
+                    <Pagination
+                        defaultCurrent={pageParams.offset / pageParams.limit + 1}
+                        onChange={changePage}
+                        defaultPageSize={pageParams.limit}
+                        total={data.searchSubjects.total}
+                        showSizeChanger={false}
+                    />
+                    <List data={data} />
                 </div>
-            </Spin>
+            ) : (
+                <div className="flex h-full items-center justify-center">
+                    <Empty
+                        image={<EmptyIcon />}
+                        description={<span className="text-neutral-700">Создайте первый объект</span>}
+                    />
+                </div>
+            )}
         </section>
     );
 }

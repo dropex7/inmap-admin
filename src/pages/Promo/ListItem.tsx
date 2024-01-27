@@ -14,11 +14,17 @@ interface ListItemProps {
 }
 
 const ListItem = memo<ListItemProps>(({promo}) => {
-    const {imageUrl, subtitle, title} = promo;
+    const {smallImageUrl, subtitle, title} = promo;
     return (
         <div className="grid grid-cols-[2fr_1fr_1fr] items-center">
             <div className="flex items-center gap-9 border-r border-neutral-300">
-                <PreviewImage alt="image" height="100px" rounded url={imageUrl ?? noPhoto} width="100px" />
+                <PreviewImage
+                    alt="image"
+                    height="100px"
+                    className="rounded-lg"
+                    url={smallImageUrl ?? noPhoto}
+                    width="100px"
+                />
                 <div className="flex flex-col gap-3">
                     <span className="text-base font-bold leading-none">{title}</span>
                     <span className="text-sm leading-none">{subtitle}</span>
@@ -26,11 +32,23 @@ const ListItem = memo<ListItemProps>(({promo}) => {
             </div>
 
             <div className="flex justify-center">
-                <PreviewImage alt="image" height="100px" rounded url={imageUrl ?? noPhoto} width="100px" />
+                <PreviewImage
+                    alt="image"
+                    height="100px"
+                    className="rounded-lg"
+                    url={smallImageUrl ?? noPhoto}
+                    width="100px"
+                />
             </div>
 
             <div className="flex justify-center">
-                <PreviewImage alt="image" height="100px" rounded url={imageUrl ?? noPhoto} width="100px" />
+                <PreviewImage
+                    alt="image"
+                    height="100px"
+                    className="rounded-lg"
+                    url={smallImageUrl ?? noPhoto}
+                    width="100px"
+                />
             </div>
         </div>
     );

@@ -13,7 +13,7 @@ interface LinksViewProps {
 
 const LinksView = memo<LinksViewProps>(({isOpen}) => {
     return (
-        <nav className={clsx('flex flex-col gap-6 py-5', !isOpen && 'items-center')}>
+        <nav className={clsx('flex flex-col gap-8 py-5', !isOpen && 'items-center')}>
             {navLinks.map(({icon, path, title}) => (
                 <NavLink
                     className={({isActive}) =>

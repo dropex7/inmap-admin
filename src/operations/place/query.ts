@@ -16,7 +16,10 @@ export const GET_PLACE = gql`
             logoUrl
             address
             schedule
-            selectedPlanKey
+            selectedPlan {
+                key
+            }
+            initialLayerUuid
             recs {
                 title
             }

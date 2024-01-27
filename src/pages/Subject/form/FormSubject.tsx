@@ -10,7 +10,7 @@ import {memo, useCallback, useMemo} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useRecoilValue} from 'recoil';
 
-import type {SCHEDULE_DAYS} from '@/components/Shedule/types';
+import type {SCHEDULE_DAYS} from '@/components/Schedule/types';
 import type {Query} from '@/generated/graphql';
 
 import {placeAtom} from '@/atoms/selectedPlace';
@@ -20,9 +20,9 @@ import {GET_TEMPLATE_BY_ID} from '@/operations/template/query';
 import {prepareSchedule} from '@/utils/utils';
 import DefaultFields from './DefaultFields';
 import {prepareFieldsToSend} from './helper';
-import type {ScheduleFormInterval} from '@/components/Shedule/types';
+import type {ScheduleFormInterval} from '@/components/Schedule/types';
 import type {GetSubjectsByIdQuery} from '@/generated/graphql';
-import {prepareDataForForm} from './prepareDataForForm';
+import {defaultScheduleValues, prepareDataForForm} from './prepareDataForForm';
 import TemplateTabs from './template/TemplateTabs';
 import type {ImageType} from '@/components/ImageLoader/ImageLoaderField.tsx';
 
@@ -45,6 +45,8 @@ type TemplateById = {template: Query['template']};
 
 const {Item} = Form;
 
+const baseInitialValues = {schedule: defaultScheduleValues()};
+
 const FormSubject = memo<FormProps>(({item}) => {
     const {templateId} = useParams();
     const navigate = useNavigate();
@@ -59,9 +61,7 @@ const FormSubject = memo<FormProps>(({item}) => {
     const [createSubject] = useMutation<SubjectFormValues>(CREATE_SUBJECT);
     const [updateSubject] = useMutation<SubjectFormValues>(UPDATE_SUBJECT);
 
-    const initialValues = useMemo(() => (isCreate ? undefined : prepareDataForForm(item)), [isCreate, item]);
-
-    // console.log(initialValues);
+    const initialValues = useMemo(() => (isCreate ? baseInitialValues : prepareDataForForm(item)), [isCreate, item]);
 
     const onFinish = useCallback(
         async ({
@@ -121,7 +121,6 @@ const FormSubject = memo<FormProps>(({item}) => {
             className="card flex flex-col gap-6 p-6"
             layout="vertical"
             onFinish={onFinish}
-            // onValuesChange={(_, values) => console.log(values)}
         >
             <DefaultFields />
             {data?.template && <TemplateTabs data={data.template.tabs} />}

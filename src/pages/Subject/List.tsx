@@ -14,7 +14,7 @@ interface ListProps {
 
 const List = memo<ListProps>(({data}) => {
     return (
-        <div className="flex flex-wrap justify-center gap-6 rounded-lg">
+        <div className="flex flex-wrap justify-center gap-6">
             {data.searchSubjects.items.map(sub => (
                 <SubjectCard key={sub.uuid} subject={sub} />
             ))}

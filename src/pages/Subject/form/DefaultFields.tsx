@@ -12,7 +12,7 @@ import type {GetPlaceLayersQuery} from '@/generated/graphql';
 import {placeAtom} from '@/atoms/selectedPlace';
 import ImageLoaderField from '@/components/ImageLoader/ImageLoaderField';
 import {GET_PLACE_LAYERS} from '@/operations/place/query';
-import ScheduleFields from '@/components/Shedule/ScheduleFields';
+import ScheduleFields from '@/components/Schedule/ScheduleFields.tsx';
 
 const {Item} = Form;
 

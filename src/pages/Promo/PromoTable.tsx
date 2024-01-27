@@ -27,14 +27,22 @@ const columns: ColumnsType<PromoSearchModel> = [
     {
         title: 'Картинка',
         key: 'imageUrl',
-        render: ({imageUrl}) => (
-            <PreviewImage alt="image" height="100px" rounded url={imageUrl ?? noPhoto} width="100px" />
+        render: ({smallImageUrl}) => (
+            <PreviewImage
+                alt="image"
+                height="100px"
+                className="rounded-lg"
+                url={smallImageUrl ?? noPhoto}
+                width="100px"
+            />
         ),
     },
 ];
 
 const PromoTable = memo<PromoTableProps>(({data, ...rest}) => {
-    return <Table columns={columns} dataSource={data} {...rest} />;
+    return (
+        <Table rowKey={({title, subtitle}) => `${title}_${subtitle}`} columns={columns} dataSource={data} {...rest} />
+    );
 });
 
 export default PromoTable;
