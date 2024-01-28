@@ -40,14 +40,6 @@ export function Component() {
         return <>{error.message}</>;
     }
 
-    if (loading) {
-        return (
-            <div className="flex h-full items-center justify-center">
-                <Spin tip="Loading" size="large" />;
-            </div>
-        );
-    }
-
     return (
         <section className="flex h-full flex-col divide-y divide-zinc-800 rounded-lg bg-zinc-900">
             <div className="flex justify-between p-6">
@@ -55,25 +47,26 @@ export function Component() {
                 <LinkToCreate />
             </div>
 
-            {data && data.searchSubjects.total !== 0 ? (
-                <div className="flex flex-col gap-6 p-6">
-                    <Pagination
-                        defaultCurrent={pageParams.offset / pageParams.limit + 1}
-                        onChange={changePage}
-                        defaultPageSize={pageParams.limit}
-                        total={data.searchSubjects.total}
-                        showSizeChanger={false}
-                    />
-                    <List data={data} />
-                </div>
-            ) : (
-                <div className="flex h-full items-center justify-center">
+            <Spin tip="Loading" size="large" spinning={loading}>
+                {data && data.searchSubjects.total !== 0 ? (
+                    <div className="flex flex-col gap-6 p-6">
+                        <Pagination
+                            defaultCurrent={pageParams.offset / pageParams.limit + 1}
+                            onChange={changePage}
+                            defaultPageSize={pageParams.limit}
+                            total={data.searchSubjects.total}
+                            showSizeChanger={false}
+                        />
+                        <List data={data} />
+                    </div>
+                ) : (
                     <Empty
+                        className="flex h-[50vh] flex-col justify-center"
                         image={<EmptyIcon />}
                         description={<span className="text-neutral-700">Создайте первый объект</span>}
                     />
-                </div>
-            )}
+                )}
+            </Spin>
         </section>
     );
 }
