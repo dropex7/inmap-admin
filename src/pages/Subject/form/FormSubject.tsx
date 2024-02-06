@@ -5,18 +5,15 @@
 import type {Color} from 'antd/es/color-picker';
 
 import {useMutation, useQuery} from '@apollo/client';
-import {Button, Form} from 'antd';
+import {Form} from 'antd';
 import {memo, useCallback, useMemo} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useRecoilValue} from 'recoil';
-
 import type {SCHEDULE_DAYS} from '@/components/Schedule/types';
 import type {Query} from '@/generated/graphql';
-
 import {placeAtom} from '@/atoms/selectedPlace';
 import {CREATE_SUBJECT, UPDATE_SUBJECT} from '@/operations/subject/mutation';
 import {GET_SUBJECTS, GET_SUBJECTS_BY_ID} from '@/operations/subject/query';
-import {GET_TEMPLATE_BY_ID} from '@/operations/template/query';
 import {prepareSchedule} from '@/utils/utils';
 import DefaultFields from './DefaultFields';
 import {prepareFieldsToSend} from './helper';
@@ -25,6 +22,7 @@ import type {GetSubjectsByIdQuery} from '@/generated/graphql';
 import {defaultScheduleValues, prepareDataForForm} from './prepareDataForForm';
 import TemplateTabs from './template/TemplateTabs';
 import type {ImageType} from '@/components/ImageLoader/ImageLoaderField.tsx';
+import {GET_TEMPLATE_BY_ID} from '@/operations/template/query.ts';
 
 interface FormProps {
     item?: GetSubjectsByIdQuery['subject'];
@@ -41,9 +39,7 @@ interface SubjectFormValues {
     tabs: Array<any>;
 }
 
-type TemplateById = {template: Query['template']};
-
-const {Item} = Form;
+export type TemplateById = {template: Query['template']};
 
 const baseInitialValues = {schedule: defaultScheduleValues()};
 
@@ -117,19 +113,14 @@ const FormSubject = memo<FormProps>(({item}) => {
 
     return (
         <Form
+            name="subjectForm"
             initialValues={initialValues}
-            className="card flex flex-col gap-6 p-6"
+            className="flex flex-col gap-6 p-6"
             layout="vertical"
             onFinish={onFinish}
         >
             <DefaultFields />
             {data?.template && <TemplateTabs data={data.template.tabs} />}
-
-            <Item>
-                <Button className="w-full" htmlType="submit" size="large" type="primary">
-                    {isCreate ? 'Создать' : 'Сохранить изменения'}
-                </Button>
-            </Item>
         </Form>
     );
 });

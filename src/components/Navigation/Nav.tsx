@@ -25,7 +25,7 @@ const Nav = memo(() => {
     }, [navigate, pathname]);
 
     return (
-        <aside className={clsx('flex h-full flex-col justify-between bg-zinc-900', isOpen ? 'w-[15%]' : 'w-auto')}>
+        <aside className={clsx('flex h-full flex-col justify-between bg-zinc-950', isOpen ? 'w-[15%]' : 'w-auto')}>
             <LinksView isOpen={isOpen} />
 
             <CollapseButton isOpen={isOpen} toggle={toggle} />

@@ -5,21 +5,16 @@ export const authorizedAppRoutes = [
     {
         children: [
             {
+                element: <Outlet />,
+                errorElement: <PageError />,
+                path: 'create-subject',
                 children: [
-                    {
-                        errorElement: <PageError />,
-                        index: true,
-                        lazy: () => import('../pages/Template/Page'),
-                    },
                     {
                         errorElement: <PageError />,
                         lazy: () => import('../pages/Subject/form/Page'),
                         path: ':templateId',
                     },
                 ],
-                element: <Outlet />,
-                errorElement: <PageError />,
-                path: 'create-subject',
             },
             {
                 errorElement: <PageError />,
@@ -34,7 +29,7 @@ export const authorizedAppRoutes = [
                     {
                         errorElement: <PageError />,
                         index: true,
-                        lazy: () => import('../pages/Subject/Item/Page'),
+                        lazy: () => import('@/pages/Subject/item/Page'),
                     },
                 ],
             },

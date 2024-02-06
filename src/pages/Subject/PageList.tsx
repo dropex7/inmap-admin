@@ -9,7 +9,7 @@ import SearchBar from '@/components/SearchBar';
 import usePaginationFilter from '@/hooks/pagination/usePaginationFilter';
 import usePaginationParams from '@/hooks/pagination/usePaginationParams';
 import {SEARCH_SUBJECTS} from '@/operations/subject/query';
-import LinkToCreate from './LinkToCreate';
+import CreatingTemplateModal from './template/CreatingTemplateModal.tsx';
 import List from './List';
 import {useRecoilValue} from 'recoil';
 import {placeAtom} from '@/atoms/selectedPlace';
@@ -41,10 +41,10 @@ export function Component() {
     }
 
     return (
-        <section className="flex h-full flex-col divide-y divide-zinc-800 rounded-lg bg-zinc-900">
+        <section className="flex flex-col divide-y divide-zinc-800 rounded-lg bg-zinc-900">
             <div className="flex justify-between p-6">
                 <SearchBar placeholder="Поиск объектов" url={url} />
-                <LinkToCreate />
+                <CreatingTemplateModal />
             </div>
 
             <Spin tip="Loading" size="large" spinning={loading}>

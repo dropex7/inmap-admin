@@ -144,51 +144,14 @@ export type CreateUserInput = {
   role: Scalars['String']['input'];
 };
 
-export type FieldsContentWithTranslationParkingFieldsModel = {
-  __typename?: 'FieldsContentWithTranslationParkingFieldsModel';
-  uuid: Scalars['String']['output'];
-};
-
-export type FieldsContentWithTranslationParkingTariffsModel = {
-  __typename?: 'FieldsContentWithTranslationParkingTariffsModel';
-  uuid: Scalars['String']['output'];
-};
-
-export type FieldsContentWithTranslationPlaceModel = {
-  __typename?: 'FieldsContentWithTranslationPlaceModel';
-  title: TextContentModel;
-  uuid: Scalars['String']['output'];
-};
-
-export type FieldsContentWithTranslationPromoModel = {
-  __typename?: 'FieldsContentWithTranslationPromoModel';
-  title: TextContentModel;
-  uuid: Scalars['String']['output'];
-};
-
-export type FieldsContentWithTranslationsModel = {
-  __typename?: 'FieldsContentWithTranslationsModel';
+export type FieldsContentModel = {
+  __typename?: 'FieldsContentModel';
+  en?: Maybe<Array<Scalars['JSON']['output']>>;
+  es?: Maybe<Array<Scalars['JSON']['output']>>;
   originalFields: Array<Scalars['JSON']['output']>;
-  parkingFields?: Maybe<FieldsContentWithTranslationParkingFieldsModel>;
-  parkingTariffs?: Maybe<FieldsContentWithTranslationParkingTariffsModel>;
-  place?: Maybe<FieldsContentWithTranslationPlaceModel>;
-  promo?: Maybe<FieldsContentWithTranslationPromoModel>;
-  translations: Array<FieldsTranslationModel>;
-  type: Scalars['String']['output'];
+  ru?: Maybe<Array<Scalars['JSON']['output']>>;
   uuid: Scalars['String']['output'];
-};
-
-export type FieldsTranslationModel = {
-  __typename?: 'FieldsTranslationModel';
-  fieldsContentId: Scalars['String']['output'];
-  languageId: Scalars['String']['output'];
-  translation: Array<Scalars['JSON']['output']>;
-};
-
-export type LanguageModel = {
-  __typename?: 'LanguageModel';
-  locale: Scalars['String']['output'];
-  name: Scalars['String']['output'];
+  zh?: Maybe<Array<Scalars['JSON']['output']>>;
 };
 
 export type LocalizedTemplateTabModel = {
@@ -229,9 +192,8 @@ export type Mutation = {
   setLinkedRecsToSubject: SubjectLocalizedModel;
   setLinkedSubjectsToRecommendation: PlaceRecommendationLocalizedModel;
   updateCity: CityLocalizedModel;
-  updateFieldsTranslation: FieldsTranslationModel;
+  updateFieldsContent: FieldsContentModel;
   updateLinkedTemplatesToPlace: PlaceLocalizedModel;
-  updateOriginalTextContent: TextContentModel;
   updateParking: ParkingLocalizedModel;
   updatePlace: PlaceLocalizedModel;
   updatePlaceLayer: PlaceLayerLocalizedModel;
@@ -240,7 +202,7 @@ export type Mutation = {
   updatePromo: PromoLocalizedModel;
   updateSubject: SubjectLocalizedModel;
   updateTemplate: TemplateLocalizedModel;
-  updateTextTranslation: TextTranslationModel;
+  updateTextContent: TextContentModel;
   updateUser: UserLocalizedModel;
   uploadImage: UploadResult;
 };
@@ -389,7 +351,7 @@ export type MutationUpdateCityArgs = {
 };
 
 
-export type MutationUpdateFieldsTranslationArgs = {
+export type MutationUpdateFieldsContentArgs = {
   input: UpdateFieldsTranslationInput;
 };
 
@@ -398,11 +360,6 @@ export type MutationUpdateLinkedTemplatesToPlaceArgs = {
   placeUuid: Scalars['String']['input'];
   templatesUuidsToAdd: Array<Scalars['String']['input']>;
   templatesUuidsToRemove: Array<Scalars['String']['input']>;
-};
-
-
-export type MutationUpdateOriginalTextContentArgs = {
-  updateTextContentInput: UpdateOriginalTextInput;
 };
 
 
@@ -447,7 +404,7 @@ export type MutationUpdateTemplateArgs = {
 };
 
 
-export type MutationUpdateTextTranslationArgs = {
+export type MutationUpdateTextContentArgs = {
   input: UpdateTextTranslationInput;
 };
 
@@ -574,8 +531,7 @@ export type Query = {
   cities: Array<CityLocalizedModel>;
   citiesOnMap: Array<CityLocalizedModel>;
   city: CityLocalizedModel;
-  existingLanguages: Array<LanguageModel>;
-  fieldsContentTranslationsOfPlace: Array<FieldsContentWithTranslationsModel>;
+  fieldsContentsOfPlace: Array<FieldsContentModel>;
   parking: ParkingLocalizedModel;
   parkingWithPlaceUuid?: Maybe<ParkingLocalizedModel>;
   place: PlaceLocalizedModel;
@@ -601,8 +557,8 @@ export type Query = {
   template: TemplateLocalizedModel;
   templates: Array<TemplateLocalizedModel>;
   templatesOfPlace: Array<TemplateLocalizedModel>;
-  textContent: TextContentModel;
-  textContentTranslationsOfPlace: Array<TextContentWithTranslationsModel>;
+  textContent: TextContentModelLight;
+  textContentsOfPlace: Array<TextContentModel>;
   user: UserLocalizedModel;
   users: Array<UserLocalizedModel>;
   validVersion: ValidVersion;
@@ -620,7 +576,7 @@ export type QueryCityArgs = {
 };
 
 
-export type QueryFieldsContentTranslationsOfPlaceArgs = {
+export type QueryFieldsContentsOfPlaceArgs = {
   placeUuid: Scalars['String']['input'];
 };
 
@@ -746,7 +702,7 @@ export type QueryTextContentArgs = {
 };
 
 
-export type QueryTextContentTranslationsOfPlaceArgs = {
+export type QueryTextContentsOfPlaceArgs = {
   placeUuid: Scalars['String']['input'];
 };
 
@@ -852,22 +808,18 @@ export type TemplatedContentTabLocalizedModel = {
 
 export type TextContentModel = {
   __typename?: 'TextContentModel';
+  en?: Maybe<Scalars['String']['output']>;
+  es?: Maybe<Scalars['String']['output']>;
   originalText: Scalars['String']['output'];
+  ru?: Maybe<Scalars['String']['output']>;
   uuid: Scalars['String']['output'];
+  zh?: Maybe<Scalars['String']['output']>;
 };
 
-export type TextContentWithTranslationsModel = {
-  __typename?: 'TextContentWithTranslationsModel';
+export type TextContentModelLight = {
+  __typename?: 'TextContentModelLight';
   originalText: Scalars['String']['output'];
-  translations: Array<TextTranslationModel>;
   uuid: Scalars['String']['output'];
-};
-
-export type TextTranslationModel = {
-  __typename?: 'TextTranslationModel';
-  languageId: Scalars['String']['output'];
-  textContentId: Scalars['String']['output'];
-  translation: Scalars['String']['output'];
 };
 
 export type UpdateCityInput = {
@@ -879,14 +831,12 @@ export type UpdateCityInput = {
 };
 
 export type UpdateFieldsTranslationInput = {
+  en?: InputMaybe<Array<Scalars['JSON']['input']>>;
+  es?: InputMaybe<Array<Scalars['JSON']['input']>>;
   fieldsContentId: Scalars['String']['input'];
-  locale: Scalars['String']['input'];
-  translation: Array<Scalars['JSON']['input']>;
-};
-
-export type UpdateOriginalTextInput = {
-  originalText: Scalars['String']['input'];
-  uuid: Scalars['String']['input'];
+  originalFields?: InputMaybe<Array<Scalars['JSON']['input']>>;
+  ru?: InputMaybe<Array<Scalars['JSON']['input']>>;
+  zh?: InputMaybe<Array<Scalars['JSON']['input']>>;
 };
 
 export type UpdateParkingInput = {
@@ -970,9 +920,12 @@ export type UpdateTemplateInput = {
 };
 
 export type UpdateTextTranslationInput = {
-  locale: Scalars['String']['input'];
+  en?: InputMaybe<Scalars['String']['input']>;
+  es?: InputMaybe<Scalars['String']['input']>;
+  originalText?: InputMaybe<Scalars['String']['input']>;
+  ru?: InputMaybe<Scalars['String']['input']>;
   textContentId: Scalars['String']['input'];
-  translation: Scalars['String']['input'];
+  zh?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateUserInput = {

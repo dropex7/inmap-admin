@@ -2,7 +2,7 @@
  * Created by MIRZOEV A. on 26.11.2023
  */
 import {useQuery} from '@apollo/client';
-import {Button, Descriptions} from 'antd';
+import {Button, Descriptions, Typography} from 'antd';
 import {useNavigate, useParams} from 'react-router-dom';
 
 import type {GetSubjectsByIdQuery} from '@/generated/graphql';
@@ -12,8 +12,10 @@ import DeleteButton from './DeleteButton';
 import {useCallback} from 'react';
 import {useRecoilValue} from 'recoil';
 import {placeAtom} from '@/atoms/selectedPlace';
+import {LeftOutlined} from '@ant-design/icons';
 
 const {Item} = Descriptions;
+const {Title} = Typography;
 export function Component() {
     const navigate = useNavigate();
     const placeUuid = useRecoilValue(placeAtom);
@@ -36,7 +38,13 @@ export function Component() {
     return (
         <div className="card flex flex-col gap-6 p-6">
             <div className="flex justify-between">
-                <h3 className="text-white">{subject.name ?? 'Объект'}</h3>
+                <div className="flex items-center gap-3">
+                    <Button icon={<LeftOutlined />} type="text" onClick={() => navigate('..')} />
+                    <Title level={4} className="!m-0">
+                        {subject.name ?? 'Объект'}
+                    </Title>
+                </div>
+
                 <div className="flex gap-3">
                     <Button type="primary" onClick={toChangeSubject}>
                         Редактировать

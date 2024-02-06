@@ -9,6 +9,7 @@ export const GET_TEMPLATES = gql`
             tabs {
                 uuid
                 fields
+                name
             }
         }
     }

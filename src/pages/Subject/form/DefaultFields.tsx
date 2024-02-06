@@ -22,7 +22,7 @@ const DefaultFields = memo(() => {
     const {data} = useQuery<GetPlaceLayersQuery>(GET_PLACE_LAYERS, {variables: {placeUuid: placeId!}});
 
     return (
-        <div className="card grid grid-cols-2 divide-x py-6">
+        <div className="grid grid-cols-2 divide-x py-6">
             <div className="flex flex-col gap-3 px-6">
                 <Item
                     className="m-0"
@@ -57,7 +57,7 @@ const DefaultFields = memo(() => {
                 </div>
             </div>
             <div className="flex flex-col gap-3 px-6">
-                <ImageLoaderField countOfImages={1} fieldName="logo" label="Добавьте логотип объекта" />
+                <ImageLoaderField isCropped countOfImages={1} fieldName="logo" label="Добавьте логотип объекта" />
                 <ImageLoaderField countOfImages={10} fieldName="images" label="Добавьте изображения" />
             </div>
         </div>
