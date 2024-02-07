@@ -28,10 +28,10 @@ const SubjectCard = memo<SubjectCardProps>(({subject}) => {
             <div className="relative flex flex-col">
                 {logoUrl && (
                     <div className="absolute -bottom-2 left-2 z-10 rounded-lg border border-zinc-900 bg-white">
-                        <PreviewLogo alt="image" logoUrl={logoUrl} className="h-10 w-10 rounded-lg" />
+                        <PreviewLogo alt="image" logoUrl={logoUrl} className="h-12 w-12 rounded-lg" />
                     </div>
                 )}
-                <div className="absolute right-3 top-3 flex items-center justify-center rounded-3xl bg-zinc-800 bg-opacity-85 px-2 py-1">
+                <div className="absolute right-3 top-3 flex items-center justify-center rounded-3xl bg-zinc-800 bg-opacity-90 px-2 py-1">
                     <span className="self-end text-xs text-white">НЕТ ЭТАЖА</span>
                 </div>
 
