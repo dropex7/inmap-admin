@@ -11,7 +11,7 @@ import {GET_PLACE_LAYERS} from '@/operations/place/query';
 import {Radio, Space} from 'antd';
 import {MapContext} from '../MapContext';
 import {getSelectLayerMessage} from '@/utils/widgetMessages';
-import {PlaceGlobalCtx} from '@/pages/Place/PlaceGlobalCtx.ts';
+import {PlaceGlobalCtx} from '@/components/Place/PlaceGlobalCtx.ts';
 
 const {Group, Button} = Radio;
 

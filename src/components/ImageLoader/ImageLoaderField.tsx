@@ -24,7 +24,7 @@ interface Props {
     countOfImages: number;
     fieldName: Array<string | number> | string;
     isRequired?: boolean;
-    label: string;
+    label?: string;
     name?: string;
     isCropped?: boolean;
 }
@@ -102,7 +102,12 @@ const ImageLoaderField = memo<Props>(
 
         return (
             <>
-                <Item label={label} name={name} rules={[{message: `Изображение не добавлено!`, required: isRequired}]}>
+                <Item
+                    labelAlign="left"
+                    label={label}
+                    name={name}
+                    rules={[{message: `Изображение не добавлено!`, required: isRequired}]}
+                >
                     {isCropped ? (
                         <ImgCrop>
                             <Upload

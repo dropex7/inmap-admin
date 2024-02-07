@@ -9,7 +9,7 @@ import {MapContext} from '@/pages/Map/MapContext';
 import {useRecoilValue} from 'recoil';
 import {placeAtom} from '@/atoms/selectedPlace';
 import {getLoadPlanMessage} from '@/utils/widgetMessages';
-import {PlaceGlobalCtx} from '@/pages/Place/PlaceGlobalCtx';
+import {PlaceGlobalCtx} from '@/components/Place/PlaceGlobalCtx';
 
 const Map = memo<PropsWithChildren>(() => {
     const {ref} = useContext(MapContext);

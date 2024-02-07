@@ -26,7 +26,7 @@ const CreatingTemplateModal = memo(() => {
 
     return (
         <>
-            <Button onClick={onOpen} shape="round" size="large" type="primary">
+            <Button onClick={onOpen} size="large" type="primary">
                 Создать объект
             </Button>
             <Modal

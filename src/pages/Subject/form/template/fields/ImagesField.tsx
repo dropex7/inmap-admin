@@ -17,7 +17,7 @@ const {Item} = Form;
 const ImagesField = memo<ImagesFieldProps>(({fieldIndex, tabIndex}) => {
     return (
         <>
-            <Item label="Заголовок над фотографиями" name="title">
+            <Item labelAlign="left" label="Заголовок над фотографиями" name="title">
                 <Input />
             </Item>
             <ImageLoaderField

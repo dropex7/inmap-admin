@@ -50,13 +50,16 @@ export function Component() {
             <Spin tip="Loading" size="large" spinning={loading}>
                 {data && data.searchSubjects.total !== 0 ? (
                     <div className="flex flex-col gap-6 p-6">
-                        <Pagination
-                            defaultCurrent={pageParams.offset / pageParams.limit + 1}
-                            onChange={changePage}
-                            defaultPageSize={pageParams.limit}
-                            total={data.searchSubjects.total}
-                            showSizeChanger={false}
-                        />
+                        <div className="flex justify-end">
+                            <Pagination
+                                defaultCurrent={pageParams.offset / pageParams.limit + 1}
+                                onChange={changePage}
+                                defaultPageSize={pageParams.limit}
+                                total={data.searchSubjects.total}
+                                showSizeChanger={false}
+                            />
+                        </div>
+
                         <List data={data} />
                     </div>
                 ) : (

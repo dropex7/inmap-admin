@@ -6,7 +6,7 @@ import type {Color} from 'antd/es/color-picker';
 
 import {useMutation, useQuery} from '@apollo/client';
 import {Form} from 'antd';
-import {memo, useCallback, useMemo} from 'react';
+import {memo, useCallback, useMemo, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useRecoilValue} from 'recoil';
 import type {SCHEDULE_DAYS} from '@/components/Schedule/types';
@@ -15,14 +15,16 @@ import {placeAtom} from '@/atoms/selectedPlace';
 import {CREATE_SUBJECT, UPDATE_SUBJECT} from '@/operations/subject/mutation';
 import {GET_SUBJECTS, GET_SUBJECTS_BY_ID} from '@/operations/subject/query';
 import {prepareSchedule} from '@/utils/utils';
-import DefaultFields from './DefaultFields';
 import {prepareFieldsToSend} from './helper';
 import type {ScheduleFormInterval} from '@/components/Schedule/types';
 import type {GetSubjectsByIdQuery} from '@/generated/graphql';
 import {defaultScheduleValues, prepareDataForForm} from './prepareDataForForm';
-import TemplateTabs from './template/TemplateTabs';
 import type {ImageType} from '@/components/ImageLoader/ImageLoaderField.tsx';
 import {GET_TEMPLATE_BY_ID} from '@/operations/template/query.ts';
+import TabsMenu from '@/pages/Subject/form/tabs/TabsMenu.tsx';
+import {AppstoreOutlined} from '@ant-design/icons';
+import {FORM_MENU_BASE_ITEM_KEYS} from '@/pages/Subject/form/tabs/helper.ts';
+import TabView from '@/pages/Subject/form/tabs/TabView.tsx';
 
 interface FormProps {
     item?: GetSubjectsByIdQuery['subject'];
@@ -45,6 +47,7 @@ const baseInitialValues = {schedule: defaultScheduleValues()};
 
 const FormSubject = memo<FormProps>(({item}) => {
     const {templateId} = useParams();
+    const [selectedTab, setSelectedTab] = useState<string>(FORM_MENU_BASE_ITEM_KEYS.MAIN);
     const navigate = useNavigate();
     const placeUuid = useRecoilValue(placeAtom);
     const isCreate = !item?.uuid;
@@ -56,6 +59,16 @@ const FormSubject = memo<FormProps>(({item}) => {
 
     const [createSubject] = useMutation<SubjectFormValues>(CREATE_SUBJECT);
     const [updateSubject] = useMutation<SubjectFormValues>(UPDATE_SUBJECT);
+
+    const extraFields = useMemo(
+        () =>
+            data?.template.tabs.map(({name, uuid}) => ({
+                label: name,
+                key: uuid,
+                icon: <AppstoreOutlined />,
+            })),
+        [data],
+    );
 
     const initialValues = useMemo(() => (isCreate ? baseInitialValues : prepareDataForForm(item)), [isCreate, item]);
 
@@ -113,14 +126,16 @@ const FormSubject = memo<FormProps>(({item}) => {
 
     return (
         <Form
+            labelCol={{span: 6}}
+            wrapperCol={{span: 24}}
             name="subjectForm"
+            className="flex h-full"
             initialValues={initialValues}
-            className="flex flex-col gap-6 p-6"
-            layout="vertical"
             onFinish={onFinish}
         >
-            <DefaultFields />
-            {data?.template && <TemplateTabs data={data.template.tabs} />}
+            <TabsMenu selectedTab={selectedTab} setSelectedTab={setSelectedTab} extraFields={extraFields} />
+
+            <TabView selectedTab={selectedTab} tabs={data?.template.tabs ?? []} />
         </Form>
     );
 });

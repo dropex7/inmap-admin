@@ -8,7 +8,7 @@ import {memo} from 'react';
 
 const PhonesField = memo(() => {
     return (
-        <Form.Item label="Телефоны">
+        <Form.Item labelAlign="left" label="Телефоны">
             <Form.List name="phones">
                 {(fields, {add, remove}) => (
                     <div className="flex flex-col gap-2">

@@ -24,7 +24,7 @@ const SubjectCard = memo<SubjectCardProps>(({subject}) => {
     }, [images]);
 
     return (
-        <div className="card flex w-48 flex-col rounded-xl bg-zinc-800 bg-opacity-80" onClick={() => navigate(uuid!)}>
+        <div className="card flex w-60 flex-col rounded-xl bg-zinc-800 bg-opacity-80" onClick={() => navigate(uuid!)}>
             <div className="relative flex flex-col">
                 {logoUrl && (
                     <div className="absolute -bottom-2 left-2 z-10 rounded-lg border border-zinc-900 bg-white">

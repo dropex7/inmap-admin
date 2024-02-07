@@ -5,7 +5,7 @@
 import {Form} from 'antd';
 import {memo} from 'react';
 import type {LocalizedTemplateTabModel} from '@/generated/graphql';
-import TemplateFields from '../TemplateFields';
+import TemplateFields from './TemplateFields.tsx';
 
 interface NewTemplateProps {
     data: Array<LocalizedTemplateTabModel>;
@@ -17,13 +17,15 @@ const TemplateTabs = memo<NewTemplateProps>(({data}) => {
             {() => (
                 <div style={{display: 'flex', rowGap: 16, flexDirection: 'column'}}>
                     {data.map(({uuid, name, fields}, index) => (
-                        <TemplateFields
-                            templateTabUuid={uuid}
-                            fields={fields}
-                            key={uuid}
-                            name={name}
-                            tabIndex={index}
-                        />
+                        <>
+                            <TemplateFields
+                                templateTabUuid={uuid}
+                                fields={fields}
+                                key={uuid}
+                                name={name}
+                                tabIndex={index}
+                            />
+                        </>
                     ))}
                 </div>
             )}

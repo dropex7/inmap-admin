@@ -11,7 +11,7 @@ import type {GetListOfPlacesQuery} from '@/generated/graphql';
 
 import {useAuth} from '@/hooks/useAuth';
 import {GET_PLACES} from '@/operations/place/query';
-import PlaceSelect from '@/pages/Place/PlaceSelect';
+import PlaceSelect from '@/components/Place/PlaceSelect';
 
 const Header = memo(() => {
     const {logout} = useAuth();

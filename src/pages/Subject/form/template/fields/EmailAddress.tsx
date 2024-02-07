@@ -9,7 +9,7 @@ const {Item} = Form;
 
 const EmailAddress = memo(() => {
     return (
-        <Item label="Электронная почта" name="emailAddress">
+        <Item labelAlign="left" label="Электронная почта" name="emailAddress">
             <Input />
         </Item>
     );

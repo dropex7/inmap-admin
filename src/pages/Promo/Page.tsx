@@ -12,7 +12,7 @@ const url = SEARCH_PROMOS.loc?.source.body ?? '';
 
 export function Component() {
     return (
-        <div className="card flex flex-col gap-3 p-6">
+        <div className="flex flex-col gap-3 p-6">
             <div className="flex justify-between">
                 <SearchBar placeholder="Поиск объялений" url={url} />
                 <NavigateToCreate />

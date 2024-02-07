@@ -12,7 +12,11 @@ interface CollapseButtonProps {
 
 const CollapseButton = memo<CollapseButtonProps>(({isOpen, toggle}) => {
     return (
-        <Button className="inline-flex items-center justify-center gap-2.5 p-5 " onClick={toggle} type="text">
+        <Button
+            className="inline-flex items-center justify-center gap-2.5 border-t-zinc-800 p-5 "
+            onClick={toggle}
+            type="text"
+        >
             <img alt="collapse" height={20} src={isOpen ? '/icons/collapse.svg' : '/icons/expand.svg'} width={20} />
             {isOpen && <div className="text-sm font-semibold leading-none text-neutral-500">Свернуть</div>}
         </Button>

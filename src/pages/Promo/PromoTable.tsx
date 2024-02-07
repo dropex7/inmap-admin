@@ -3,8 +3,6 @@
  */
 
 import {memo} from 'react';
-import noPhoto from '../../assets/no-photo-available.png';
-import PreviewImage from '../../components/Images/PreviewImage';
 import type {ColumnsType, TableProps} from 'antd/es/table';
 import {Table} from 'antd';
 import type {PromoSearchModel} from '@/generated/graphql';
@@ -24,19 +22,19 @@ const columns: ColumnsType<PromoSearchModel> = [
         dataIndex: 'subtitle',
         key: 'subtitle',
     },
-    {
-        title: 'Картинка',
-        key: 'imageUrl',
-        render: ({smallImageUrl}) => (
-            <PreviewImage
-                alt="image"
-                height="100px"
-                className="rounded-lg"
-                url={smallImageUrl ?? noPhoto}
-                width="100px"
-            />
-        ),
-    },
+    // {
+    //     title: 'Картинка',
+    //     key: 'imageUrl',
+    //     render: ({smallImageUrl}) => (
+    //         <PreviewImage
+    //             alt="image"
+    //             height="100px"
+    //             className="rounded-lg"
+    //             url={smallImageUrl ?? noPhoto}
+    //             width="100px"
+    //         />
+    //     ),
+    // },
 ];
 
 const PromoTable = memo<PromoTableProps>(({data, ...rest}) => {

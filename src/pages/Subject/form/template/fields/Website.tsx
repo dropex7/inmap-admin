@@ -9,7 +9,7 @@ const {Item} = Form;
 
 const Website = memo(() => {
     return (
-        <Item label="Название сайта" name="websiteUrl">
+        <Item labelAlign="left" label="Название сайта" name="websiteUrl">
             <Input />
         </Item>
     );

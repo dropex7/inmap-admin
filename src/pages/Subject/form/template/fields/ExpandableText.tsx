@@ -13,7 +13,7 @@ const {Item} = Form;
 
 const ExpandableText = memo<Props>(({name}) => {
     return (
-        <Item label="Текст" name={name}>
+        <Item labelAlign="left" label="Текст" name={name}>
             <Input />
         </Item>
     );

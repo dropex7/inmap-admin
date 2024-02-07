@@ -8,7 +8,7 @@ import {placeAtom} from '../atoms/selectedPlace';
 import {useQuery} from '@apollo/client';
 import {GET_PLACE} from '../operations/place/query';
 import type {GetPlaceQuery} from '../generated/graphql';
-import {PlaceGlobalCtx} from '../pages/Place/PlaceGlobalCtx';
+import {PlaceGlobalCtx} from '@/components/Place/PlaceGlobalCtx';
 
 export function Component() {
     const placeId = useRecoilValue(placeAtom);

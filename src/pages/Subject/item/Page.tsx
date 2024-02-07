@@ -36,7 +36,7 @@ export function Component() {
     const {subject} = data;
 
     return (
-        <div className="card flex flex-col gap-6 p-6">
+        <div className="flex flex-col gap-6 p-6">
             <div className="flex justify-between">
                 <div className="flex items-center gap-3">
                     <Button icon={<LeftOutlined />} type="text" onClick={() => navigate('..')} />

@@ -11,7 +11,7 @@ import SelectLayer from './Panel/SelectLayer';
 
 export function Component() {
     return (
-        <section className="card flex h-full rounded-xl bg-zinc-900">
+        <section className="flex h-full bg-zinc-900">
             <MapWrapper>
                 <SubjectPanel />
                 <SelectLayer />

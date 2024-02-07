@@ -12,7 +12,7 @@ import type {GetSubjectsByIdQuery} from '@/generated/graphql';
 import {GET_SUBJECTS_BY_ID} from '@/operations/subject/query';
 import {Button} from 'antd';
 import {getSyncPlanMessage} from '@/utils/widgetMessages';
-import {PlaceGlobalCtx} from '../../Place/PlaceGlobalCtx';
+import {PlaceGlobalCtx} from '@/components/Place/PlaceGlobalCtx';
 import SubjectInfo from './SubjectInfo';
 
 const SubjectPanel = memo(() => {

@@ -33,7 +33,7 @@ const options = Object.entries(SocialMediaTypes).map(([_, value]) => ({
 
 const SocialMediaField = memo(() => {
     return (
-        <Form.Item label="Социальные сети">
+        <Form.Item labelAlign="left" label="Социальные сети">
             <Form.List name="socialMediaList">
                 {(fields, {add, remove}) => (
                     <div className="flex flex-col gap-2">

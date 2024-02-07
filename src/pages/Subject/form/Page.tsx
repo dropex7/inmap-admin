@@ -34,7 +34,7 @@ export function Component() {
     });
 
     return (
-        <div className="card -m-5 flex flex-col divide-y divide-gray-700">
+        <div className="flex h-full flex-col divide-y divide-gray-700">
             <div className="flex items-center justify-between p-4">
                 <div className="flex items-center gap-3">
                     <Button
