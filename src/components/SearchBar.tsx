@@ -26,14 +26,13 @@ const SearchBar = memo<SearchBarProps>(({placeholder = 'Поиск', url}) => {
     const debouncedValue = useDebounce<string>(value ?? '', 500);
 
     useEffect(() => {
-        setFilter({...filter, query: debouncedValue});
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [debouncedValue]);
+        setFilter({query: debouncedValue});
+    }, [debouncedValue, setFilter]);
 
     return (
         <div className="flex items-center gap-3">
             <Input
-                addonBefore={<SearchOutlined />}
+                addonAfter={<SearchOutlined />}
                 onChange={({target}) => setValue(target.value)}
                 placeholder={placeholder}
                 size="large"
