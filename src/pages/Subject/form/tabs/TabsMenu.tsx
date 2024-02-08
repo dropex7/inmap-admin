@@ -5,7 +5,6 @@
 import {memo} from 'react';
 import type {MenuProps} from 'antd';
 import {Menu} from 'antd';
-import {FileImageOutlined, ShopOutlined} from '@ant-design/icons';
 import {FORM_MENU_BASE_ITEM_KEYS} from '@/pages/Subject/form/tabs/helper.ts';
 
 interface TabsMenuProps {
@@ -18,12 +17,10 @@ const items: MenuProps['items'] = [
     {
         label: 'Основная информация',
         key: FORM_MENU_BASE_ITEM_KEYS.MAIN,
-        icon: <ShopOutlined />,
     },
     {
         label: 'Фотографии',
         key: FORM_MENU_BASE_ITEM_KEYS.PHOTOS,
-        icon: <FileImageOutlined />,
     },
 ];
 

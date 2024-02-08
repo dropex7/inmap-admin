@@ -31,7 +31,7 @@ const TemplateItem = memo<TemplateItemProps>(({uuid, tabs, name, selectedTemplat
 
     return (
         <div
-            className={clsx('card flex flex-col rounded-xl p-4 outline-1 hover:cursor-pointer', extraClassName)}
+            className={clsx('card flex flex-col rounded-xl p-6 outline-1 hover:cursor-pointer', extraClassName)}
             key={uuid + name}
             onClick={() => setTemplate(uuid)}
         >

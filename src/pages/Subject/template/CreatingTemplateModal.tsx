@@ -32,7 +32,6 @@ const CreatingTemplateModal = memo(() => {
             <Modal
                 title="Выбор шаблона"
                 open={open}
-                cancelText="Закрыть"
                 onOk={handleCreateObject}
                 okText="Выбрать"
                 onCancel={onClose}

@@ -22,7 +22,6 @@ import {defaultScheduleValues, prepareDataForForm} from './prepareDataForForm';
 import type {ImageType} from '@/components/ImageLoader/ImageLoaderField.tsx';
 import {GET_TEMPLATE_BY_ID} from '@/operations/template/query.ts';
 import TabsMenu from '@/pages/Subject/form/tabs/TabsMenu.tsx';
-import {AppstoreOutlined} from '@ant-design/icons';
 import {FORM_MENU_BASE_ITEM_KEYS} from '@/pages/Subject/form/tabs/helper.ts';
 import TabView from '@/pages/Subject/form/tabs/TabView.tsx';
 
@@ -65,7 +64,6 @@ const FormSubject = memo<FormProps>(({item}) => {
             data?.template.tabs.map(({name, uuid}) => ({
                 label: name,
                 key: uuid,
-                icon: <AppstoreOutlined />,
             })),
         [data],
     );
