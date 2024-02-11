@@ -8,12 +8,10 @@ import {placeAtom} from '@/atoms/selectedPlace';
 import {useQuery} from '@apollo/client';
 import type {GetPlaceLayersQuery} from '@/generated/graphql';
 import {GET_PLACE_LAYERS} from '@/operations/place/query';
-import {Radio, Space} from 'antd';
 import {MapContext} from '../MapContext';
 import {getSelectLayerMessage} from '@/utils/widgetMessages';
 import {PlaceGlobalCtx} from '@/components/Place/PlaceGlobalCtx.ts';
-
-const {Group, Button} = Radio;
+import clsx from 'clsx';
 
 const SelectLayer = memo(() => {
     const {ref} = useContext(MapContext);
@@ -41,15 +39,25 @@ const SelectLayer = memo(() => {
     }, [data, handleSelectLayer, initialLayerUuid]);
 
     return (
-        <Group className="flex w-40 justify-center bg-zinc-700 p-3" value={selectedLayer}>
-            <Space direction="vertical" size="large">
-                {data?.placeLayers.map(({fullName, uuid}) => (
-                    <Button type="primary" value={uuid} key={uuid} onClick={() => handleSelectLayer(uuid)}>
-                        {fullName}
-                    </Button>
-                ))}
-            </Space>
-        </Group>
+        <div className="flex w-32 flex-col divide-y divide-zinc-700 border-l border-zinc-700 bg-zinc-900">
+            <span className="flex justify-center bg-zinc-700 p-3 text-white">№ этажа</span>
+            {data?.placeLayers.map(({shortName, uuid}) => {
+                const isSelected = selectedLayer === uuid;
+
+                return (
+                    <div
+                        key={uuid}
+                        onClick={isSelected ? undefined : () => handleSelectLayer(uuid)}
+                        className={clsx(
+                            'flex items-center justify-center p-3 text-white text-opacity-80 hover:cursor-pointer',
+                            isSelected && 'bg-zinc-800',
+                        )}
+                    >
+                        {shortName}
+                    </div>
+                );
+            })}
+        </div>
     );
 });
 

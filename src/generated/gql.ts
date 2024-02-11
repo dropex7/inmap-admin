@@ -16,7 +16,7 @@ const documents = {
     "\n    mutation UploadImage($uploadInput: UploadInput!) {\n        uploadImage(uploadInput: $uploadInput) {\n            url\n        }\n    }\n": types.UploadImageDocument,
     "\n    query GetListOfPlaces {\n        places {\n            uuid\n            title\n            logoUrl\n        }\n    }\n": types.GetListOfPlacesDocument,
     "\n    query GetPlace($uuid: String!) {\n        place(uuid: $uuid) {\n            title\n            logoUrl\n            address\n            schedule\n            selectedPlan {\n                key\n            }\n            initialLayerUuid\n            recs {\n                title\n            }\n            promos {\n                title\n            }\n        }\n    }\n": types.GetPlaceDocument,
-    "\n    query GetPlaceLayers($placeUuid: String!) {\n        placeLayers(placeUuid: $placeUuid) {\n            uuid\n            fullName\n        }\n    }\n": types.GetPlaceLayersDocument,
+    "\n    query GetPlaceLayers($placeUuid: String!) {\n        placeLayers(placeUuid: $placeUuid) {\n            uuid\n            fullName\n            shortName\n        }\n    }\n": types.GetPlaceLayersDocument,
     "\n    mutation CreatePromo($createPromoInput: CreatePromoInput!) {\n        createPromo(createPromoInput: $createPromoInput) {\n            uuid\n            smallImageUrl\n        }\n    }\n": types.CreatePromoDocument,
     "\n    query GetListOfPromos($placeUuid: String!, $subjectUuid: String!) {\n        promos(placeUuid: $placeUuid, subjectUuid: $subjectUuid) {\n            uuid\n            title\n            subtitle\n            smallImageUrl\n            subtitle\n        }\n    }\n": types.GetListOfPromosDocument,
     "\n    query SearchPromos($searchPromosInput: SearchPromosInput!) {\n        searchPromos(searchPromosInput: $searchPromosInput) {\n            total\n            items {\n                uuid\n                placeUuid\n                smallImageUrl\n                largeImageUrl\n                title\n                subtitle\n            }\n        }\n    }\n": types.SearchPromosDocument,
@@ -57,7 +57,7 @@ export function graphql(source: "\n    query GetPlace($uuid: String!) {\n       
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query GetPlaceLayers($placeUuid: String!) {\n        placeLayers(placeUuid: $placeUuid) {\n            uuid\n            fullName\n        }\n    }\n"): (typeof documents)["\n    query GetPlaceLayers($placeUuid: String!) {\n        placeLayers(placeUuid: $placeUuid) {\n            uuid\n            fullName\n        }\n    }\n"];
+export function graphql(source: "\n    query GetPlaceLayers($placeUuid: String!) {\n        placeLayers(placeUuid: $placeUuid) {\n            uuid\n            fullName\n            shortName\n        }\n    }\n"): (typeof documents)["\n    query GetPlaceLayers($placeUuid: String!) {\n        placeLayers(placeUuid: $placeUuid) {\n            uuid\n            fullName\n            shortName\n        }\n    }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

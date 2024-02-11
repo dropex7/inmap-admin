@@ -32,3 +32,13 @@ export function getSyncPlanMessage(placeUuid: string, planKey?: string | null) {
         },
     };
 }
+
+export function connectObjectWithPlace(objectUuid?: string, originUuid?: string) {
+    return {
+        type: 'link-object',
+        data: {
+            objectUuid,
+            originUuid, //объект из бд
+        },
+    };
+}

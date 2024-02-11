@@ -10,7 +10,7 @@ import {placeAtom} from '@/atoms/selectedPlace';
 import {useQuery} from '@apollo/client';
 import type {GetSubjectsByIdQuery} from '@/generated/graphql';
 import {GET_SUBJECTS_BY_ID} from '@/operations/subject/query';
-import {Button} from 'antd';
+import {Alert, Button} from 'antd';
 import {getSyncPlanMessage} from '@/utils/widgetMessages';
 import {PlaceGlobalCtx} from '@/components/Place/PlaceGlobalCtx';
 import SubjectInfo from './SubjectInfo';
@@ -32,16 +32,19 @@ const SubjectPanel = memo(() => {
     }, [place.selectedPlan?.key, placeUuid, ref]);
 
     return (
-        <div className="flex w-96 flex-col gap-3 p-3">
-            <SubjectStatus />
-            {data && (
-                <>
-                    <SubjectInfo subject={data.subject} />
-                    <Button type="primary" onClick={handleSavePlan}>
-                        Сохранить изменения
-                    </Button>
-                </>
+        <div className="flex w-96 min-w-96 flex-col gap-3 p-3">
+            <div className="flex flex-col" />
+            {selectedObject ? (
+                <div className="flex flex-col gap-6">
+                    {data ? <SubjectInfo subject={data.subject} /> : <SubjectStatus />}
+                </div>
+            ) : (
+                <Alert message="Выберите площадь на карте" type="info" showIcon />
             )}
+
+            <Button type="primary" onClick={handleSavePlan}>
+                Сохранить изменения
+            </Button>
         </div>
     );
 });

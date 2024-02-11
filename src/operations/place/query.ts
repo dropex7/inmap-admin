@@ -34,6 +34,7 @@ export const GET_PLACE_LAYERS = gql`
         placeLayers(placeUuid: $placeUuid) {
             uuid
             fullName
+            shortName
         }
     }
 `;
