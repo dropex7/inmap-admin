@@ -9,13 +9,13 @@ import {MapContext} from '../MapContext';
 const SubjectStatus = memo(() => {
     const {selectedObject} = useContext(MapContext);
 
-    const alertMessage = selectedObject
-        ? selectedObject.originUuid
-            ? 'Объект привязан'
-            : 'Нужно привязать объект'
-        : 'Выберите объект';
+    const isPied = selectedObject?.originUuid && selectedObject.objectUuid;
 
-    return <Alert message={alertMessage} type="info" showIcon />;
+    const alertMessage = isPied
+        ? 'Для выбранной области на карте уже есть связанный объект'
+        : 'Нужно связать объект с областью на плане';
+
+    return <Alert description={alertMessage} message="Состояние выбранной области" type="info" showIcon />;
 });
 
 export default SubjectStatus;

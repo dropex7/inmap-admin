@@ -4,9 +4,10 @@
 
 import {memo} from 'react';
 import type {GetSubjectsByIdQuery} from '@/generated/graphql.ts';
-import {Carousel, Typography, Image} from 'antd';
+import {Typography} from 'antd';
 import SubjectStatus from '@/pages/Map/Panel/SubjectStatus.tsx';
-import noPhoto from '@/assets/no-photo-available.png';
+
+import ImageCarousel from '@/pages/Map/Panel/ImageCarousel.tsx';
 
 interface SubjectInfoProps {
     subject: GetSubjectsByIdQuery['subject'];
@@ -19,24 +20,11 @@ const SubjectInfo = memo<SubjectInfoProps>(({subject}) => {
 
     return (
         <div className="flex flex-col gap-3">
-            <Title level={2}>{subject.name}</Title>
+            <Title level={2} className="self-center">
+                {subject.name}
+            </Title>
+            <ImageCarousel images={images} />
             <SubjectStatus />
-            {images.length === 0 ? (
-                <Image preview={false} height="250px" width="100%" className="object-cover" src={noPhoto} />
-            ) : (
-                <Carousel autoplay>
-                    {images.map(url => (
-                        <Image
-                            key={url}
-                            preview={false}
-                            height="250px"
-                            width="100%"
-                            className="object-cover"
-                            src={url}
-                        />
-                    ))}
-                </Carousel>
-            )}
         </div>
     );
 });
