@@ -32,12 +32,13 @@ const CreatingTemplateModal = memo(() => {
             <Modal
                 title="Выбор шаблона"
                 open={open}
-                onOk={handleCreateObject}
                 okText="Выбрать"
+                footer={
+                    <Button disabled={!template} onClick={handleCreateObject}>
+                        Выбрать
+                    </Button>
+                }
                 onCancel={onClose}
-                okButtonProps={{
-                    disabled: !template,
-                }}
             >
                 <TemplateList selectedTemplate={template} setTemplate={setTemplate} data={data?.templates ?? []} />
             </Modal>

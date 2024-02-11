@@ -2,7 +2,7 @@
  * Created by MIRZOEV A. on 10.04.2023
  */
 
-import {Button, Form, Input} from 'antd';
+import {Button, Form, Input, Typography} from 'antd';
 import {memo, useCallback} from 'react';
 
 import {useAuth} from '@/hooks/useAuth';
@@ -14,6 +14,7 @@ interface LoginValues {
 
 const {Item, useForm} = Form;
 const {Password} = Input;
+const {Title} = Typography;
 
 const LoginForm = memo(() => {
     const [form] = useForm();
@@ -28,11 +29,12 @@ const LoginForm = memo(() => {
 
     return (
         <Form form={form} layout="vertical" onFinish={handleLogin} requiredMark={false}>
-            <Item label="Электронная почта" name="email" rules={[{required: true, whitespace: true}]}>
-                <Input autoComplete="email" placeholder="Почта" />
+            <Title level={2}>Вход</Title>
+            <Item name="email" rules={[{required: true, whitespace: true}]}>
+                <Input autoComplete="email" placeholder="Почта или телефон" />
             </Item>
 
-            <Item label="Пароль" name="password" rules={[{required: true, whitespace: true}]}>
+            <Item name="password" rules={[{required: true, whitespace: true}]}>
                 <Password autoComplete="current-password" placeholder="Пароль" />
             </Item>
 
