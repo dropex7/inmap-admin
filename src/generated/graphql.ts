@@ -48,10 +48,10 @@ export type CreateCityInput = {
 };
 
 export type CreateParkingInput = {
-  fields: Array<Scalars['JSON']['input']>;
+  fields?: InputMaybe<Array<Scalars['JSON']['input']>>;
   levels: Scalars['JSON']['input'];
   placeUuid: Scalars['String']['input'];
-  tariffs: Array<Scalars['JSON']['input']>;
+  tariffs?: InputMaybe<Array<Scalars['JSON']['input']>>;
 };
 
 export type CreatePlaceInput = {
@@ -113,8 +113,6 @@ export type CreateSubjectInput = {
 };
 
 export type CreateTemplateInput = {
-  /** Image to show in templates list */
-  imageUrl: Scalars['String']['input'];
   /** Name of the template */
   name: Scalars['String']['input'];
   /** Tabs of this template */
@@ -201,7 +199,6 @@ export type Mutation = {
   updatePlan: Plan;
   updatePromo: PromoLocalizedModel;
   updateSubject: SubjectLocalizedModel;
-  updateTemplate: TemplateLocalizedModel;
   updateTextContent: TextContentModel;
   updateUser: UserLocalizedModel;
   uploadImage: UploadResult;
@@ -399,11 +396,6 @@ export type MutationUpdateSubjectArgs = {
 };
 
 
-export type MutationUpdateTemplateArgs = {
-  updateTemplateInput: UpdateTemplateInput;
-};
-
-
 export type MutationUpdateTextContentArgs = {
   input: UpdateTextTranslationInput;
 };
@@ -420,10 +412,10 @@ export type MutationUploadImageArgs = {
 
 export type ParkingLocalizedModel = {
   __typename?: 'ParkingLocalizedModel';
-  fields: Array<Scalars['JSON']['output']>;
+  fields?: Maybe<Array<Scalars['JSON']['output']>>;
   levels: Scalars['JSON']['output'];
   placeUuid: Scalars['String']['output'];
-  tariffs: Array<Scalars['JSON']['output']>;
+  tariffs?: Maybe<Array<Scalars['JSON']['output']>>;
   uuid: Scalars['String']['output'];
 };
 
@@ -439,13 +431,14 @@ export type PlaceLocalizedModel = {
   __typename?: 'PlaceLocalizedModel';
   address: Scalars['String']['output'];
   code: Scalars['String']['output'];
-  fields: Array<Scalars['FieldModel']['output']>;
+  fields?: Maybe<Array<Scalars['FieldModel']['output']>>;
   images: Array<Scalars['String']['output']>;
   initialLayerUuid?: Maybe<Scalars['String']['output']>;
   isVisible: Scalars['Boolean']['output'];
   latitude: Scalars['Float']['output'];
   logoUrl: Scalars['String']['output'];
   longitude: Scalars['Float']['output'];
+  parking?: Maybe<ParkingLocalizedModel>;
   plans: Array<Plan>;
   promos?: Maybe<Array<PromoLocalizedModel>>;
   recs: Array<PlaceRecommendationLocalizedModel>;
@@ -783,8 +776,6 @@ export type SubjectsSearchResModel = {
 
 export type TemplateLocalizedModel = {
   __typename?: 'TemplateLocalizedModel';
-  /** Image to show in templates list */
-  imageUrl: Scalars['String']['output'];
   /** Name of the template */
   name: Scalars['String']['output'];
   /** Tabs of this template */
@@ -841,8 +832,8 @@ export type UpdateFieldsTranslationInput = {
 
 export type UpdateParkingInput = {
   fields: Array<Scalars['JSON']['input']>;
-  levels: Scalars['JSON']['input'];
-  tariffs: Array<Scalars['JSON']['input']>;
+  levels?: InputMaybe<Scalars['JSON']['input']>;
+  tariffs?: InputMaybe<Array<Scalars['JSON']['input']>>;
   uuid: Scalars['String']['input'];
 };
 
@@ -909,13 +900,6 @@ export type UpdateSubjectInput = {
   promosUuids?: InputMaybe<Array<Scalars['String']['input']>>;
   schedule?: InputMaybe<Scalars['ScheduleWeek']['input']>;
   shortDescription?: InputMaybe<Scalars['String']['input']>;
-  uuid: Scalars['String']['input'];
-};
-
-export type UpdateTemplateInput = {
-  /** Image to show in templates list */
-  imageUrl: Scalars['String']['input'];
-  /** UUID of the template */
   uuid: Scalars['String']['input'];
 };
 

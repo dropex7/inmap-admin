@@ -3,32 +3,39 @@
  */
 
 import {memo, useMemo} from 'react';
-import {useNavigate} from 'react-router-dom';
 
 import type {SubjectSearchModel} from '@/generated/graphql';
 
 import noPhoto from '@/assets/no-photo-available.png';
 import PreviewImage from '@/components/Images/PreviewImage';
 import PreviewLogo from '@/components/Images/PreviewLogo';
+import clsx from 'clsx';
 
 interface SubjectCardProps {
     subject: Partial<SubjectSearchModel>;
+    onClick: () => void;
+    className?: string;
 }
 
-const SubjectCard = memo<SubjectCardProps>(({subject}) => {
-    const {images, logoUrl, name, shortDescription, uuid} = subject;
-    const navigate = useNavigate();
+const SubjectCard = memo<SubjectCardProps>(({subject, onClick, className = ''}) => {
+    const {images, logoUrl, name, shortDescription} = subject;
 
     const backgroundImage = useMemo(() => {
         return images?.[0];
     }, [images]);
 
     return (
-        <div className="card flex w-60 flex-col rounded-xl bg-zinc-800 bg-opacity-80" onClick={() => navigate(uuid!)}>
+        <div
+            className={clsx(
+                'card flex w-60 flex-col rounded-xl bg-zinc-800 bg-opacity-80 hover:cursor-pointer',
+                className,
+            )}
+            onClick={onClick}
+        >
             <div className="relative flex flex-col">
                 {logoUrl && (
                     <div className="absolute -bottom-2 left-2 z-10 rounded-lg border border-zinc-900 bg-white">
-                        <PreviewLogo alt="image" logoUrl={logoUrl} className="h-12 w-12 rounded-lg" />
+                        <PreviewLogo alt="image" logoUrl={logoUrl} className="size-12 rounded-lg" />
                     </div>
                 )}
                 <div className="absolute right-3 top-3 flex items-center justify-center rounded-3xl bg-zinc-800 bg-opacity-90 px-2 py-1">

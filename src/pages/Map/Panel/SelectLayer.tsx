@@ -40,7 +40,7 @@ const SelectLayer = memo(() => {
 
     return (
         <div className="flex  flex-col divide-y divide-zinc-700 border border-zinc-700 bg-zinc-900">
-            <span className="flex justify-center bg-zinc-700 p-3 text-white">№ этажа</span>
+            <span className="bg-zinc-700 p-3 text-center text-white">№ этажа</span>
             {data?.placeLayers.map(({shortName, uuid}) => {
                 const isSelected = selectedLayer === uuid;
 

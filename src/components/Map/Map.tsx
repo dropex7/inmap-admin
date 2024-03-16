@@ -25,7 +25,7 @@ const Map = memo<PropsWithChildren>(() => {
     }, [ref, isReady, placeUuid, place.selectedPlan?.key]);
 
     return (
-        <div className="flex h-full w-full flex-col gap-y-4">
+        <div className="flex size-full flex-col gap-y-4">
             <iframe
                 className="rounded-r-xl"
                 width="100%"

@@ -33,6 +33,10 @@ export function Component() {
     );
 
     useEffect(() => {
+        setParams({limit: 20});
+    }, [setParams]);
+
+    useEffect(() => {
         loadList({variables: {searchSubjectsInput: {...pageParams, ...filter, placeUuid}}});
     }, [filter, placeUuid, loadList, pageParams]);
 

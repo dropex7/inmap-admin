@@ -13,8 +13,9 @@ export function Component() {
     return (
         <section className="flex h-full bg-zinc-900">
             <MapWrapper>
-                <SubjectPanel />
                 <SelectLayer />
+                <SubjectPanel />
+
                 <Map />
             </MapWrapper>
         </section>

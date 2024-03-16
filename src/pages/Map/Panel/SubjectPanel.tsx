@@ -14,6 +14,7 @@ import {Alert, Button} from 'antd';
 import {getSyncPlanMessage} from '@/utils/widgetMessages';
 import {PlaceGlobalCtx} from '@/components/Place/PlaceGlobalCtx';
 import SubjectInfo from './SubjectInfo';
+import SubjectPieModal from '@/pages/Map/Panel/SubjectPieModal.tsx';
 
 const SubjectPanel = memo(() => {
     const {selectedObject, ref} = useContext(MapContext);
@@ -46,6 +47,7 @@ const SubjectPanel = memo(() => {
                     showIcon
                 />
             )}
+            {selectedObject && <SubjectPieModal objectUuid={selectedObject.objectUuid} />}
 
             <Button type="primary" onClick={handleSavePlan}>
                 Сохранить изменения

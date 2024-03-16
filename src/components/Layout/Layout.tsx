@@ -10,11 +10,11 @@ import Nav from '../Navigation/Nav';
 
 const Layout = memo(() => {
     return (
-        <div className="flex h-[100vh] flex-col">
+        <div className="flex h-screen flex-col">
             <Header />
             <div className="flex">
                 <Nav />
-                <div className="h-[calc(100vh-64px)] w-full self-end overflow-scroll bg-zinc-900">
+                <div className="h-[calc(100vh-64px)] w-full overflow-hidden bg-zinc-900">
                     <Outlet />
                 </div>
             </div>
