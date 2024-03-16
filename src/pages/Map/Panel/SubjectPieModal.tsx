@@ -3,7 +3,7 @@
  */
 
 import {memo, useCallback, useContext, useEffect, useState} from 'react';
-import {Button, Empty, Modal, Pagination, Spin} from 'antd';
+import {App, Button, Empty, Modal, Pagination, Spin} from 'antd';
 import useOpen from '@/hooks/useOpen.ts';
 import {useRecoilValue} from 'recoil';
 import {placeAtom} from '@/atoms/selectedPlace.ts';
@@ -22,10 +22,13 @@ interface SubjectPieModalProps {
     objectUuid: string;
 }
 
+const {useApp} = App;
+
 const url = SEARCH_SUBJECTS.loc?.source.body ?? 'url';
 
 const SubjectPieModal = memo<SubjectPieModalProps>(({objectUuid}) => {
     const {ref} = useContext(MapContext);
+    const {message} = useApp();
     const {open, onOpen, onClose} = useOpen();
     const [selectedObjectId, setSelectedObjectId] = useState<string>();
     const placeUuid = useRecoilValue(placeAtom);
@@ -47,8 +50,9 @@ const SubjectPieModal = memo<SubjectPieModalProps>(({objectUuid}) => {
         if (ref?.current?.contentWindow) {
             ref.current.contentWindow.postMessage(connectObjectWithPlace(objectUuid, selectedObjectId), '*');
         }
+        message.success('Объект привязан к области');
         onClose();
-    }, [objectUuid, onClose, ref, selectedObjectId]);
+    }, [message, objectUuid, onClose, ref, selectedObjectId]);
 
     useEffect(() => {
         setParams({limit: 9});

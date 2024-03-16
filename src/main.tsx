@@ -1,5 +1,5 @@
 import {ApolloProvider} from '@apollo/client';
-import {ConfigProvider, theme} from 'antd';
+import {App, ConfigProvider, theme} from 'antd';
 import 'antd/dist/reset.css';
 import {StrictMode} from 'react';
 import ReactDOM from 'react-dom/client';
@@ -22,7 +22,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     locale={ruRU}
                     form={{colon: false, validateMessages: validateMessagesWithLabels}}
                 >
-                    <RouterProviderWrapper />
+                    <App>
+                        <RouterProviderWrapper />
+                    </App>
                 </ConfigProvider>
             </ApolloProvider>
         </RecoilRoot>
