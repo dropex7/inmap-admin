@@ -2,8 +2,6 @@
  * Created by MIRZOEV A. on 15.08.2023
  */
 
-import type {UploadFile} from 'antd/es/upload/interface';
-
 import {useMutation} from '@apollo/client';
 import {Steps} from 'antd';
 import {useState} from 'react';
@@ -12,17 +10,22 @@ import {useRecoilValue} from 'recoil';
 
 import {placeAtom} from '@/atoms/selectedPlace';
 import {CREATE_PROMO} from '@/operations/promo/mutation';
-import {GET_PROMOS} from '@/operations/promo/query';
 import PromoDescription from './PromoDescription';
 import PromoMainPart from './PromoMainPart';
+import type {ImageType} from '@/components/ImageLoader/ImageLoaderField.tsx';
+import {GET_PROMOS} from '@/operations/promo/query.ts';
 
 export interface IMainFormValues {
-    imageUrl: Array<UploadFile>;
+    largeImageUrl: Array<ImageType>;
+    smallImageUrl: Array<ImageType>;
     subtitle: string;
     title: string;
+    startDateTime: string;
+    endDateTime: string;
+    subjectsUuids: Array<string>;
 }
 
-export interface IFullFormValues extends IMainFormValues {
+export interface IFullFormValues {
     content: Record<string, any>;
 }
 
@@ -51,7 +54,8 @@ export function Component() {
             ...values,
             ...{
                 ...mainFormValues,
-                imageUrl: mainFormValues?.imageUrl?.[0].url,
+                largeImageUrl: mainFormValues?.largeImageUrl?.[0].originFileObj.url,
+                smallImageUrl: mainFormValues?.smallImageUrl?.[0].originFileObj.url,
             },
         };
 
