@@ -2,7 +2,6 @@ import {useLazyQuery} from '@apollo/client';
 import {Empty, Pagination, Spin} from 'antd';
 import {useCallback, useEffect} from 'react';
 import EmptyIcon from '@/assets/empty.svg?react';
-import type {PaginationParams} from '@/components/Pagination/types';
 import type {SearchSubjectsOfPlaceQuery} from '@/generated/graphql';
 
 import SearchBar from '@/components/SearchBar';
@@ -13,13 +12,14 @@ import CreatingTemplateModal from './template/CreatingTemplateModal.tsx';
 import List from './List';
 import {useRecoilValue} from 'recoil';
 import {placeAtom} from '@/atoms/selectedPlace';
+import type {PaginationFilter} from '@/components/Pagination/types';
 
 const url = SEARCH_SUBJECTS.loc?.source.body ?? 'url';
 
 export function Component() {
     const placeUuid = useRecoilValue(placeAtom);
     const [pageParams, setParams] = usePaginationParams(url);
-    const [filter] = usePaginationFilter<PaginationParams>(url);
+    const [filter] = usePaginationFilter<PaginationFilter>(url);
 
     const [loadList, {data, error, loading}] = useLazyQuery<SearchSubjectsOfPlaceQuery>(SEARCH_SUBJECTS, {
         variables: {searchSubjectsInput: {...pageParams, ...filter, placeUuid}},
@@ -70,7 +70,11 @@ export function Component() {
                     <Empty
                         className="flex h-[50vh] flex-col justify-center"
                         image={<EmptyIcon />}
-                        description={<span className="text-neutral-700">Создайте первый объект</span>}
+                        description={
+                            <span className="text-neutral-700">
+                                {filter.query.length > 0 ? 'Ничего не найдено' : 'Создайте первый объект'}
+                            </span>
+                        }
                     />
                 )}
             </Spin>
