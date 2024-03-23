@@ -46,24 +46,24 @@ export function Component() {
 
     return (
         <section className="flex flex-col divide-y divide-zinc-800 rounded-lg bg-zinc-900">
-            <div className="flex justify-between p-6">
-                <SearchBar placeholder="Поиск объектов" url={url} />
-                <CreatingTemplateModal />
+            <div className="flex justify-between px-6 py-3">
+                <Pagination
+                    defaultCurrent={pageParams.offset / pageParams.limit + 1}
+                    onChange={changePage}
+                    defaultPageSize={pageParams.limit}
+                    total={data?.searchSubjects.total ?? 0}
+                    showSizeChanger={false}
+                />
+
+                <div className="flex items-center gap-3">
+                    <SearchBar placeholder="Поиск объектов" url={url} />
+                    <CreatingTemplateModal />
+                </div>
             </div>
 
             <Spin tip="Loading" size="large" spinning={loading}>
                 {data && data.searchSubjects.total !== 0 ? (
-                    <div className="flex flex-col gap-6 p-6">
-                        <div className="flex justify-end">
-                            <Pagination
-                                defaultCurrent={pageParams.offset / pageParams.limit + 1}
-                                onChange={changePage}
-                                defaultPageSize={pageParams.limit}
-                                total={data.searchSubjects.total}
-                                showSizeChanger={false}
-                            />
-                        </div>
-
+                    <div className="p-6">
                         <List data={data} />
                     </div>
                 ) : (
@@ -72,7 +72,7 @@ export function Component() {
                         image={<EmptyIcon />}
                         description={
                             <span className="text-neutral-700">
-                                {filter.query.length > 0 ? 'Ничего не найдено' : 'Создайте первый объект'}
+                                {(filter.query?.length ?? 0) > 0 ? 'Ничего не найдено' : 'Создайте первый объект'}
                             </span>
                         }
                     />

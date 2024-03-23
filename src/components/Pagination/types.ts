@@ -4,5 +4,5 @@ export interface PaginationParams {
 }
 
 export interface PaginationFilter {
-    query: string;
+    query?: string;
 }
