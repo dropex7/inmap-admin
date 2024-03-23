@@ -9,8 +9,12 @@ export interface SelectedObjectFromFlutter {
 interface MaxCtx {
     ref: RefObject<HTMLIFrameElement> | null;
     selectedObject?: SelectedObjectFromFlutter;
+    isEditMode: boolean;
+    toggleEditMode: () => void;
 }
 
 export const MapContext = createContext<MaxCtx>({
     ref: null,
+    isEditMode: false,
+    toggleEditMode: () => {},
 });

@@ -3,7 +3,7 @@
  */
 
 import type {PropsWithChildren} from 'react';
-import {memo, useEffect, useRef, useState} from 'react';
+import {memo, useCallback, useEffect, useRef, useState} from 'react';
 import type {SelectedObjectFromFlutter} from './MapContext';
 import {MapContext} from './MapContext';
 import {FLUTTER_MESSAGE} from '@/components/Map/types';
@@ -13,6 +13,11 @@ const MapWrapper = memo<PropsWithChildren>(({children}) => {
     const {message} = useGetMessageFromMap();
     const ref = useRef<HTMLIFrameElement>(null);
     const [selectedObject, setSelectedObject] = useState<SelectedObjectFromFlutter>();
+    const [isEditMode, setIsEditMode] = useState(false);
+
+    const toggleEditMode = useCallback(() => {
+        setIsEditMode(prev => !prev);
+    }, []);
 
     useEffect(() => {
         if (message?.type === FLUTTER_MESSAGE.objectSelected) {
@@ -20,7 +25,9 @@ const MapWrapper = memo<PropsWithChildren>(({children}) => {
         }
     }, [message]);
 
-    return <MapContext.Provider value={{ref, selectedObject}}>{children}</MapContext.Provider>;
+    return (
+        <MapContext.Provider value={{ref, selectedObject, isEditMode, toggleEditMode}}>{children}</MapContext.Provider>
+    );
 });
 
 export default MapWrapper;

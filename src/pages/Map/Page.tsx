@@ -8,15 +8,18 @@ import MapWrapper from './MapWrapper';
 
 import SubjectPanel from './Panel/SubjectPanel';
 import SelectLayer from './Panel/SelectLayer';
+import MapEditorHeader from '@/pages/Map/MapEditorHeader.tsx';
 
 export function Component() {
     return (
-        <section className="flex h-full bg-zinc-900">
+        <section className="flex h-full flex-col bg-zinc-900">
             <MapWrapper>
-                <SelectLayer />
-                <SubjectPanel />
-
-                <Map />
+                <MapEditorHeader />
+                <div className="flex h-full">
+                    <SubjectPanel />
+                    <SelectLayer />
+                    <Map />
+                </div>
             </MapWrapper>
         </section>
     );
