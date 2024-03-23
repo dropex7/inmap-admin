@@ -4,7 +4,9 @@
 @layer base {
     :root {
         --header-height: 64px;
+        color-scheme: dark;
     }
+
 
     body {
         @apply bg-blue-50
