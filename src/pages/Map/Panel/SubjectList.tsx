@@ -4,7 +4,8 @@
 
 import {memo} from 'react';
 import type {SearchSubjectsOfPlaceQuery} from '@/generated/graphql.ts';
-import SubjectCard from '@/pages/Subject/SubjectCard.tsx';
+import View from '@/pages/Subject/card/View.tsx';
+import clsx from 'clsx';
 
 type Props = {
     data: SearchSubjectsOfPlaceQuery;
@@ -16,12 +17,13 @@ const SubjectList = memo<Props>(({data, selectedObjectId, setSelectedObjectId}) 
     return (
         <div className="flex flex-wrap justify-center gap-6">
             {data.searchSubjects.items.map(sub => (
-                <SubjectCard
+                <div
                     key={sub.uuid}
-                    className={selectedObjectId === sub.uuid ? 'outline outline-zinc-500' : undefined}
+                    className={clsx('rounded-xl', selectedObjectId === sub.uuid && 'outline outline-zinc-500')}
                     onClick={() => setSelectedObjectId(sub.uuid)}
-                    subject={sub}
-                />
+                >
+                    <View subject={sub} />
+                </div>
             ))}
         </div>
     );

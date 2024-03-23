@@ -147,9 +147,39 @@ export type FieldsContentModel = {
   en?: Maybe<Array<Scalars['JSON']['output']>>;
   es?: Maybe<Array<Scalars['JSON']['output']>>;
   originalFields: Array<Scalars['JSON']['output']>;
+  parkingFields?: Maybe<FieldsContentModelParkingFields>;
+  parkingTariffs?: Maybe<FieldsContentModelParkingTariffs>;
+  place?: Maybe<FieldsContentModelPlace>;
+  promo?: Maybe<FieldsContentModelPromo>;
   ru?: Maybe<Array<Scalars['JSON']['output']>>;
   uuid: Scalars['String']['output'];
   zh?: Maybe<Array<Scalars['JSON']['output']>>;
+};
+
+export type FieldsContentModelParkingFields = {
+  __typename?: 'FieldsContentModelParkingFields';
+  place: FieldsContentModelPlace;
+};
+
+export type FieldsContentModelParkingTariffs = {
+  __typename?: 'FieldsContentModelParkingTariffs';
+  place: FieldsContentModelPlace;
+};
+
+export type FieldsContentModelPlace = {
+  __typename?: 'FieldsContentModelPlace';
+  title: FieldsContentTextContentModel;
+  uuid: Scalars['String']['output'];
+};
+
+export type FieldsContentModelPromo = {
+  __typename?: 'FieldsContentModelPromo';
+  title: FieldsContentTextContentModel;
+};
+
+export type FieldsContentTextContentModel = {
+  __typename?: 'FieldsContentTextContentModel';
+  originalText: Scalars['String']['output'];
 };
 
 export type LocalizedTemplateTabModel = {
@@ -191,6 +221,7 @@ export type Mutation = {
   setLinkedSubjectsToRecommendation: PlaceRecommendationLocalizedModel;
   updateCity: CityLocalizedModel;
   updateFieldsContent: FieldsContentModel;
+  updateFieldsTranslation: FieldsContentModel;
   updateLinkedTemplatesToPlace: PlaceLocalizedModel;
   updateParking: ParkingLocalizedModel;
   updatePlace: PlaceLocalizedModel;
@@ -200,6 +231,7 @@ export type Mutation = {
   updatePromo: PromoLocalizedModel;
   updateSubject: SubjectLocalizedModel;
   updateTextContent: TextContentModel;
+  updateTextTranslation: TextContentModel;
   updateUser: UserLocalizedModel;
   uploadImage: UploadResult;
 };
@@ -349,6 +381,11 @@ export type MutationUpdateCityArgs = {
 
 
 export type MutationUpdateFieldsContentArgs = {
+  input: UpdateFieldsContentInput;
+};
+
+
+export type MutationUpdateFieldsTranslationArgs = {
   input: UpdateFieldsTranslationInput;
 };
 
@@ -397,6 +434,11 @@ export type MutationUpdateSubjectArgs = {
 
 
 export type MutationUpdateTextContentArgs = {
+  input: UpdateTextContentInput;
+};
+
+
+export type MutationUpdateTextTranslationArgs = {
   input: UpdateTextTranslationInput;
 };
 
@@ -821,7 +863,7 @@ export type UpdateCityInput = {
   uuid: Scalars['String']['input'];
 };
 
-export type UpdateFieldsTranslationInput = {
+export type UpdateFieldsContentInput = {
   en?: InputMaybe<Array<Scalars['JSON']['input']>>;
   es?: InputMaybe<Array<Scalars['JSON']['input']>>;
   fieldsContentId: Scalars['String']['input'];
@@ -830,9 +872,15 @@ export type UpdateFieldsTranslationInput = {
   zh?: InputMaybe<Array<Scalars['JSON']['input']>>;
 };
 
+export type UpdateFieldsTranslationInput = {
+  fieldsContentId: Scalars['String']['input'];
+  locale: Scalars['String']['input'];
+  translation?: InputMaybe<Array<Scalars['JSON']['input']>>;
+};
+
 export type UpdateParkingInput = {
-  fields: Array<Scalars['JSON']['input']>;
-  levels?: InputMaybe<Scalars['JSON']['input']>;
+  fields?: InputMaybe<Array<Scalars['JSON']['input']>>;
+  levels: Scalars['JSON']['input'];
   tariffs?: InputMaybe<Array<Scalars['JSON']['input']>>;
   uuid: Scalars['String']['input'];
 };
@@ -903,13 +951,19 @@ export type UpdateSubjectInput = {
   uuid: Scalars['String']['input'];
 };
 
-export type UpdateTextTranslationInput = {
+export type UpdateTextContentInput = {
   en?: InputMaybe<Scalars['String']['input']>;
   es?: InputMaybe<Scalars['String']['input']>;
   originalText?: InputMaybe<Scalars['String']['input']>;
   ru?: InputMaybe<Scalars['String']['input']>;
   textContentId: Scalars['String']['input'];
   zh?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateTextTranslationInput = {
+  locale: Scalars['String']['input'];
+  textContentId: Scalars['String']['input'];
+  translation?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateUserInput = {

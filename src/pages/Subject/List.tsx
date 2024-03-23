@@ -6,20 +6,17 @@ import {memo} from 'react';
 
 import type {SearchSubjectsOfPlaceQuery} from '@/generated/graphql';
 
-import SubjectCard from './SubjectCard';
-import {useNavigate} from 'react-router-dom';
+import SubjectCard from './card/SubjectCard.tsx';
 
 interface ListProps {
     data: SearchSubjectsOfPlaceQuery;
 }
 
 const List = memo<ListProps>(({data}) => {
-    const navigate = useNavigate();
-
     return (
         <div className="flex flex-wrap justify-center gap-6">
             {data.searchSubjects.items.map(sub => (
-                <SubjectCard onClick={() => navigate(sub.uuid)} key={sub.uuid} subject={sub} />
+                <SubjectCard key={sub.uuid} subject={sub} />
             ))}
         </div>
     );

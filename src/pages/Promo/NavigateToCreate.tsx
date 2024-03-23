@@ -14,7 +14,7 @@ const NavigateToCreate = memo(() => {
     }, [navigate]);
 
     return (
-        <Button onClick={handleCreatePromo} shape="round" size="large" type="primary">
+        <Button onClick={handleCreatePromo} size="large" type="primary">
             Создать объявление
         </Button>
     );

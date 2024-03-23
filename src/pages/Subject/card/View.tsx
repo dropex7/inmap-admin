@@ -1,23 +1,20 @@
 /**
- * Created by MIRZOEV A. on 11.04.2023
+ * Created by MIRZOEV A. on 23.03.2024
  */
 
 import {memo, useMemo} from 'react';
-
-import type {SubjectSearchModel} from '@/generated/graphql';
-
-import noPhoto from '@/assets/no-photo-available.png';
-import PreviewImage from '@/components/Images/PreviewImage';
-import PreviewLogo from '@/components/Images/PreviewLogo';
 import clsx from 'clsx';
+import PreviewLogo from '@/components/Images/PreviewLogo.tsx';
+import PreviewImage from '@/components/Images/PreviewImage.tsx';
+import noPhoto from '@/assets/no-photo-available.png';
+import type {SubjectSearchModel} from '@/generated/graphql.ts';
 
-interface SubjectCardProps {
+interface ViewProps {
     subject: Partial<SubjectSearchModel>;
-    onClick: () => void;
     className?: string;
 }
 
-const SubjectCard = memo<SubjectCardProps>(({subject, onClick, className = ''}) => {
+const View = memo<ViewProps>(({subject, className, ...props}) => {
     const {images, logoUrl, name, shortDescription} = subject;
 
     const backgroundImage = useMemo(() => {
@@ -26,11 +23,11 @@ const SubjectCard = memo<SubjectCardProps>(({subject, onClick, className = ''}) 
 
     return (
         <div
+            {...props}
             className={clsx(
                 'card flex w-60 flex-col rounded-xl bg-zinc-800 bg-opacity-80 hover:cursor-pointer',
                 className,
             )}
-            onClick={onClick}
         >
             <div className="relative flex flex-col">
                 {logoUrl && (
@@ -53,4 +50,4 @@ const SubjectCard = memo<SubjectCardProps>(({subject, onClick, className = ''}) 
     );
 });
 
-export default SubjectCard;
+export default View;
