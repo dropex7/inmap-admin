@@ -11,10 +11,13 @@ export const prepareDataForForm = (subject: GetSubjectsByIdQuery['subject']) => 
     };
 };
 
-function createFileFromUrl(url: string, index: number) {
+export function createFileFromUrl(url: string, index: number) {
     return {
         uid: Symbol(url),
         name: index + 1,
+        originFileObj: {
+            url,
+        },
         url,
     };
 }

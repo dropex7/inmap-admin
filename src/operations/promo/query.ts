@@ -17,6 +17,22 @@ export const GET_PROMOS = gql`
     }
 `;
 
+export const GET_PROMO_BY_ID = gql`
+    query GetPromoById($uuid: String!) {
+        promo(uuid: $uuid) {
+            uuid
+            title
+            subtitle
+            smallImageUrl
+            largeImageUrl
+            subtitle
+            startDateTime
+            endDateTime
+            content
+        }
+    }
+`;
+
 export const SEARCH_PROMOS = gql`
     query SearchPromos($searchPromosInput: SearchPromosInput!) {
         searchPromos(searchPromosInput: $searchPromosInput) {

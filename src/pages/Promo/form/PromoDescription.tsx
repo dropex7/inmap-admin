@@ -6,19 +6,24 @@ import type {Sources} from 'quill';
 import type {UnprivilegedEditor} from 'react-quill';
 
 import {Button, Form} from 'antd';
-import {memo, useCallback} from 'react';
+import {memo, useCallback, useEffect} from 'react';
 
 import QuillWrapper from '@/components/Quill/QuillWrapper';
+import type {PromoLocalizedModel} from '@/generated/graphql.ts';
 
 interface PromoDescriptionProps {
     onFinish: (values: any) => void;
     toPrev: () => void;
+    promo?: Partial<PromoLocalizedModel>;
 }
 
-const {Item, useForm} = Form;
+const {Item, useForm, useWatch} = Form;
 
-const PromoDescription = memo<PromoDescriptionProps>(({onFinish, toPrev}) => {
+const PromoDescription = memo<PromoDescriptionProps>(({onFinish, toPrev, promo}) => {
     const [form] = useForm();
+
+    const contentValue = useWatch('content', form);
+
     const onChange = useCallback(
         (_: string, __: unknown, ___: Sources, editor: UnprivilegedEditor) => {
             form.setFieldValue('content', editor.getContents());
@@ -26,10 +31,16 @@ const PromoDescription = memo<PromoDescriptionProps>(({onFinish, toPrev}) => {
         [form],
     );
 
+    useEffect(() => {
+        if (promo) {
+            form.setFieldValue('content', (promo?.content as Array<any>)[0]);
+        }
+    }, [form, promo]);
+
     return (
         <Form form={form} onFinish={onFinish}>
             <Item name="content" rules={[{message: 'Обязательное поле!', required: true}]}>
-                <QuillWrapper onChange={onChange} />
+                <QuillWrapper value={contentValue} onChange={onChange} />
             </Item>
             <div style={{marginTop: 65}}>
                 <Button onClick={toPrev} style={{margin: '0 8px'}}>

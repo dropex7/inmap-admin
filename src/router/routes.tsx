@@ -40,6 +40,11 @@ export const authorizedAppRoutes = [
             },
             {
                 errorElement: <PageError />,
+                lazy: () => import('../pages/Promo/form/PromoForm'),
+                path: ':promoId',
+            },
+            {
+                errorElement: <PageError />,
                 index: true,
                 lazy: () => import('../pages/Promo/Page'),
             },

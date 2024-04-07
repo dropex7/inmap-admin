@@ -10,7 +10,7 @@ import {PlusOutlined} from '@ant-design/icons';
 import {useMutation} from '@apollo/client';
 import {Form} from 'antd';
 import {Modal, Upload} from 'antd';
-import {memo, useCallback} from 'react';
+import {memo, useCallback, useEffect} from 'react';
 import {useState} from 'react';
 import {useRecoilValue} from 'recoil';
 
@@ -35,7 +35,7 @@ export interface ImageType extends Omit<UploadFile, 'originFileObj'> {
     originFileObj: NewOriginFileObj;
 }
 
-const {Item, useFormInstance} = Form;
+const {Item, useFormInstance, useWatch} = Form;
 
 const ImageLoaderField = memo<Props>(
     ({countOfImages, fieldName, isRequired = true, label, name = fieldName, isCropped = false}) => {
@@ -43,7 +43,9 @@ const ImageLoaderField = memo<Props>(
         const [previewOpen, setPreviewOpen] = useState(false);
         const [previewImage, setPreviewImage] = useState('');
         const [previewTitle, setPreviewTitle] = useState('');
-        const [fileList, setFileList] = useState<Array<UploadFile>>(form.getFieldValue(fieldName));
+        const initialFileList = useWatch(fieldName, form);
+
+        const [fileList, setFileList] = useState<Array<UploadFile>>([]);
 
         const placeUuid = useRecoilValue(placeAtom);
 
@@ -99,6 +101,10 @@ const ImageLoaderField = memo<Props>(
                 <div style={{marginTop: 8}}>Upload</div>
             </div>
         );
+
+        useEffect(() => {
+            setFileList(initialFileList);
+        }, [initialFileList]);
 
         return (
             <>

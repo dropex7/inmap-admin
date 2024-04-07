@@ -105,6 +105,7 @@ const FormSubject = memo<FormProps>(({item}) => {
                         updateSubjectInput: {
                             ...values,
                             uuid: item?.uuid,
+                            // TODO Добавить обработку табов
                             // content: {
                             //     tabs: prepareFieldsToSend(tabs),
                             //     templateUuid: templateId,

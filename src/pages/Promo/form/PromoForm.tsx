@@ -2,28 +2,19 @@
  * Created by MIRZOEV A. on 15.08.2023
  */
 
-import {useMutation} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client';
 import {Steps} from 'antd';
 import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {useRecoilValue} from 'recoil';
 
 import {placeAtom} from '@/atoms/selectedPlace';
-import {CREATE_PROMO} from '@/operations/promo/mutation';
+import {CREATE_PROMO, UPDATE_PROMO} from '@/operations/promo/mutation';
 import PromoDescription from './PromoDescription';
+import type {IMainFormValues} from './PromoMainPart';
 import PromoMainPart from './PromoMainPart';
-import type {ImageType} from '@/components/ImageLoader/ImageLoaderField.tsx';
-import {GET_PROMOS} from '@/operations/promo/query.ts';
-
-export interface IMainFormValues {
-    largeImageUrl: Array<ImageType>;
-    smallImageUrl: Array<ImageType>;
-    subtitle: string;
-    title: string;
-    startDateTime: string;
-    endDateTime: string;
-    subjectsUuids: Array<string>;
-}
+import {GET_PROMO_BY_ID, GET_PROMOS} from '@/operations/promo/query.ts';
+import type {GetPromoByIdQuery} from '@/generated/graphql.ts';
 
 export interface IFullFormValues {
     content: Record<string, any>;
@@ -31,10 +22,18 @@ export interface IFullFormValues {
 
 export function Component() {
     const placeUuid = useRecoilValue(placeAtom);
+    const {promoId} = useParams();
+    const isCreate = !promoId;
     const navigate = useNavigate();
     const [current, setCurrent] = useState(0);
     const [mainFormValues, setMainFormValues] = useState<IMainFormValues>();
     const [createPromo] = useMutation<IFullFormValues>(CREATE_PROMO);
+    const [updatePromo] = useMutation<IFullFormValues>(UPDATE_PROMO);
+
+    const {data} = useQuery<GetPromoByIdQuery>(GET_PROMO_BY_ID, {
+        variables: {uuid: promoId!},
+        skip: isCreate,
+    });
 
     const next = () => {
         setCurrent(current + 1);
@@ -54,29 +53,42 @@ export function Component() {
             ...values,
             ...{
                 ...mainFormValues,
+                subjectsUuids: mainFormValues?.subjectsUuids.map(({uuid}) => uuid),
                 largeImageUrl: mainFormValues?.largeImageUrl?.[0].originFileObj.url,
                 smallImageUrl: mainFormValues?.smallImageUrl?.[0].originFileObj.url,
             },
         };
 
-        await createPromo({
-            onCompleted: () => {
-                navigate('..');
-            },
-            refetchQueries: [GET_PROMOS, 'GetListOfPromosQuery'],
-            variables: {
-                createPromoInput: {...fullFormValues, placeUuid},
-            },
-        });
+        if (isCreate) {
+            await createPromo({
+                onCompleted: () => {
+                    navigate('..');
+                },
+                refetchQueries: [GET_PROMOS, 'GetListOfPromosQuery'],
+                variables: {
+                    createPromoInput: {...fullFormValues, placeUuid},
+                },
+            });
+        } else {
+            await updatePromo({
+                onCompleted: () => {
+                    navigate('..');
+                },
+                refetchQueries: [GET_PROMOS, 'GetListOfPromosQuery'],
+                variables: {
+                    updatePromoInput: {...fullFormValues, placeUuid, uuid: promoId},
+                },
+            });
+        }
     };
 
     const steps = [
         {
-            content: <PromoMainPart initialValues={mainFormValues} onFinish={onFinishMainPart} />,
+            content: <PromoMainPart initialValues={mainFormValues} promo={data?.promo} onFinish={onFinishMainPart} />,
             title: 'Основная информация',
         },
         {
-            content: <PromoDescription onFinish={onFinish} toPrev={prev} />,
+            content: <PromoDescription promo={data?.promo} onFinish={onFinish} toPrev={prev} />,
             title: 'Описание',
         },
     ];

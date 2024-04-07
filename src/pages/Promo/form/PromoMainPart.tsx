@@ -3,27 +3,73 @@
  */
 
 import {Button, DatePicker, Form, Input} from 'antd';
-import {memo} from 'react';
+import {memo, useEffect} from 'react';
 
-import type {IMainFormValues} from './PromoForm';
-
+import type {ImageType} from '@/components/ImageLoader/ImageLoaderField';
 import ImageLoaderField from '@/components/ImageLoader/ImageLoaderField';
 import AutoComplete from '@/components/AutoComplete/AutoComplete.tsx';
-import {SUBJECTS_OF_PLACE} from '@/operations/subject/query.ts';
-import type {GetSubjectsOfPlaceInputQuery} from '@/generated/graphql.ts';
+import {GET_SUBJECTS_BY_PROMO, SUBJECTS_OF_PLACE} from '@/operations/subject/query.ts';
+import type {GetSubjectsOfPlaceInputQuery, PromoLocalizedModel, SubjectLocalizedModel} from '@/generated/graphql.ts';
+import {createFileFromUrl} from '@/pages/Subject/form/prepareDataForForm.ts';
+import dayjs from 'dayjs';
+import {useQuery} from '@apollo/client';
+import type {GetSubjectsByPromoQuery} from '@/generated/graphql.ts';
+import {useRecoilValue} from 'recoil';
+import {placeAtom} from '@/atoms/selectedPlace.ts';
 
-interface Props {
-    initialValues?: IMainFormValues;
-    onFinish: (values: IMainFormValues) => void;
+export interface IMainFormValues {
+    largeImageUrl: Array<ImageType>;
+    smallImageUrl: Array<ImageType>;
+    subtitle: string;
+    title: string;
+    startDateTime: string;
+    endDateTime: string;
+    subjectsUuids: Array<SubjectLocalizedModel>;
 }
 
-const {Item} = Form;
+interface Props {
+    onFinish: (values: IMainFormValues) => void;
+    initialValues?: IMainFormValues;
+    promo?: Partial<PromoLocalizedModel>;
+}
 
-const PromoMainPart = memo<Props>(({initialValues, onFinish}) => {
+const {Item, useForm} = Form;
+
+const PromoMainPart = memo<Props>(({promo, initialValues, onFinish}) => {
+    const placeUuid = useRecoilValue(placeAtom);
+    const [form] = useForm();
+
+    const {data} = useQuery<GetSubjectsByPromoQuery>(GET_SUBJECTS_BY_PROMO, {
+        variables: {placeUuid, promoUuid: promo?.uuid},
+        skip: !promo,
+    });
+
+    useEffect(() => {
+        if (promo) {
+            const {title, subtitle, startDateTime, endDateTime, smallImageUrl, largeImageUrl} = promo;
+
+            form.setFieldsValue({
+                title,
+                subtitle,
+                startDateTime: startDateTime ? dayjs(startDateTime) : undefined,
+                endDateTime: endDateTime ? dayjs(endDateTime) : undefined,
+                largeImageUrl: [createFileFromUrl(largeImageUrl!, 1)],
+                smallImageUrl: [createFileFromUrl(smallImageUrl!, 0)],
+                subjectsUuids: data?.subjectsLinkedToPromo,
+            });
+        }
+    }, [data?.subjectsLinkedToPromo, form, promo]);
+
     return (
-        <Form layout="vertical" initialValues={initialValues} onFinish={onFinish}>
+        <Form form={form} initialValues={initialValues} layout="vertical" onFinish={onFinish}>
             <div className="flex flex-col gap-6">
-                <Item label="Заголовок" className="w-80" name="title" rules={[{required: true}]}>
+                <Item
+                    label="Заголовок"
+                    className="w-80"
+                    name="title"
+                    initialValue={promo?.title}
+                    rules={[{required: true}]}
+                >
                     <Input />
                 </Item>
                 <Item label="Описание" className="w-80" name="subtitle" rules={[{required: true}]}>
@@ -50,12 +96,12 @@ const PromoMainPart = memo<Props>(({initialValues, onFinish}) => {
                 </div>
 
                 <Item label="Участники акции" name="subjectsUuids" rules={[{type: 'array'}]}>
-                    <AutoComplete<GetSubjectsOfPlaceInputQuery>
+                    <AutoComplete<GetSubjectsOfPlaceInputQuery, SubjectLocalizedModel, true>
                         request={SUBJECTS_OF_PLACE}
                         mode="multiple"
-                        renderOptions={queryResult =>
-                            queryResult.subjectsOfPlace.items.map(({uuid, name}) => ({value: uuid, label: name}))
-                        }
+                        renderItem={item => item.name}
+                        // @ts-expect-error ошибка типизации
+                        getItemFromQuery={queryResult => queryResult.subjectsOfPlace.items}
                     />
                 </Item>
             </div>

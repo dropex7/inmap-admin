@@ -10,6 +10,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 interface QuillWrapperProps {
+    value: any;
     onChange: (value: string, delta: unknown, source: Sources, editor: UnprivilegedEditor) => void;
 }
 
@@ -23,10 +24,8 @@ const modules = {
     ],
 };
 
-// const formats = ['header', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'link', 'image'];
-
-const QuillWrapper = memo<QuillWrapperProps>(({onChange}) => {
-    return <ReactQuill className="h-80" modules={modules} onChange={onChange} theme="snow" />;
+const QuillWrapper = memo<QuillWrapperProps>(({onChange, value}) => {
+    return <ReactQuill className="h-80" value={value} modules={modules} onChange={onChange} theme="snow" />;
 });
 
 export default QuillWrapper;

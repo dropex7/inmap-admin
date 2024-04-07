@@ -8,3 +8,12 @@ export const CREATE_PROMO = gql`
         }
     }
 `;
+
+export const UPDATE_PROMO = gql`
+    mutation UpdatePromo($updatePromoInput: UpdatePromoInput!) {
+        updatePromo(updatePromoInput: $updatePromoInput) {
+            uuid
+            smallImageUrl
+        }
+    }
+`;

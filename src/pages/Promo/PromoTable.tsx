@@ -12,6 +12,7 @@ import noPhoto from '@/assets/no-photo-available.png';
 import DateView from '@/components/Date/DateView.tsx';
 import {DATE_WITHOUT_TIME} from '@/utils/dateFormats.ts';
 import PromoSubjectsView from '@/pages/Promo/views/PromoSubjectsView.tsx';
+import {useNavigate} from 'react-router-dom';
 
 type PartialPromo = Partial<PromoLocalizedModel>;
 
@@ -57,8 +58,22 @@ const columns: ColumnsType<PartialPromo> = [
 ];
 
 const PromoTable = memo<PromoTableProps>(({data, ...rest}) => {
+    const navigate = useNavigate();
+
     return (
-        <Table rowKey={({title, subtitle}) => `${title}_${subtitle}`} columns={columns} dataSource={data} {...rest} />
+        <Table
+            {...rest}
+            onRow={({uuid}) => {
+                return {
+                    onClick: () => {
+                        navigate(uuid!);
+                    },
+                };
+            }}
+            rowKey={({title, subtitle}) => `${title}_${subtitle}`}
+            columns={columns}
+            dataSource={data}
+        />
     );
 });
 
