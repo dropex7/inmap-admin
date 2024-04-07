@@ -17,9 +17,11 @@ const documents = {
     "\n    query GetListOfPlaces {\n        places {\n            uuid\n            title\n            logoUrl\n        }\n    }\n": types.GetListOfPlacesDocument,
     "\n    query GetPlace($uuid: String!) {\n        place(uuid: $uuid) {\n            title\n            logoUrl\n            address\n            schedule\n            selectedPlan {\n                key\n            }\n            initialLayerUuid\n            recs {\n                title\n            }\n            promos {\n                title\n            }\n        }\n    }\n": types.GetPlaceDocument,
     "\n    query GetPlaceLayers($placeUuid: String!) {\n        placeLayers(placeUuid: $placeUuid) {\n            uuid\n            fullName\n            shortName\n        }\n    }\n": types.GetPlaceLayersDocument,
+    "\n    query GetPlansOfPlace($placeUuid: String!) {\n        plansOfPlace(placeUuid: $placeUuid) {\n            key\n            title\n        }\n    }\n": types.GetPlansOfPlaceDocument,
     "\n    mutation CreatePromo($createPromoInput: CreatePromoInput!) {\n        createPromo(createPromoInput: $createPromoInput) {\n            uuid\n            smallImageUrl\n        }\n    }\n": types.CreatePromoDocument,
+    "\n    mutation UpdatePromo($updatePromoInput: UpdatePromoInput!) {\n        updatePromo(updatePromoInput: $updatePromoInput) {\n            uuid\n            smallImageUrl\n        }\n    }\n": types.UpdatePromoDocument,
     "\n    query GetListOfPromos($input: GetPromosInput!) {\n        promos(input: $input) {\n            total\n            items {\n                uuid\n                title\n                subtitle\n                smallImageUrl\n                subtitle\n                startDateTime\n                endDateTime\n            }\n        }\n    }\n": types.GetListOfPromosDocument,
-    "\n    query GetPromoById($uuid: String!) {\n        promo(uuid: $uuid) {\n            uuid\n            title\n            subtitle\n            smallImageUrl\n            largeImageUrl\n            subtitle\n            startDateTime\n            endDateTime\n        }\n    }\n": types.GetPromoByIdDocument,
+    "\n    query GetPromoById($uuid: String!) {\n        promo(uuid: $uuid) {\n            uuid\n            title\n            subtitle\n            smallImageUrl\n            largeImageUrl\n            subtitle\n            startDateTime\n            endDateTime\n            content\n        }\n    }\n": types.GetPromoByIdDocument,
     "\n    query SearchPromos($searchPromosInput: SearchPromosInput!) {\n        searchPromos(searchPromosInput: $searchPromosInput) {\n            total\n            items {\n                uuid\n                placeUuid\n                smallImageUrl\n                largeImageUrl\n                title\n                subtitle\n            }\n        }\n    }\n": types.SearchPromosDocument,
     "\n    mutation CreateSubject($createSubjectInput: CreateSubjectInput!) {\n        createSubject(createSubjectInput: $createSubjectInput) {\n            uuid\n        }\n    }\n": types.CreateSubjectDocument,
     "\n    mutation UpdateSubject($updateSubjectInput: UpdateSubjectInput!, $placeUuid: String!) {\n        updateSubject(updateSubjectInput: $updateSubjectInput, placeUuid: $placeUuid) {\n            uuid\n        }\n    }\n": types.UpdateSubjectDocument,
@@ -63,7 +65,15 @@ export function graphql(source: "\n    query GetPlaceLayers($placeUuid: String!)
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "\n    query GetPlansOfPlace($placeUuid: String!) {\n        plansOfPlace(placeUuid: $placeUuid) {\n            key\n            title\n        }\n    }\n"): (typeof documents)["\n    query GetPlansOfPlace($placeUuid: String!) {\n        plansOfPlace(placeUuid: $placeUuid) {\n            key\n            title\n        }\n    }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "\n    mutation CreatePromo($createPromoInput: CreatePromoInput!) {\n        createPromo(createPromoInput: $createPromoInput) {\n            uuid\n            smallImageUrl\n        }\n    }\n"): (typeof documents)["\n    mutation CreatePromo($createPromoInput: CreatePromoInput!) {\n        createPromo(createPromoInput: $createPromoInput) {\n            uuid\n            smallImageUrl\n        }\n    }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    mutation UpdatePromo($updatePromoInput: UpdatePromoInput!) {\n        updatePromo(updatePromoInput: $updatePromoInput) {\n            uuid\n            smallImageUrl\n        }\n    }\n"): (typeof documents)["\n    mutation UpdatePromo($updatePromoInput: UpdatePromoInput!) {\n        updatePromo(updatePromoInput: $updatePromoInput) {\n            uuid\n            smallImageUrl\n        }\n    }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -71,7 +81,7 @@ export function graphql(source: "\n    query GetListOfPromos($input: GetPromosIn
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    query GetPromoById($uuid: String!) {\n        promo(uuid: $uuid) {\n            uuid\n            title\n            subtitle\n            smallImageUrl\n            largeImageUrl\n            subtitle\n            startDateTime\n            endDateTime\n        }\n    }\n"): (typeof documents)["\n    query GetPromoById($uuid: String!) {\n        promo(uuid: $uuid) {\n            uuid\n            title\n            subtitle\n            smallImageUrl\n            largeImageUrl\n            subtitle\n            startDateTime\n            endDateTime\n        }\n    }\n"];
+export function graphql(source: "\n    query GetPromoById($uuid: String!) {\n        promo(uuid: $uuid) {\n            uuid\n            title\n            subtitle\n            smallImageUrl\n            largeImageUrl\n            subtitle\n            startDateTime\n            endDateTime\n            content\n        }\n    }\n"): (typeof documents)["\n    query GetPromoById($uuid: String!) {\n        promo(uuid: $uuid) {\n            uuid\n            title\n            subtitle\n            smallImageUrl\n            largeImageUrl\n            subtitle\n            startDateTime\n            endDateTime\n            content\n        }\n    }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

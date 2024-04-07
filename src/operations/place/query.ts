@@ -38,3 +38,12 @@ export const GET_PLACE_LAYERS = gql`
         }
     }
 `;
+
+export const GET_PLACE_PLANS = gql`
+    query GetPlansOfPlace($placeUuid: String!) {
+        plansOfPlace(placeUuid: $placeUuid) {
+            key
+            title
+        }
+    }
+`;

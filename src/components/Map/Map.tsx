@@ -9,20 +9,20 @@ import {MapContext} from '@/pages/Map/MapContext';
 import {useRecoilValue} from 'recoil';
 import {placeAtom} from '@/atoms/selectedPlace';
 import {getLoadPlanMessage} from '@/utils/widgetMessages';
-import {PlaceGlobalCtx} from '@/components/Place/PlaceGlobalCtx';
 
 const Map = memo<PropsWithChildren>(() => {
     const {ref} = useContext(MapContext);
     const placeUuid = useRecoilValue(placeAtom);
-    const place = useContext(PlaceGlobalCtx);
+    const {selectedPlanKey} = useContext(MapContext);
 
     const {isReady} = useGetMessageFromMap();
 
     useEffect(() => {
         if (ref?.current?.contentWindow && isReady) {
-            ref.current.contentWindow.postMessage(getLoadPlanMessage(placeUuid, place.selectedPlan?.key), '*'); // '*' означает, что сообщение будет отправлено всем окнам.
+            // TODO сбрасывать этаж при загрузке плана
+            ref.current.contentWindow.postMessage(getLoadPlanMessage(placeUuid, selectedPlanKey), '*'); // '*' означает, что сообщение будет отправлено всем окнам.
         }
-    }, [ref, isReady, placeUuid, place.selectedPlan?.key]);
+    }, [ref, isReady, placeUuid, selectedPlanKey]);
 
     return (
         <div className="flex size-full flex-col gap-y-4">

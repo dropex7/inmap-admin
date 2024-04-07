@@ -8,7 +8,7 @@ import MapWrapper from './MapWrapper';
 
 import SubjectPanel from './Panel/SubjectPanel';
 import SelectLayer from './Panel/SelectLayer';
-import MapEditorHeader from '@/pages/Map/MapEditorHeader.tsx';
+import MapEditorHeader from '@/pages/Map/header/MapEditorHeader.tsx';
 
 export function Component() {
     return (

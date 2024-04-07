@@ -11,10 +11,14 @@ interface MaxCtx {
     selectedObject?: SelectedObjectFromFlutter;
     isEditMode: boolean;
     toggleEditMode: () => void;
+    selectedPlanKey: string;
+    setSelectedPlanKey: (plan: string) => void;
 }
 
 export const MapContext = createContext<MaxCtx>({
     ref: null,
     isEditMode: false,
     toggleEditMode: () => {},
+    selectedPlanKey: '',
+    setSelectedPlanKey: () => {},
 });
