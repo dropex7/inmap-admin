@@ -10,6 +10,8 @@ export const GET_PROMOS = gql`
                 subtitle
                 smallImageUrl
                 subtitle
+                startDateTime
+                endDateTime
             }
         }
     }

@@ -7,10 +7,11 @@ import type {ColumnsType, TableProps} from 'antd/es/table';
 import {Table} from 'antd';
 import type {PromoLocalizedModel} from '@/generated/graphql';
 import PreviewImage from '@/components/Images/PreviewImage.tsx';
-import PromoTextView from '@/pages/Promo/PromoTextView.tsx';
+import PromoTextView from '@/pages/Promo/views/PromoTextView.tsx';
 import noPhoto from '@/assets/no-photo-available.png';
 import DateView from '@/components/Date/DateView.tsx';
 import {DATE_WITHOUT_TIME} from '@/utils/dateFormats.ts';
+import PromoSubjectsView from '@/pages/Promo/views/PromoSubjectsView.tsx';
 
 type PartialPromo = Partial<PromoLocalizedModel>;
 
@@ -37,13 +38,21 @@ const columns: ColumnsType<PartialPromo> = [
     },
     {
         title: 'Начало акции',
-        width: 150,
+        align: 'center',
         render: ({startDateTime}) => <DateView date={startDateTime} format={DATE_WITHOUT_TIME} />,
+        width: 150,
     },
     {
         title: 'Конец акции',
-        width: 150,
+        align: 'center',
         render: ({endDateTime}) => <DateView date={endDateTime} format={DATE_WITHOUT_TIME} />,
+        width: 150,
+    },
+    {
+        title: 'Объекты',
+        align: 'center',
+        render: ({uuid}) => <PromoSubjectsView promoUuid={uuid} />,
+        width: 300,
     },
 ];
 

@@ -54,3 +54,13 @@ export const GET_SUBJECTS_BY_ID = gql`
         }
     }
 `;
+
+export const GET_SUBJECTS_BY_PROMO = gql`
+    query GetSubjectsByPromo($placeUuid: String!, $promoUuid: String!) {
+        subjectsLinkedToPromo(placeUuid: $placeUuid, promoUuid: $promoUuid) {
+            uuid
+            name
+            logoUrl
+        }
+    }
+`;
