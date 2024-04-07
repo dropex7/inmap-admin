@@ -6,14 +6,14 @@ import {useLazyQuery} from '@apollo/client';
 import {memo, useCallback, useEffect, useMemo} from 'react';
 
 import type {PaginationParams} from '@/components/Pagination/types';
-import type {SearchPromosQuery} from '@/generated/graphql';
 
 import usePaginationFilter from '@/hooks/pagination/usePaginationFilter';
 import usePaginationParams from '@/hooks/pagination/usePaginationParams';
-import {SEARCH_PROMOS} from '@/operations/promo/query';
+import {GET_PROMOS} from '@/operations/promo/query';
 import PromoTable from './PromoTable';
 import {useRecoilValue} from 'recoil';
 import {placeAtom} from '@/atoms/selectedPlace';
+import type {GetListOfPromosQuery} from '@/generated/graphql';
 
 interface PromoListProps {
     url: string;
@@ -24,7 +24,7 @@ const PromoList = memo<PromoListProps>(({url}) => {
     const [pageParams, setParams] = usePaginationParams(url);
     const [filter] = usePaginationFilter<PaginationParams>(url);
 
-    const [loadList, {data, error}] = useLazyQuery<SearchPromosQuery>(SEARCH_PROMOS, {
+    const [loadList, {data, error}] = useLazyQuery<GetListOfPromosQuery>(GET_PROMOS, {
         variables: {searchPromosInput: {...pageParams, ...filter, placeUuid}},
     });
 
@@ -38,11 +38,11 @@ const PromoList = memo<PromoListProps>(({url}) => {
     const paginationSettings = useMemo(
         () => ({
             defaultPageSize: pageParams.limit,
-            total: data?.searchPromos.total,
+            total: data?.promos.total,
             showSizeChanger: false,
             onChange: changePage,
         }),
-        [changePage, data?.searchPromos.total, pageParams.limit],
+        [changePage, data?.promos.total, pageParams.limit],
     );
 
     useEffect(() => {
@@ -57,7 +57,7 @@ const PromoList = memo<PromoListProps>(({url}) => {
         return null;
     }
 
-    return <PromoTable pagination={paginationSettings} data={data.searchPromos.items} />;
+    return <PromoTable pagination={paginationSettings} data={data.promos.items ?? []} />;
 });
 
 export default PromoList;

@@ -10,7 +10,7 @@ import type {IMainFormValues} from './PromoForm';
 import ImageLoaderField from '@/components/ImageLoader/ImageLoaderField';
 import AutoComplete from '@/components/AutoComplete/AutoComplete.tsx';
 import {SUBJECTS_OF_PLACE} from '@/operations/subject/query.ts';
-import type {SearchSubjectsOfPlaceQuery} from '@/generated/graphql.ts';
+import type {GetSubjectsOfPlaceInputQuery} from '@/generated/graphql.ts';
 
 interface Props {
     initialValues?: IMainFormValues;
@@ -50,11 +50,11 @@ const PromoMainPart = memo<Props>(({initialValues, onFinish}) => {
                 </div>
 
                 <Item label="Участники акции" name="subjectsUuids" rules={[{type: 'array'}]}>
-                    <AutoComplete<SearchSubjectsOfPlaceQuery>
+                    <AutoComplete<GetSubjectsOfPlaceInputQuery>
                         request={SUBJECTS_OF_PLACE}
                         mode="multiple"
                         renderOptions={queryResult =>
-                            queryResult.searchSubjects.items.map(({uuid, name}) => ({value: uuid, label: name}))
+                            queryResult.subjectsOfPlace.items.map(({uuid, name}) => ({value: uuid, label: name}))
                         }
                     />
                 </Item>

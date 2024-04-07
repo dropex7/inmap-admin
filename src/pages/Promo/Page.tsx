@@ -4,11 +4,11 @@
 import 'react-quill/dist/quill.snow.css';
 
 import SearchBar from '@/components/SearchBar';
-import {SEARCH_PROMOS} from '@/operations/promo/query';
+import {GET_PROMOS} from '@/operations/promo/query';
 import NavigateToCreate from './NavigateToCreate';
 import PromoList from './PromoList';
 
-const url = SEARCH_PROMOS.loc?.source.body ?? '';
+const url = GET_PROMOS.loc?.source.body ?? '';
 
 export function Component() {
     return (
