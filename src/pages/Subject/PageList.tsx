@@ -2,27 +2,27 @@ import {useLazyQuery} from '@apollo/client';
 import {Empty, Pagination, Spin} from 'antd';
 import {useCallback, useEffect} from 'react';
 import EmptyIcon from '@/assets/empty.svg?react';
-import type {SearchSubjectsOfPlaceQuery} from '@/generated/graphql';
 
 import SearchBar from '@/components/SearchBar';
 import usePaginationFilter from '@/hooks/pagination/usePaginationFilter';
 import usePaginationParams from '@/hooks/pagination/usePaginationParams';
-import {SEARCH_SUBJECTS} from '@/operations/subject/query';
+import {SUBJECTS_OF_PLACE} from '@/operations/subject/query';
 import CreatingTemplateModal from './template/CreatingTemplateModal.tsx';
 import List from './List';
 import {useRecoilValue} from 'recoil';
 import {placeAtom} from '@/atoms/selectedPlace';
 import type {PaginationFilter} from '@/components/Pagination/types';
+import type {GetSubjectsOfPlaceInputQuery} from '@/generated/graphql';
 
-const url = SEARCH_SUBJECTS.loc?.source.body ?? 'url';
+const url = SUBJECTS_OF_PLACE.loc?.source.body ?? 'url';
 
 export function Component() {
     const placeUuid = useRecoilValue(placeAtom);
     const [pageParams, setParams] = usePaginationParams(url);
     const [filter] = usePaginationFilter<PaginationFilter>(url);
 
-    const [loadList, {data, error, loading}] = useLazyQuery<SearchSubjectsOfPlaceQuery>(SEARCH_SUBJECTS, {
-        variables: {searchSubjectsInput: {...pageParams, ...filter, placeUuid}},
+    const [loadList, {data, error, loading}] = useLazyQuery<GetSubjectsOfPlaceInputQuery>(SUBJECTS_OF_PLACE, {
+        variables: {input: {...pageParams, ...filter, placeUuid}},
     });
 
     const changePage = useCallback(
@@ -37,7 +37,7 @@ export function Component() {
     }, [setParams]);
 
     useEffect(() => {
-        loadList({variables: {searchSubjectsInput: {...pageParams, ...filter, placeUuid}}});
+        loadList({variables: {input: {...pageParams, ...filter, placeUuid}}});
     }, [filter, placeUuid, loadList, pageParams]);
 
     if (error) {
@@ -51,7 +51,7 @@ export function Component() {
                     defaultCurrent={pageParams.offset / pageParams.limit + 1}
                     onChange={changePage}
                     defaultPageSize={pageParams.limit}
-                    total={data?.searchSubjects.total ?? 0}
+                    total={data?.subjectsOfPlace.total ?? 0}
                     showSizeChanger={false}
                 />
 
@@ -62,7 +62,7 @@ export function Component() {
             </div>
 
             <Spin tip="Loading" size="large" spinning={loading}>
-                {data && data.searchSubjects.total !== 0 ? (
+                {data && data.subjectsOfPlace.total !== 0 ? (
                     <div className="p-6">
                         <List data={data} />
                     </div>

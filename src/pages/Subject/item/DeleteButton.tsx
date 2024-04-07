@@ -8,7 +8,7 @@ import {memo, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {DELETE_SUBJECT} from '@/operations/subject/mutation';
-import {GET_SUBJECTS} from '@/operations/subject/query';
+import {SUBJECTS_OF_PLACE} from '@/operations/subject/query.ts';
 
 interface DeleteButtonProps {
     placeUuid: string;
@@ -20,7 +20,7 @@ const DeleteButton = memo<DeleteButtonProps>(({placeUuid, subjectId}) => {
     const navigate = useNavigate();
     const handleDelete = () => {
         deleteSubject({
-            refetchQueries: [GET_SUBJECTS, 'GetSubjectsOfPlace'],
+            refetchQueries: [SUBJECTS_OF_PLACE, 'GetSubjectsOfPlace'],
             variables: {placeUuid: placeUuid, uuid: subjectId},
         });
 

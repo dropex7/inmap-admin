@@ -46,7 +46,7 @@ const PromoList = memo<PromoListProps>(({url}) => {
     );
 
     useEffect(() => {
-        loadList({variables: {searchSubjectsInput: {...pageParams, ...filter, placeUuid}}});
+        loadList({variables: {input: {...pageParams, ...filter, placeUuid}}});
     }, [filter, placeUuid, loadList, pageParams]);
 
     if (error) {

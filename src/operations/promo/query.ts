@@ -1,13 +1,16 @@
 import {gql} from '@apollo/client';
 
 export const GET_PROMOS = gql`
-    query GetListOfPromos($placeUuid: String!, $subjectUuid: String!) {
-        promos(placeUuid: $placeUuid, subjectUuid: $subjectUuid) {
-            uuid
-            title
-            subtitle
-            smallImageUrl
-            subtitle
+    query GetListOfPromos($input: GetPromosInput!) {
+        promos(input: $input) {
+            total
+            items {
+                uuid
+                title
+                subtitle
+                smallImageUrl
+                subtitle
+            }
         }
     }
 `;

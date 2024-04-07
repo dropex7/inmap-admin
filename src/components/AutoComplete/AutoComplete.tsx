@@ -31,7 +31,7 @@ function AutoComplete<QType>({
     const debouncedValue = useDebounce(query);
 
     const {data, loading} = useQuery<QType>(request, {
-        variables: {searchSubjectsInput: {limit: 20, offset: 0, query: debouncedValue, placeUuid}},
+        variables: {input: {limit: 20, offset: 0, query: debouncedValue, placeUuid}},
     });
 
     const handleSearch = useCallback((value: string) => {

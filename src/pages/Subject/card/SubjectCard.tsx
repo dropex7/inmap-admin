@@ -4,7 +4,7 @@
 
 import {memo, useCallback, useMemo} from 'react';
 
-import type {SubjectSearchModel} from '@/generated/graphql.ts';
+import type {SubjectLocalizedModel} from '@/generated/graphql.ts';
 
 import type {MenuProps} from 'antd';
 import {Dropdown} from 'antd';
@@ -14,10 +14,10 @@ import {placeAtom} from '@/atoms/selectedPlace.ts';
 import View from '@/pages/Subject/card/View.tsx';
 import {useMutation} from '@apollo/client';
 import {DELETE_SUBJECT} from '@/operations/subject/mutation.ts';
-import {GET_SUBJECTS} from '@/operations/subject/query.ts';
+import {SUBJECTS_OF_PLACE} from '@/operations/subject/query.ts';
 
 interface SubjectCardProps {
-    subject: Partial<SubjectSearchModel>;
+    subject: Partial<SubjectLocalizedModel>;
 }
 
 const items: MenuProps['items'] = [
@@ -47,7 +47,7 @@ const SubjectCard = memo<SubjectCardProps>(({subject}) => {
                     break;
                 case 'delete':
                     deleteSubject({
-                        refetchQueries: [GET_SUBJECTS, 'GetSubjectsOfPlace'],
+                        refetchQueries: [SUBJECTS_OF_PLACE, 'GetSubjectsOfPlace'],
                         variables: {placeUuid, uuid},
                     });
                     break;

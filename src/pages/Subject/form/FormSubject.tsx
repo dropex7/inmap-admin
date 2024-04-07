@@ -13,7 +13,7 @@ import type {SCHEDULE_DAYS} from '@/components/Schedule/types';
 import type {Query} from '@/generated/graphql';
 import {placeAtom} from '@/atoms/selectedPlace';
 import {CREATE_SUBJECT, UPDATE_SUBJECT} from '@/operations/subject/mutation';
-import {GET_SUBJECTS, GET_SUBJECTS_BY_ID} from '@/operations/subject/query';
+import {GET_SUBJECTS_BY_ID, SUBJECTS_OF_PLACE} from '@/operations/subject/query';
 import {prepareSchedule} from '@/utils/utils';
 import {prepareFieldsToSend} from './helper';
 import type {ScheduleFormInterval} from '@/components/Schedule/types';
@@ -82,7 +82,7 @@ const FormSubject = memo<FormProps>(({item}) => {
         }) => {
             if (isCreate) {
                 await createSubject({
-                    refetchQueries: [GET_SUBJECTS, 'GetSubjectsOfPlace'],
+                    refetchQueries: [SUBJECTS_OF_PLACE, 'GetSubjectsOfPlace'],
                     variables: {
                         createSubjectInput: {
                             ...values,
@@ -100,7 +100,7 @@ const FormSubject = memo<FormProps>(({item}) => {
                 navigate(`/subject`);
             } else {
                 await updateSubject({
-                    refetchQueries: [GET_SUBJECTS, GET_SUBJECTS_BY_ID],
+                    refetchQueries: [SUBJECTS_OF_PLACE, GET_SUBJECTS_BY_ID],
                     variables: {
                         updateSubjectInput: {
                             ...values,

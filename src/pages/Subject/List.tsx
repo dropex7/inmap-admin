@@ -4,18 +4,17 @@
 
 import {memo} from 'react';
 
-import type {SearchSubjectsOfPlaceQuery} from '@/generated/graphql';
-
 import SubjectCard from './card/SubjectCard.tsx';
+import type {GetSubjectsOfPlaceInputQuery} from '@/generated/graphql';
 
 interface ListProps {
-    data: SearchSubjectsOfPlaceQuery;
+    data: GetSubjectsOfPlaceInputQuery;
 }
 
 const List = memo<ListProps>(({data}) => {
     return (
         <div className="flex flex-wrap justify-center gap-6">
-            {data.searchSubjects.items.map(sub => (
+            {data.subjectsOfPlace.items.map(sub => (
                 <SubjectCard key={sub.uuid} subject={sub} />
             ))}
         </div>

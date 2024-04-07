@@ -11,12 +11,12 @@ import usePaginationParams from '@/hooks/pagination/usePaginationParams.ts';
 import usePaginationFilter from '@/hooks/pagination/usePaginationFilter.ts';
 import type {PaginationParams} from '@/components/Pagination/types.ts';
 import {useLazyQuery} from '@apollo/client';
-import type {SearchSubjectsOfPlaceQuery} from '@/generated/graphql.ts';
-import {SEARCH_SUBJECTS} from '@/operations/subject/query.ts';
+import {SUBJECTS_OF_PLACE} from '@/operations/subject/query.ts';
 import EmptyIcon from '@/assets/empty.svg?react';
 import SubjectList from '@/pages/Map/Panel/SubjectList.tsx';
 import {MapContext} from '@/pages/Map/MapContext.ts';
 import {connectObjectWithPlace} from '@/utils/widgetMessages.ts';
+import type {GetSubjectsOfPlaceInputQuery} from '@/generated/graphql.ts';
 
 interface SubjectPieModalProps {
     objectUuid: string;
@@ -24,7 +24,7 @@ interface SubjectPieModalProps {
 
 const {useApp} = App;
 
-const url = SEARCH_SUBJECTS.loc?.source.body ?? 'url';
+const url = SUBJECTS_OF_PLACE.loc?.source.body ?? 'url';
 
 const SubjectPieModal = memo<SubjectPieModalProps>(({objectUuid}) => {
     const {ref} = useContext(MapContext);
@@ -35,8 +35,8 @@ const SubjectPieModal = memo<SubjectPieModalProps>(({objectUuid}) => {
     const [pageParams, setParams] = usePaginationParams(url);
     const [filter] = usePaginationFilter<PaginationParams>(url);
 
-    const [loadList, {data, error, loading}] = useLazyQuery<SearchSubjectsOfPlaceQuery>(SEARCH_SUBJECTS, {
-        variables: {searchSubjectsInput: {...pageParams, ...filter, placeUuid}},
+    const [loadList, {data, error, loading}] = useLazyQuery<GetSubjectsOfPlaceInputQuery>(SUBJECTS_OF_PLACE, {
+        variables: {input: {...pageParams, ...filter, placeUuid}},
     });
 
     const changePage = useCallback(
@@ -59,7 +59,7 @@ const SubjectPieModal = memo<SubjectPieModalProps>(({objectUuid}) => {
     }, [setParams]);
 
     useEffect(() => {
-        loadList({variables: {searchSubjectsInput: {...pageParams, ...filter, placeUuid}}});
+        loadList({variables: {input: {...pageParams, ...filter, placeUuid}}});
     }, [filter, placeUuid, loadList, pageParams]);
 
     if (error) {
@@ -79,14 +79,14 @@ const SubjectPieModal = memo<SubjectPieModalProps>(({objectUuid}) => {
                 onCancel={onClose}
             >
                 <Spin tip="Loading" size="large" spinning={loading}>
-                    {data && data.searchSubjects.total !== 0 ? (
+                    {data && data.subjectsOfPlace.total !== 0 ? (
                         <div className="flex flex-col gap-6 p-6">
                             <div className="flex justify-end">
                                 <Pagination
                                     defaultCurrent={pageParams.offset / pageParams.limit + 1}
                                     onChange={changePage}
                                     defaultPageSize={pageParams.limit}
-                                    total={data.searchSubjects.total}
+                                    total={data.subjectsOfPlace.total}
                                     showSizeChanger={false}
                                 />
                             </div>

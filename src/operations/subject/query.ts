@@ -1,21 +1,24 @@
 import {gql} from '@apollo/client';
 
-export const GET_SUBJECTS = gql`
-    query GetSubjectsOfPlace($placeUuid: String!) {
-        subjectsOfPlace(placeUuid: $placeUuid) {
-            uuid
-            name
-            layerName
-            logoUrl
-            shortDescription
-            images
+export const SEARCH_SUBJECTS = gql`
+    query SearchSubjectsOfPlace($searchSubjectsInput: SearchSubjectsInput!) {
+        searchSubjects(searchSubjectsInput: $searchSubjectsInput) {
+            total
+            items {
+                uuid
+                name
+                layerUuid
+                logoUrl
+                shortDescription
+                images
+            }
         }
     }
 `;
 
-export const SEARCH_SUBJECTS = gql`
-    query SearchSubjectsOfPlace($searchSubjectsInput: SearchSubjectsInput!) {
-        searchSubjects(searchSubjectsInput: $searchSubjectsInput) {
+export const SUBJECTS_OF_PLACE = gql`
+    query GetSubjectsOfPlaceInput($input: GetSubjectsOfPlaceInput!) {
+        subjectsOfPlace(input: $input) {
             total
             items {
                 uuid

@@ -7,10 +7,10 @@ import clsx from 'clsx';
 import PreviewLogo from '@/components/Images/PreviewLogo.tsx';
 import PreviewImage from '@/components/Images/PreviewImage.tsx';
 import noPhoto from '@/assets/no-photo-available.png';
-import type {SubjectSearchModel} from '@/generated/graphql.ts';
+import type {SubjectLocalizedModel} from '@/generated/graphql.ts';
 
 interface ViewProps {
-    subject: Partial<SubjectSearchModel>;
+    subject: Partial<SubjectLocalizedModel>;
     className?: string;
 }
 
