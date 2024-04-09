@@ -26,10 +26,10 @@ const columns: ColumnsType<PartialPromo> = [
         render: ({smallImageUrl}) => (
             <PreviewImage
                 alt="image"
-                height="100px"
+                height="60px"
                 className="rounded-lg"
                 url={smallImageUrl ?? noPhoto}
-                width="100px"
+                width="60px"
             />
         ),
         width: 150,

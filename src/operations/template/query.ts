@@ -5,7 +5,6 @@ export const GET_TEMPLATES = gql`
         templates {
             uuid
             name
-            imageUrl
             tabs {
                 uuid
                 fields
@@ -20,7 +19,6 @@ export const GET_TEMPLATE_BY_ID = gql`
         template(uuid: $uuid) {
             uuid
             name
-            imageUrl
             tabs {
                 uuid
                 name

@@ -4,9 +4,9 @@
 
 import {memo, useCallback, useContext, useEffect, useState} from 'react';
 import {useQuery} from '@apollo/client';
-import type {GetPlaceLayersQuery} from '@/generated/graphql';
-import {GET_PLACE_LAYERS} from '@/operations/place/query';
-import {getSelectLayerMessage} from '@/utils/widgetMessages';
+import type {GetPlaceLayersQuery} from '@/generated/graphql.ts';
+import {GET_PLACE_LAYERS} from '@/operations/place/query.ts';
+import {getSelectLayerMessage} from '@/utils/widgetMessages.ts';
 import {PlaceGlobalCtx} from '@/components/Place/PlaceGlobalCtx.ts';
 import clsx from 'clsx';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';

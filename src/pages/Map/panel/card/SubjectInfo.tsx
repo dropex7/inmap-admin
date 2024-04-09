@@ -5,9 +5,9 @@
 import {memo} from 'react';
 import type {GetSubjectsByIdQuery} from '@/generated/graphql.ts';
 import {Typography} from 'antd';
-import SubjectStatus from '@/pages/Map/Panel/SubjectStatus.tsx';
+import SubjectStatus from '@/pages/Map/panel/card/SubjectStatus.tsx';
 
-import ImageCarousel from '@/pages/Map/Panel/ImageCarousel.tsx';
+import ImageCarousel from '@/pages/Map/panel/card/ImageCarousel.tsx';
 
 interface SubjectInfoProps {
     subject: GetSubjectsByIdQuery['subject'];

@@ -11,7 +11,7 @@ import type {PaginationParams} from '@/components/Pagination/types.ts';
 import {useLazyQuery} from '@apollo/client';
 import {SUBJECTS_OF_PLACE} from '@/operations/subject/query.ts';
 import EmptyIcon from '@/assets/empty.svg?react';
-import SubjectList from '@/pages/Map/Panel/SubjectList.tsx';
+import SubjectList from '@/pages/Map/panel/card/SubjectList.tsx';
 import {connectObjectWithPlace} from '@/utils/widgetMessages.ts';
 import type {GetSubjectsOfPlaceInputQuery} from '@/generated/graphql.ts';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
