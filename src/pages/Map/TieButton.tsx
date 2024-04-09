@@ -2,16 +2,16 @@
  * Created by MIRZOEV A. on 05.01.2024
  */
 
-import {memo, useContext} from 'react';
+import {memo} from 'react';
 import {Button} from 'antd';
-import {MapContext} from './MapContext';
+import {useGetMap} from '@/hooks/useGetMap.ts';
 
 interface TieButtonProps {
     openDrawer: () => void;
 }
 
 const TieButton = memo<TieButtonProps>(({openDrawer}) => {
-    const {selectedObject} = useContext(MapContext);
+    const {selectedObject} = useGetMap();
 
     if (!selectedObject) {
         return null;

@@ -3,17 +3,16 @@
  */
 
 import type {PropsWithChildren} from 'react';
-import {memo, useContext, useEffect} from 'react';
+import {memo, useEffect} from 'react';
 import {useGetMessageFromMap} from '@/hooks/useGetMessageFromMap';
-import {MapContext} from '@/pages/Map/MapContext';
-import {useRecoilValue} from 'recoil';
-import {placeAtom} from '@/atoms/selectedPlace';
 import {getLoadPlanMessage} from '@/utils/widgetMessages';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
+import {useGetMap} from '@/hooks/useGetMap.ts';
 
 const Map = memo<PropsWithChildren>(() => {
-    const {ref} = useContext(MapContext);
-    const placeUuid = useRecoilValue(placeAtom);
-    const {selectedPlanKey} = useContext(MapContext);
+    const {ref} = useGetMap();
+    const placeUuid = useGetPlaceUuid();
+    const {selectedPlanKey} = useGetMap();
 
     const {isReady} = useGetMessageFromMap();
 

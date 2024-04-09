@@ -5,20 +5,16 @@
 import type {RcFile, UploadProps} from 'antd/es/upload';
 import type {UploadFile} from 'antd/es/upload/interface';
 import ImgCrop from 'antd-img-crop';
-
 import {PlusOutlined} from '@ant-design/icons';
 import {useMutation} from '@apollo/client';
 import {Form} from 'antd';
 import {Modal, Upload} from 'antd';
 import {memo, useCallback, useEffect} from 'react';
 import {useState} from 'react';
-import {useRecoilValue} from 'recoil';
-
 import type {UploadImageMutation} from '@/generated/graphql';
-
-import {placeAtom} from '@/atoms/selectedPlace';
 import {UPLOAD_IMAGE} from '@/operations/image/mutation';
 import {getBase64} from '@/utils/utils';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
 interface Props {
     countOfImages: number;
@@ -47,7 +43,7 @@ const ImageLoaderField = memo<Props>(
 
         const [fileList, setFileList] = useState<Array<UploadFile>>([]);
 
-        const placeUuid = useRecoilValue(placeAtom);
+        const placeUuid = useGetPlaceUuid();
 
         const [uploadImage, {loading}] = useMutation<UploadImageMutation>(UPLOAD_IMAGE);
 

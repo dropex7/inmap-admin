@@ -9,17 +9,16 @@ import FormSubject from './FormSubject';
 import {useQuery} from '@apollo/client';
 import type {GetSubjectsByIdQuery} from '@/generated/graphql';
 import {GET_SUBJECTS_BY_ID} from '@/operations/subject/query';
-import {useRecoilValue} from 'recoil';
-import {placeAtom} from '@/atoms/selectedPlace';
 import {GET_TEMPLATE_BY_ID} from '@/operations/template/query.ts';
 import {LeftOutlined} from '@ant-design/icons';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
 const {Title} = Typography;
 
 export function Component() {
     const {subjectId, templateId} = useParams();
     const navigate = useNavigate();
-    const placeUuid = useRecoilValue(placeAtom);
+    const placeUuid = useGetPlaceUuid();
 
     const isCreate = !subjectId;
 

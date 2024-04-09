@@ -8,10 +8,9 @@ import {useMutation, useQuery} from '@apollo/client';
 import {Form} from 'antd';
 import {memo, useCallback, useMemo, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import {useRecoilValue} from 'recoil';
 import type {SCHEDULE_DAYS} from '@/components/Schedule/types';
 import type {Query} from '@/generated/graphql';
-import {placeAtom} from '@/atoms/selectedPlace';
+
 import {CREATE_SUBJECT, UPDATE_SUBJECT} from '@/operations/subject/mutation';
 import {GET_SUBJECTS_BY_ID, SUBJECTS_OF_PLACE} from '@/operations/subject/query';
 import {prepareSchedule} from '@/utils/utils';
@@ -24,6 +23,7 @@ import {GET_TEMPLATE_BY_ID} from '@/operations/template/query.ts';
 import TabsMenu from '@/pages/Subject/form/tabs/TabsMenu.tsx';
 import {FORM_MENU_BASE_ITEM_KEYS} from '@/pages/Subject/form/tabs/helper.ts';
 import TabView from '@/pages/Subject/form/tabs/TabView.tsx';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
 interface FormProps {
     item?: GetSubjectsByIdQuery['subject'];
@@ -48,7 +48,7 @@ const FormSubject = memo<FormProps>(({item}) => {
     const {templateId} = useParams();
     const [selectedTab, setSelectedTab] = useState<string>(FORM_MENU_BASE_ITEM_KEYS.MAIN);
     const navigate = useNavigate();
-    const placeUuid = useRecoilValue(placeAtom);
+    const placeUuid = useGetPlaceUuid();
     const isCreate = !item?.uuid;
 
     const {data} = useQuery<TemplateById>(GET_TEMPLATE_BY_ID, {

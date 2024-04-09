@@ -2,11 +2,9 @@
  * Created by MIRZOEV A. on 11.02.2024
  */
 
-import {memo, useCallback, useContext, useEffect, useState} from 'react';
+import {memo, useCallback, useEffect, useState} from 'react';
 import {App, Button, Empty, Modal, Pagination, Spin} from 'antd';
 import useOpen from '@/hooks/useOpen.ts';
-import {useRecoilValue} from 'recoil';
-import {placeAtom} from '@/atoms/selectedPlace.ts';
 import usePaginationParams from '@/hooks/pagination/usePaginationParams.ts';
 import usePaginationFilter from '@/hooks/pagination/usePaginationFilter.ts';
 import type {PaginationParams} from '@/components/Pagination/types.ts';
@@ -14,9 +12,10 @@ import {useLazyQuery} from '@apollo/client';
 import {SUBJECTS_OF_PLACE} from '@/operations/subject/query.ts';
 import EmptyIcon from '@/assets/empty.svg?react';
 import SubjectList from '@/pages/Map/Panel/SubjectList.tsx';
-import {MapContext} from '@/pages/Map/MapContext.ts';
 import {connectObjectWithPlace} from '@/utils/widgetMessages.ts';
 import type {GetSubjectsOfPlaceInputQuery} from '@/generated/graphql.ts';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
+import {useGetMap} from '@/hooks/useGetMap.ts';
 
 interface SubjectPieModalProps {
     objectUuid: string;
@@ -27,11 +26,11 @@ const {useApp} = App;
 const url = SUBJECTS_OF_PLACE.loc?.source.body ?? 'url';
 
 const SubjectPieModal = memo<SubjectPieModalProps>(({objectUuid}) => {
-    const {ref} = useContext(MapContext);
+    const {ref} = useGetMap();
     const {message} = useApp();
     const {open, onOpen, onClose} = useOpen();
     const [selectedObjectId, setSelectedObjectId] = useState<string>();
-    const placeUuid = useRecoilValue(placeAtom);
+    const placeUuid = useGetPlaceUuid();
     const [pageParams, setParams] = usePaginationParams(url);
     const [filter] = usePaginationFilter<PaginationParams>(url);
 

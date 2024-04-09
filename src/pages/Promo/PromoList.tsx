@@ -11,16 +11,15 @@ import usePaginationFilter from '@/hooks/pagination/usePaginationFilter';
 import usePaginationParams from '@/hooks/pagination/usePaginationParams';
 import {GET_PROMOS} from '@/operations/promo/query';
 import PromoTable from './PromoTable';
-import {useRecoilValue} from 'recoil';
-import {placeAtom} from '@/atoms/selectedPlace';
 import type {GetListOfPromosQuery} from '@/generated/graphql';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
 interface PromoListProps {
     url: string;
 }
 
 const PromoList = memo<PromoListProps>(({url}) => {
-    const placeUuid = useRecoilValue(placeAtom);
+    const placeUuid = useGetPlaceUuid();
     const [pageParams, setParams] = usePaginationParams(url);
     const [filter] = usePaginationFilter<PaginationParams>(url);
 

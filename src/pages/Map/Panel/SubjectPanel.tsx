@@ -2,22 +2,22 @@
  * Created by MIRZOEV A. on 06.01.2024
  */
 
-import {memo, useContext} from 'react';
+import {memo} from 'react';
 import SubjectStatus from './SubjectStatus';
-import {MapContext} from '../MapContext';
-import {useRecoilValue} from 'recoil';
-import {placeAtom} from '@/atoms/selectedPlace';
+
 import {useQuery} from '@apollo/client';
 import type {GetSubjectsByIdQuery} from '@/generated/graphql';
 import {GET_SUBJECTS_BY_ID} from '@/operations/subject/query';
 import {Alert} from 'antd';
 import SubjectInfo from './SubjectInfo';
 import SubjectPieModal from '@/pages/Map/Panel/SubjectPieModal.tsx';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
+import {useGetMap} from '@/hooks/useGetMap.ts';
 
 const SubjectPanel = memo(() => {
-    const {selectedObject} = useContext(MapContext);
-    const placeUuid = useRecoilValue(placeAtom);
-    const {isEditMode} = useContext(MapContext);
+    const {selectedObject} = useGetMap();
+    const placeUuid = useGetPlaceUuid();
+    const {isEditMode} = useGetMap();
 
     const {data} = useQuery<GetSubjectsByIdQuery>(GET_SUBJECTS_BY_ID, {
         variables: {placeUuid, uuid: selectedObject?.originUuid},

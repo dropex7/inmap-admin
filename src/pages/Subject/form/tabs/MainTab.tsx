@@ -5,18 +5,17 @@
 import {memo} from 'react';
 import {Form, Input, Select, Typography} from 'antd';
 import ScheduleFields from '@/components/Schedule/ScheduleFields.tsx';
-import {useRecoilValue} from 'recoil';
-import {placeAtom} from '@/atoms/selectedPlace.ts';
 import {useQuery} from '@apollo/client';
 import type {GetPlaceLayersQuery} from '@/generated/graphql.ts';
 import {GET_PLACE_LAYERS} from '@/operations/place/query.ts';
 import ImageLoaderField from '@/components/ImageLoader/ImageLoaderField.tsx';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
 const {Item} = Form;
 const {Title} = Typography;
 
 const MainTab = memo(() => {
-    const placeId = useRecoilValue(placeAtom);
+    const placeId = useGetPlaceUuid();
 
     const {data} = useQuery<GetPlaceLayersQuery>(GET_PLACE_LAYERS, {variables: {placeUuid: placeId!}});
 

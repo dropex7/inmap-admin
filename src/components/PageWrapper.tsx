@@ -2,16 +2,14 @@
  * Created by MIRZOEV A. on 09.08.2023
  */
 import {Outlet} from 'react-router-dom';
-import {useRecoilValue} from 'recoil';
-
-import {placeAtom} from '../atoms/selectedPlace';
 import {useQuery} from '@apollo/client';
 import {GET_PLACE} from '../operations/place/query';
 import type {GetPlaceQuery} from '../generated/graphql';
 import {PlaceGlobalCtx} from '@/components/Place/PlaceGlobalCtx';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
 export function Component() {
-    const placeId = useRecoilValue(placeAtom);
+    const placeId = useGetPlaceUuid();
 
     const {
         data: placeResponse,

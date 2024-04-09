@@ -3,21 +3,20 @@
  */
 
 import {memo, useCallback, useContext, useEffect, useState} from 'react';
-import {useRecoilValue} from 'recoil';
-import {placeAtom} from '@/atoms/selectedPlace';
 import {useQuery} from '@apollo/client';
 import type {GetPlaceLayersQuery} from '@/generated/graphql';
 import {GET_PLACE_LAYERS} from '@/operations/place/query';
-import {MapContext} from '../MapContext';
 import {getSelectLayerMessage} from '@/utils/widgetMessages';
 import {PlaceGlobalCtx} from '@/components/Place/PlaceGlobalCtx.ts';
 import clsx from 'clsx';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
+import {useGetMap} from '@/hooks/useGetMap.ts';
 
 const SelectLayer = memo(() => {
-    const {ref} = useContext(MapContext);
+    const {ref} = useGetMap();
     const {initialLayerUuid} = useContext(PlaceGlobalCtx);
     const [selectedLayer, setSelectedLayer] = useState<string>();
-    const placeUuid = useRecoilValue(placeAtom);
+    const placeUuid = useGetPlaceUuid();
     const {data} = useQuery<GetPlaceLayersQuery>(GET_PLACE_LAYERS, {variables: {placeUuid}});
 
     const handleSelectLayer = useCallback(

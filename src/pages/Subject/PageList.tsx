@@ -9,15 +9,14 @@ import usePaginationParams from '@/hooks/pagination/usePaginationParams';
 import {SUBJECTS_OF_PLACE} from '@/operations/subject/query';
 import CreatingTemplateModal from './template/CreatingTemplateModal.tsx';
 import List from './List';
-import {useRecoilValue} from 'recoil';
-import {placeAtom} from '@/atoms/selectedPlace';
 import type {PaginationFilter} from '@/components/Pagination/types';
 import type {GetSubjectsOfPlaceInputQuery} from '@/generated/graphql';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
 const url = SUBJECTS_OF_PLACE.loc?.source.body ?? 'url';
 
 export function Component() {
-    const placeUuid = useRecoilValue(placeAtom);
+    const placeUuid = useGetPlaceUuid();
     const [pageParams, setParams] = usePaginationParams(url);
     const [filter] = usePaginationFilter<PaginationFilter>(url);
 

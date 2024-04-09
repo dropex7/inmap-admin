@@ -2,12 +2,12 @@
  * Created by MIRZOEV A. on 05.01.2024
  */
 
-import {memo, useContext} from 'react';
+import {memo} from 'react';
 import {Alert} from 'antd';
-import {MapContext} from '../MapContext';
+import {useGetMap} from '@/hooks/useGetMap.ts';
 
 const SubjectStatus = memo(() => {
-    const {selectedObject} = useContext(MapContext);
+    const {selectedObject} = useGetMap();
 
     const isPied = selectedObject?.originUuid && selectedObject.objectUuid;
 

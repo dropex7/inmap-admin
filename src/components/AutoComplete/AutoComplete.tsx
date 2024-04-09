@@ -9,10 +9,9 @@ import {Select} from 'antd';
 import type {DocumentNode} from 'graphql/language';
 
 import {useQuery} from '@apollo/client';
-import {useRecoilValue} from 'recoil';
-import {placeAtom} from '@/atoms/selectedPlace.ts';
 import useDebounce from '@/hooks/useDebounceValue.ts';
 import type {DefaultOption} from '@/components/AutoComplete/types.ts';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
 type item =
     | {
@@ -64,7 +63,7 @@ function AutoComplete<QType, T extends item = item, Multiple extends boolean = f
     value,
     ...rest
 }: AutoCompleteProps<QType, T, Multiple>) {
-    const placeUuid = useRecoilValue(placeAtom);
+    const placeUuid = useGetPlaceUuid();
     const [query, setQuery] = useState('');
     const debouncedValue = useDebounce(query);
 

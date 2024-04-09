@@ -10,15 +10,14 @@ import type {GetSubjectsByIdQuery} from '@/generated/graphql';
 import {GET_SUBJECTS_BY_ID} from '@/operations/subject/query';
 import DeleteButton from './DeleteButton';
 import {useCallback} from 'react';
-import {useRecoilValue} from 'recoil';
-import {placeAtom} from '@/atoms/selectedPlace';
 import {LeftOutlined} from '@ant-design/icons';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
 const {Item} = Descriptions;
 const {Title} = Typography;
 export function Component() {
     const navigate = useNavigate();
-    const placeUuid = useRecoilValue(placeAtom);
+    const placeUuid = useGetPlaceUuid();
     const {subjectId} = useParams();
 
     const {data} = useQuery<GetSubjectsByIdQuery>(GET_SUBJECTS_BY_ID, {

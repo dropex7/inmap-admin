@@ -9,12 +9,11 @@ import type {SubjectLocalizedModel} from '@/generated/graphql.ts';
 import type {MenuProps} from 'antd';
 import {Dropdown} from 'antd';
 import {useNavigate} from 'react-router-dom';
-import {useRecoilValue} from 'recoil';
-import {placeAtom} from '@/atoms/selectedPlace.ts';
 import View from '@/pages/Subject/card/View.tsx';
 import {useMutation} from '@apollo/client';
 import {DELETE_SUBJECT} from '@/operations/subject/mutation.ts';
 import {SUBJECTS_OF_PLACE} from '@/operations/subject/query.ts';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
 interface SubjectCardProps {
     subject: Partial<SubjectLocalizedModel>;
@@ -33,7 +32,7 @@ const items: MenuProps['items'] = [
 ];
 
 const SubjectCard = memo<SubjectCardProps>(({subject}) => {
-    const placeUuid = useRecoilValue(placeAtom);
+    const placeUuid = useGetPlaceUuid();
     const [deleteSubject] = useMutation(DELETE_SUBJECT);
     const {uuid} = subject;
     const navigate = useNavigate();

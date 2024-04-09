@@ -14,8 +14,7 @@ import {createFileFromUrl} from '@/pages/Subject/form/prepareDataForForm.ts';
 import dayjs from 'dayjs';
 import {useQuery} from '@apollo/client';
 import type {GetSubjectsByPromoQuery} from '@/generated/graphql.ts';
-import {useRecoilValue} from 'recoil';
-import {placeAtom} from '@/atoms/selectedPlace.ts';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
 export interface IMainFormValues {
     largeImageUrl: Array<ImageType>;
@@ -36,7 +35,7 @@ interface Props {
 const {Item, useForm} = Form;
 
 const PromoMainPart = memo<Props>(({promo, initialValues, onFinish}) => {
-    const placeUuid = useRecoilValue(placeAtom);
+    const placeUuid = useGetPlaceUuid();
     const [form] = useForm();
 
     const {data} = useQuery<GetSubjectsByPromoQuery>(GET_SUBJECTS_BY_PROMO, {

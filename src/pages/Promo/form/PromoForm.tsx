@@ -6,22 +6,20 @@ import {useMutation, useQuery} from '@apollo/client';
 import {Steps} from 'antd';
 import {useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import {useRecoilValue} from 'recoil';
-
-import {placeAtom} from '@/atoms/selectedPlace';
 import {CREATE_PROMO, UPDATE_PROMO} from '@/operations/promo/mutation';
 import PromoDescription from './PromoDescription';
 import type {IMainFormValues} from './PromoMainPart';
 import PromoMainPart from './PromoMainPart';
 import {GET_PROMO_BY_ID, GET_PROMOS} from '@/operations/promo/query.ts';
 import type {GetPromoByIdQuery} from '@/generated/graphql.ts';
+import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
 export interface IFullFormValues {
     content: Record<string, any>;
 }
 
 export function Component() {
-    const placeUuid = useRecoilValue(placeAtom);
+    const placeUuid = useGetPlaceUuid();
     const {promoId} = useParams();
     const isCreate = !promoId;
     const navigate = useNavigate();
