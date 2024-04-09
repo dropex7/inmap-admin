@@ -21,4 +21,16 @@
     left: 0 !important;
 }
 
+.ql-snow span{
+    color: #e0e0e0;
+}
+
+.ql-snow {
+    stroke: #e0e0e0;
+}
+
+.ql-stroke{
+    stroke: #e0e0e0 !important;
+}
+
 @tailwind utilities;

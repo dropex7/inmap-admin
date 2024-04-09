@@ -61,38 +61,28 @@ const PromoMainPart = memo<Props>(({promo, initialValues, onFinish}) => {
 
     return (
         <Form form={form} initialValues={initialValues} layout="vertical" onFinish={onFinish}>
-            <div className="flex flex-col gap-6">
-                <Item
-                    label="Заголовок"
-                    className="w-80"
-                    name="title"
-                    initialValue={promo?.title}
-                    rules={[{required: true}]}
-                >
+            <div className="grid grid-cols-2 gap-10">
+                <Item label="Заголовок" name="title" initialValue={promo?.title} rules={[{required: true}]}>
                     <Input />
                 </Item>
-                <Item label="Описание" className="w-80" name="subtitle" rules={[{required: true}]}>
+                <Item label="Описание" name="subtitle" rules={[{required: true}]}>
                     <Input />
                 </Item>
 
-                <div className="flex w-full items-center gap-6">
-                    <Item label="Начало" name="startDateTime">
-                        <DatePicker className="w-80" />
-                    </Item>
-                    <Item label="Конец" name="endDateTime">
-                        <DatePicker className="w-80" />
-                    </Item>
-                </div>
+                <Item label="Начало" name="startDateTime">
+                    <DatePicker className="w-full" />
+                </Item>
+                <Item label="Конец" name="endDateTime">
+                    <DatePicker className="w-full" />
+                </Item>
 
-                <div>
-                    <ImageLoaderField countOfImages={1} fieldName="smallImageUrl" label="Добавьте изображения" />
-                    <ImageLoaderField
-                        isCropped
-                        countOfImages={1}
-                        fieldName="largeImageUrl"
-                        label="Добавьте миниатюру изображения"
-                    />
-                </div>
+                <ImageLoaderField countOfImages={1} fieldName="smallImageUrl" label="Добавьте изображения" />
+                <ImageLoaderField
+                    isCropped
+                    countOfImages={1}
+                    fieldName="largeImageUrl"
+                    label="Добавьте миниатюру изображения"
+                />
 
                 <Item label="Участники акции" name="subjectsUuids" rules={[{type: 'array'}]}>
                     <AutoComplete<GetSubjectsOfPlaceInputQuery, SubjectLocalizedModel, true>
