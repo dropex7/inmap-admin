@@ -3,16 +3,16 @@
  */
 
 import {memo} from 'react';
-import SubjectStatus from './SubjectStatus';
 
 import {useQuery} from '@apollo/client';
 import type {GetSubjectsByIdQuery} from '@/generated/graphql';
 import {GET_SUBJECTS_BY_ID} from '@/operations/subject/query';
 import {Alert} from 'antd';
-import SubjectInfo from './SubjectInfo';
-import SubjectPieModal from '@/pages/Map/Panel/SubjectPieModal.tsx';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 import {useGetMap} from '@/hooks/useGetMap.ts';
+import SubjectInfo from '@/pages/Map/panel/card/SubjectInfo.tsx';
+import SubjectStatus from '@/pages/Map/panel/card/SubjectStatus.tsx';
+import SubjectPieModal from '@/pages/Map/panel/SubjectPieModal.tsx';
 
 const SubjectPanel = memo(() => {
     const {selectedObject} = useGetMap();
