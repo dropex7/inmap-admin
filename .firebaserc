@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "inmap2"
+  },
+  "targets": {
+    "inmap2": {
+      "hosting": {
+        "dev-client-admin-panel": [
+          "inmap-dev-client-admin"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
