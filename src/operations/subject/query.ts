@@ -44,6 +44,17 @@ export const GET_SUBJECTS_BY_ID = gql`
             shortDescription
             images
             schedule
+            recs {
+                uuid
+                parent {
+                    uuid
+                    title
+                    orderIndex
+                }
+                title
+                image
+                orderIndex
+            }
             content {
                 templateUuid
                 tabs {

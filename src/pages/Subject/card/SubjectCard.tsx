@@ -2,6 +2,7 @@
  * Created by MIRZOEV A. on 11.04.2023
  */
 
+import type {CSSProperties} from 'react';
 import {memo, useCallback, useMemo} from 'react';
 
 import type {SubjectLocalizedModel} from '@/generated/graphql.ts';
@@ -31,6 +32,12 @@ const items: MenuProps['items'] = [
         label: 'Удалить',
     },
 ];
+
+const overlayStyle: CSSProperties = {
+    borderRadius: '8px',
+    outline: 'solid',
+    outlineColor: 'rgba(255, 255, 255, 0.3)',
+};
 
 const SubjectCard = memo<SubjectCardProps>(({subject}) => {
     const placeUuid = useGetPlaceUuid();
@@ -80,7 +87,7 @@ const SubjectCard = memo<SubjectCardProps>(({subject}) => {
 
     return (
         <>
-            <Dropdown destroyPopupOnHide placement="top" trigger={['click']} menu={menuProps}>
+            <Dropdown overlayStyle={overlayStyle} placement="top" trigger={['click']} menu={menuProps}>
                 <View subject={subject} />
             </Dropdown>
             {contextHolder}
