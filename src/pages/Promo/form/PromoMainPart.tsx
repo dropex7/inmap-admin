@@ -61,7 +61,7 @@ const PromoMainPart = memo<Props>(({promo, initialValues, onFinish}) => {
 
     return (
         <Form form={form} initialValues={initialValues} layout="vertical" onFinish={onFinish}>
-            <div className="grid grid-cols-2 gap-10">
+            <div className="grid grid-cols-2 gap-x-10">
                 <Item label="Заголовок" name="title" initialValue={promo?.title} rules={[{required: true}]}>
                     <Input />
                 </Item>
@@ -69,10 +69,10 @@ const PromoMainPart = memo<Props>(({promo, initialValues, onFinish}) => {
                     <Input />
                 </Item>
 
-                <Item label="Начало" name="startDateTime">
+                <Item label="Дата начала акции" name="startDateTime">
                     <DatePicker className="w-full" />
                 </Item>
-                <Item label="Конец" name="endDateTime">
+                <Item label="Дата окончания акции" name="endDateTime">
                     <DatePicker className="w-full" />
                 </Item>
 

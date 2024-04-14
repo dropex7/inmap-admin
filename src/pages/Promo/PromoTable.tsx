@@ -23,6 +23,7 @@ interface PromoTableProps extends TableProps<PartialPromo> {
 const columns: ColumnsType<PartialPromo> = [
     {
         key: 'imageUrl',
+        align: 'center',
         render: ({smallImageUrl}) => (
             <PreviewImage
                 alt="image"
@@ -32,7 +33,7 @@ const columns: ColumnsType<PartialPromo> = [
                 width="60px"
             />
         ),
-        width: 150,
+        width: 100,
     },
     {
         render: ({title, subtitle}) => <PromoTextView title={title} subtitle={subtitle} />,
