@@ -33,4 +33,14 @@
     stroke: #e0e0e0 !important;
 }
 
+.ant-upload-list-item-container{
+    width: 150px !important;
+    height: 150px !important;
+}
+
+.ant-upload{
+    width: 150px !important;
+    height: 150px !important;
+}
+
 @tailwind utilities;

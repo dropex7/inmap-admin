@@ -43,6 +43,7 @@ export const GET_SUBJECTS_BY_ID = gql`
             logoUrl
             shortDescription
             images
+            schedule
             content {
                 templateUuid
                 tabs {

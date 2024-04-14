@@ -74,7 +74,10 @@ const ScheduleFields = memo(() => {
                 closable={false}
                 maskClosable={false}
                 footer={[
-                    <Button key="back" onClick={handleSaveSchedule} type="primary">
+                    <Button key="cancel" onClick={handleSaveSchedule}>
+                        Отменить
+                    </Button>,
+                    <Button key="save" onClick={handleSaveSchedule} type="primary">
                         Сохранить
                     </Button>,
                 ]}
@@ -83,6 +86,7 @@ const ScheduleFields = memo(() => {
                     {() => (
                         <div className="flex flex-col gap-3">
                             <Collapse
+                                accordion
                                 activeKey={activeElements}
                                 onChange={handleChangeCollapse}
                                 collapsible="icon"
