@@ -7,13 +7,14 @@ import {memo, useCallback, useMemo} from 'react';
 import type {SubjectLocalizedModel} from '@/generated/graphql.ts';
 
 import type {MenuProps} from 'antd';
-import {Dropdown} from 'antd';
+import {Dropdown, Modal} from 'antd';
 import {useNavigate} from 'react-router-dom';
 import View from '@/pages/Subject/card/View.tsx';
 import {useMutation} from '@apollo/client';
 import {DELETE_SUBJECT} from '@/operations/subject/mutation.ts';
 import {SUBJECTS_OF_PLACE} from '@/operations/subject/query.ts';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
+import {DeleteOutlined} from '@ant-design/icons';
 
 interface SubjectCardProps {
     subject: Partial<SubjectLocalizedModel>;
@@ -37,6 +38,15 @@ const SubjectCard = memo<SubjectCardProps>(({subject}) => {
     const {uuid} = subject;
     const navigate = useNavigate();
 
+    const [modal, contextHolder] = Modal.useModal();
+
+    const handleDelete = useCallback(() => {
+        deleteSubject({
+            refetchQueries: [SUBJECTS_OF_PLACE, 'GetSubjectsOfPlace'],
+            variables: {placeUuid, uuid},
+        });
+    }, [deleteSubject, placeUuid, uuid]);
+
     // @ts-expect-error ошибка типизации
     const handleMenuClick = useCallback<MenuProps['onClick']>(
         ({key}) => {
@@ -45,14 +55,19 @@ const SubjectCard = memo<SubjectCardProps>(({subject}) => {
                     navigate(uuid!);
                     break;
                 case 'delete':
-                    deleteSubject({
-                        refetchQueries: [SUBJECTS_OF_PLACE, 'GetSubjectsOfPlace'],
-                        variables: {placeUuid, uuid},
+                    modal.confirm({
+                        title: 'Удаление объекта',
+                        icon: <DeleteOutlined />,
+                        content: 'Вы уверены, что хотите удалить объект?',
+                        okText: 'Удалить',
+                        cancelText: 'Отмена',
+                        onOk: handleDelete,
+                        okButtonProps: {danger: true},
                     });
                     break;
             }
         },
-        [deleteSubject, navigate, placeUuid, uuid],
+        [handleDelete, modal, navigate, uuid],
     );
 
     const menuProps = useMemo<MenuProps>(
@@ -64,9 +79,12 @@ const SubjectCard = memo<SubjectCardProps>(({subject}) => {
     );
 
     return (
-        <Dropdown destroyPopupOnHide placement="top" trigger={['click']} menu={menuProps}>
-            <View subject={subject} />
-        </Dropdown>
+        <>
+            <Dropdown destroyPopupOnHide placement="top" trigger={['click']} menu={menuProps}>
+                <View subject={subject} />
+            </Dropdown>
+            {contextHolder}
+        </>
     );
 });
 
