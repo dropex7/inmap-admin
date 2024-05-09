@@ -87,7 +87,7 @@ const FormSubject = memo<FormProps>(({item}) => {
                         createSubjectInput: {
                             ...values,
                             content: {
-                                tabs: prepareFieldsToSend(tabs),
+                                tabs: prepareFieldsToSend(tabs ?? {}),
                                 templateUuid: templateId,
                             },
                             images: images?.map(image => image.originFileObj?.url),

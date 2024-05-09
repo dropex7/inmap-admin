@@ -1,6 +1,6 @@
 import {useContext} from 'react';
 import {MapContext} from '@/pages/Map/MapContext.ts';
 
-export function useGetMap() {
+export function useMap() {
     return useContext(MapContext);
 }

@@ -9,14 +9,14 @@ import {useMutation, useQuery} from '@apollo/client';
 import type {GetPlansOfPlaceQuery} from '@/generated/graphql.ts';
 import {GET_PLACE_PLANS} from '@/operations/place/query.ts';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
-import {useGetMap} from '@/hooks/useGetMap.ts';
+import {useMap} from '@/hooks/useMap.ts';
 import {UPDATE_PLACE_PLAN} from '@/operations/place/mutation.ts';
+import {useGetPlace} from '@/hooks/useGetPlace.ts';
 
-interface PlanSelectProps {}
-
-const PlanSelect = memo<PlanSelectProps>(() => {
+const PlanSelect = memo(() => {
     const placeUuid = useGetPlaceUuid();
-    const {selectedPlanKey, setSelectedPlanKey} = useGetMap();
+    const {selectedPlan} = useGetPlace();
+    const {selectedPlanKey, setSelectedPlanKey} = useMap();
     const [updatePlacePlan, {error}] = useMutation(UPDATE_PLACE_PLAN);
 
     const {data} = useQuery<GetPlansOfPlaceQuery>(GET_PLACE_PLANS, {
@@ -26,8 +26,21 @@ const PlanSelect = memo<PlanSelectProps>(() => {
     });
 
     const planOptions = useMemo<Array<DefaultOptionType>>(
-        () => data?.plansOfPlace.map(({title, key}) => ({label: title, value: key})) ?? [],
-        [data],
+        () =>
+            data?.plansOfPlace.map(({title, key}) =>
+                key === selectedPlan?.key
+                    ? {
+                          label: (
+                              <div>
+                                  <span>{title}</span>
+                                  <span className="text-xs"> - основная</span>
+                              </div>
+                          ),
+                          value: key,
+                      }
+                    : {label: title, value: key},
+            ) ?? [],
+        [data?.plansOfPlace, selectedPlan?.key],
     );
 
     const handleChangeActualPlan = useCallback(() => {

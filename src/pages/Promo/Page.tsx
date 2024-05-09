@@ -4,20 +4,18 @@
 import 'react-quill/dist/quill.snow.css';
 
 import SearchBar from '@/components/SearchBar';
-import {GET_PROMOS} from '@/operations/promo/query';
 import NavigateToCreate from './NavigateToCreate';
 import PromoList from './PromoList';
-
-const url = GET_PROMOS.loc?.source.body ?? '';
+import {GET_PROMOS_KEY} from '@/utils/queryFilterKeys.ts';
 
 export function Component() {
     return (
         <div className="flex flex-col gap-3 px-6 py-3">
             <div className="flex justify-between">
-                <SearchBar placeholder="Поиск объялений" url={url} />
+                <SearchBar placeholder="Поиск объялений" url={GET_PROMOS_KEY} />
                 <NavigateToCreate />
             </div>
-            <PromoList url={url} />
+            <PromoList url={GET_PROMOS_KEY} />
         </div>
     );
 }

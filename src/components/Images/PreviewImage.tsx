@@ -13,7 +13,15 @@ interface PreviewImageProps extends HTMLProps<HTMLImageElement> {
 }
 
 const PreviewImage = memo<PreviewImageProps>(({alt, className = '', url, ...rest}) => {
-    return <img {...rest} alt={alt} className={clsx('max-w-full object-cover', className)} src={url} />;
+    return (
+        <img
+            {...rest}
+            alt={alt}
+            className={clsx('max-w-full object-cover', className)}
+            style={{boxShadow: 'inset 200px 200px 300px 200px rgba(0,0,0,1)'}}
+            src={url}
+        />
+    );
 });
 
 export default PreviewImage;

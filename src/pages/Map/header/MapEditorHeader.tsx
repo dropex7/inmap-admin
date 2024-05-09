@@ -8,12 +8,13 @@ import {getSyncPlanMessage} from '@/utils/widgetMessages.ts';
 
 import PlanSelect from '@/pages/Map/header/PlanSelect.tsx';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
-import {useGetMap} from '@/hooks/useGetMap.ts';
+import {useMap} from '@/hooks/useMap.ts';
+import {StepBackwardOutlined, StepForwardOutlined} from '@ant-design/icons';
 
 const MapEditorHeader = memo(() => {
-    const {ref, isEditMode, toggleEditMode} = useGetMap();
+    const {ref, isEditMode, toggleEditMode} = useMap();
     const placeUuid = useGetPlaceUuid();
-    const {selectedPlanKey} = useGetMap();
+    const {selectedPlanKey} = useMap();
 
     const handleSavePlan = useCallback(() => {
         if (ref?.current?.contentWindow) {
@@ -26,9 +27,17 @@ const MapEditorHeader = memo(() => {
         <div className="flex items-center justify-between border-b border-zinc-700 p-4">
             <PlanSelect />
             {isEditMode ? (
-                <Button type="primary" onClick={handleSavePlan}>
-                    Сохранить изменения
-                </Button>
+                <div className="flex gap-3">
+                    {/*TODO ДВИЖЕНИЕ ПО ИСТОРИИ ИЗМЕНЕНИЙ*/}
+                    <Button type="text" icon={<StepBackwardOutlined />} />
+                    <Button type="text" icon={<StepForwardOutlined />} />
+
+                    {/*TODO НУЖЕН СБРОС ИЗМЕНЕНИЙ НА КАРТЕ*/}
+                    <Button onClick={toggleEditMode}>Отменить изменения</Button>
+                    <Button type="primary" onClick={handleSavePlan}>
+                        Сохранить изменения
+                    </Button>
+                </div>
             ) : (
                 <Button onClick={toggleEditMode}>Редактировать карту</Button>
             )}

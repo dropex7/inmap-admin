@@ -7,17 +7,17 @@ import {memo} from 'react';
 import {useQuery} from '@apollo/client';
 import type {GetSubjectsByIdQuery} from '@/generated/graphql';
 import {GET_SUBJECTS_BY_ID} from '@/operations/subject/query';
-import {Alert} from 'antd';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
-import {useGetMap} from '@/hooks/useGetMap.ts';
+import {useMap} from '@/hooks/useMap.ts';
 import SubjectInfo from '@/pages/Map/panel/card/SubjectInfo.tsx';
 import SubjectStatus from '@/pages/Map/panel/card/SubjectStatus.tsx';
-import SubjectPieModal from '@/pages/Map/panel/SubjectPieModal.tsx';
+import ScrolledSubjectList from '@/pages/Map/panel/card/list/ScrolledSubjectList.tsx';
+import SearchBar from '@/components/SearchBar.tsx';
+import {SCROLLED_SUBJECTS_OF_PLACE_KEY} from '@/utils/queryFilterKeys.ts';
 
 const SubjectPanel = memo(() => {
-    const {selectedObject} = useGetMap();
+    const {selectedObject} = useMap();
     const placeUuid = useGetPlaceUuid();
-    const {isEditMode} = useGetMap();
 
     const {data} = useQuery<GetSubjectsByIdQuery>(GET_SUBJECTS_BY_ID, {
         variables: {placeUuid, uuid: selectedObject?.originUuid},
@@ -25,21 +25,20 @@ const SubjectPanel = memo(() => {
     });
 
     return (
-        <div className="flex w-96 min-w-96 flex-col gap-3 px-3">
-            <div className="flex flex-col" />
+        <div className="flex w-96 min-w-96 flex-col">
+            <div className="border-b border-zinc-700 p-4">
+                <SearchBar url={SCROLLED_SUBJECTS_OF_PLACE_KEY} />
+            </div>
+
             {selectedObject ? (
-                <div className="flex flex-col gap-6">
+                <div className="flex h-full flex-col gap-6">
                     {data ? <SubjectInfo subject={data.subject} /> : <SubjectStatus />}
+
+                    {!selectedObject?.originUuid && <ScrolledSubjectList />}
                 </div>
             ) : (
-                <Alert
-                    message="Не выбрана площадь"
-                    description="Для начала работы выберите площадь на плане"
-                    type="info"
-                    showIcon
-                />
+                <ScrolledSubjectList />
             )}
-            {isEditMode && selectedObject && <SubjectPieModal objectUuid={selectedObject.objectUuid} />}
         </div>
     );
 });

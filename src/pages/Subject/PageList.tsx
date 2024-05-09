@@ -12,13 +12,12 @@ import List from './List';
 import type {PaginationFilter} from '@/components/Pagination/types';
 import type {GetSubjectsOfPlaceInputQuery} from '@/generated/graphql';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
-
-const url = SUBJECTS_OF_PLACE.loc?.source.body ?? 'url';
+import {SUBJECTS_OF_PLACE_KEY} from '@/utils/queryFilterKeys.ts';
 
 export function Component() {
     const placeUuid = useGetPlaceUuid();
-    const [pageParams, setParams] = usePaginationParams(url);
-    const [filter] = usePaginationFilter<PaginationFilter>(url);
+    const [pageParams, setParams] = usePaginationParams(SUBJECTS_OF_PLACE_KEY);
+    const [filter] = usePaginationFilter<PaginationFilter>(SUBJECTS_OF_PLACE_KEY);
 
     const [loadList, {data, error, loading}] = useLazyQuery<GetSubjectsOfPlaceInputQuery>(SUBJECTS_OF_PLACE, {
         variables: {input: {...pageParams, ...filter, placeUuid}},
@@ -55,7 +54,7 @@ export function Component() {
                 />
 
                 <div className="flex items-center gap-3">
-                    <SearchBar placeholder="Поиск объектов" url={url} />
+                    <SearchBar placeholder="Поиск объектов" url={SUBJECTS_OF_PLACE_KEY} />
                     <CreatingTemplateModal />
                 </div>
             </div>

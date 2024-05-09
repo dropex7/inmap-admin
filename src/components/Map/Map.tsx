@@ -7,12 +7,12 @@ import {memo, useEffect} from 'react';
 import {useGetMessageFromMap} from '@/hooks/useGetMessageFromMap';
 import {getLoadPlanMessage} from '@/utils/widgetMessages';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
-import {useGetMap} from '@/hooks/useGetMap.ts';
+import {useMap} from '@/hooks/useMap.ts';
 
 const Map = memo<PropsWithChildren>(() => {
-    const {ref} = useGetMap();
+    const {ref} = useMap();
     const placeUuid = useGetPlaceUuid();
-    const {selectedPlanKey} = useGetMap();
+    const {selectedPlanKey} = useMap();
 
     const {isReady} = useGetMessageFromMap();
 

@@ -8,6 +8,7 @@ import PreviewLogo from '@/components/Images/PreviewLogo.tsx';
 import PreviewImage from '@/components/Images/PreviewImage.tsx';
 import noPhoto from '@/assets/no-photo-available.png';
 import type {SubjectLocalizedModel} from '@/generated/graphql.ts';
+import {useGetLayerByIUuid} from '@/hooks/useGetLayerByIUuid.ts';
 
 interface ViewProps {
     subject: Partial<SubjectLocalizedModel>;
@@ -16,6 +17,7 @@ interface ViewProps {
 
 const View = memo<ViewProps>(({subject, className, ...props}) => {
     const {images, logoUrl, name, shortDescription} = subject;
+    const layer = useGetLayerByIUuid(subject?.layerUuid);
 
     const backgroundImage = useMemo(() => {
         return images?.[0];
@@ -36,7 +38,7 @@ const View = memo<ViewProps>(({subject, className, ...props}) => {
                     </div>
                 )}
                 <div className="absolute right-3 top-3 flex items-center justify-center rounded-3xl bg-zinc-800 bg-opacity-90 px-2 py-1">
-                    <span className="self-end text-xs text-white">НЕТ ЭТАЖА</span>
+                    <span className="self-end text-xs text-white">{layer?.fullName ?? 'НЕТ ЭТАЖА'}</span>
                 </div>
 
                 <PreviewImage alt="image" height="120px" className="rounded-t-lg" url={backgroundImage ?? noPhoto} />

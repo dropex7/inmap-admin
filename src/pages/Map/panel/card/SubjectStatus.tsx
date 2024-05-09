@@ -4,10 +4,10 @@
 
 import {memo} from 'react';
 import {Alert} from 'antd';
-import {useGetMap} from '@/hooks/useGetMap.ts';
+import {useMap} from '@/hooks/useMap.ts';
 
 const SubjectStatus = memo(() => {
-    const {selectedObject} = useGetMap();
+    const {selectedObject} = useMap();
 
     const isPied = selectedObject?.originUuid && selectedObject.objectUuid;
 

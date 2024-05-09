@@ -15,7 +15,7 @@ export function Component() {
         <section className="flex h-full flex-col bg-zinc-900">
             <MapWrapper>
                 <MapEditorHeader />
-                <div className="flex h-full">
+                <div className="flex h-full overflow-hidden">
                     <SubjectPanel />
                     <SelectLayer />
                     <Map />
