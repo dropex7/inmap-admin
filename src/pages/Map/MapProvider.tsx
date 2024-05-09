@@ -10,7 +10,7 @@ import {FLUTTER_MESSAGE} from '@/components/Map/types';
 import {useGetMessageFromMap} from '@/hooks/useGetMessageFromMap';
 import {useGetPlace} from '@/hooks/useGetPlace.ts';
 
-const MapWrapper = memo<PropsWithChildren>(({children}) => {
+const MapProvider = memo<PropsWithChildren>(({children}) => {
     const {message} = useGetMessageFromMap();
     const {selectedPlan, initialLayerUuid} = useGetPlace();
     const ref = useRef<HTMLIFrameElement>(null);
@@ -52,4 +52,4 @@ const MapWrapper = memo<PropsWithChildren>(({children}) => {
     );
 });
 
-export default MapWrapper;
+export default MapProvider;

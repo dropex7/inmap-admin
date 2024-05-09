@@ -10,16 +10,16 @@ import {GET_SUBJECTS_BY_ID} from '@/operations/subject/query';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 import {useMap} from '@/hooks/useMap.ts';
 import SubjectInfo from '@/pages/Map/panel/card/SubjectInfo.tsx';
-import SubjectStatus from '@/pages/Map/panel/card/SubjectStatus.tsx';
 import ScrolledSubjectList from '@/pages/Map/panel/card/list/ScrolledSubjectList.tsx';
 import SearchBar from '@/components/SearchBar.tsx';
 import {SCROLLED_SUBJECTS_OF_PLACE_KEY} from '@/utils/queryFilterKeys.ts';
+import {Alert, Spin} from 'antd';
 
 const SubjectPanel = memo(() => {
     const {selectedObject} = useMap();
     const placeUuid = useGetPlaceUuid();
 
-    const {data} = useQuery<GetSubjectsByIdQuery>(GET_SUBJECTS_BY_ID, {
+    const {data, loading} = useQuery<GetSubjectsByIdQuery>(GET_SUBJECTS_BY_ID, {
         variables: {placeUuid, uuid: selectedObject?.originUuid},
         skip: !selectedObject?.originUuid,
     });
@@ -31,10 +31,17 @@ const SubjectPanel = memo(() => {
             </div>
 
             {selectedObject ? (
-                <div className="flex h-full flex-col gap-6">
-                    {data ? <SubjectInfo subject={data.subject} /> : <SubjectStatus />}
-
-                    {!selectedObject?.originUuid && <ScrolledSubjectList />}
+                <div className="flex h-full flex-col">
+                    {data ? (
+                        <SubjectInfo subject={data.subject} />
+                    ) : (
+                        <Spin tip="Загрузка..." size="large" spinning={loading}>
+                            <div className="p-3">
+                                <Alert message="Свяжите объект с выбранной площадью" type="info" showIcon />
+                            </div>
+                            <ScrolledSubjectList />
+                        </Spin>
+                    )}
                 </div>
             ) : (
                 <ScrolledSubjectList />

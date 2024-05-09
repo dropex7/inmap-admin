@@ -3,11 +3,11 @@
  */
 
 import {memo} from 'react';
-import {Avatar, Button, List} from 'antd';
-import {NodeIndexOutlined} from '@ant-design/icons';
+import {Avatar, List} from 'antd';
 import type {SubjectLocalizedModel} from '@/generated/graphql.ts';
 import {useMap} from '@/hooks/useMap.ts';
 import MapPieButton from '@/pages/Map/panel/card/list/MapPieButton.tsx';
+import SelectObjectButton from '@/pages/Map/panel/card/list/SelectObjectButton.tsx';
 
 interface ListViewProps {
     subjectsOfPlace: Array<Partial<SubjectLocalizedModel>>;
@@ -29,7 +29,11 @@ const ListView = memo<ListViewProps>(({subjectsOfPlace, loading, previousSubject
                         title={item.name}
                         description={item.shortDescription}
                     />
-                    {isEditMode ? <MapPieButton /> : <Button icon={<NodeIndexOutlined />} />}
+                    {isEditMode ? (
+                        <MapPieButton originUuid={item.uuid!} />
+                    ) : (
+                        <SelectObjectButton originUuid={item.uuid!} />
+                    )}
                 </List.Item>
             )}
         />

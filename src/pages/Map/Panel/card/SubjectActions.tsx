@@ -3,13 +3,26 @@
  */
 
 import {memo, useCallback} from 'react';
-import {Button} from 'antd';
+import {App, Button} from 'antd';
 import {useNavigate} from 'react-router-dom';
 import {useMap} from '@/hooks/useMap.ts';
+import {connectObjectWithPlace} from '@/utils/widgetMessages.ts';
+
+const {useApp} = App;
 
 const SubjectActions = memo(() => {
     const navigate = useNavigate();
-    const {selectedObject, isEditMode} = useMap();
+    const {ref, selectedObject, isEditMode, resetSelectedObject} = useMap();
+
+    const {message} = useApp();
+
+    const handleUnpieObjectToMap = useCallback(() => {
+        if (ref?.current?.contentWindow) {
+            ref.current.contentWindow.postMessage(connectObjectWithPlace(selectedObject?.objectUuid), '*');
+        }
+        resetSelectedObject();
+        message.success('Объект отвязан от области');
+    }, [message, ref, resetSelectedObject, selectedObject?.objectUuid]);
 
     const handleEditButton = useCallback(() => {
         navigate(`/subject/${selectedObject?.objectUuid}`);
@@ -18,7 +31,9 @@ const SubjectActions = memo(() => {
     return (
         <div className="flex flex-col gap-3 rounded-xl bg-zinc-800 p-6">
             {isEditMode ? (
-                <Button size="large">Отвязать</Button>
+                <Button size="large" onClick={handleUnpieObjectToMap}>
+                    Отвязать
+                </Button>
             ) : (
                 <Button size="large" onClick={handleEditButton}>
                     Изменить объект

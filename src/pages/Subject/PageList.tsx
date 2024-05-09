@@ -59,7 +59,7 @@ export function Component() {
                 </div>
             </div>
 
-            <Spin tip="Loading" size="large" spinning={loading}>
+            <Spin tip="Загрузка..." size="large" spinning={loading}>
                 {data && data.subjectsOfPlace.total !== 0 ? (
                     <div className="p-6">
                         <List data={data} />
