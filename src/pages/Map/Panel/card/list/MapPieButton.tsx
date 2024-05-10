@@ -4,7 +4,7 @@
 
 import {memo, useCallback} from 'react';
 import {App, Button, Popconfirm} from 'antd';
-import {ApiOutlined} from '@ant-design/icons';
+import {LinkOutlined} from '@ant-design/icons';
 import {useMap} from '@/hooks/useMap.ts';
 import {connectObjectWithPlace} from '@/utils/widgetMessages.ts';
 
@@ -34,7 +34,7 @@ const MapPieButton = memo<Props>(({originUuid}) => {
             okText="Да"
             cancelText="Нет"
         >
-            <Button icon={<ApiOutlined />} />
+            <Button icon={<LinkOutlined />} />
         </Popconfirm>
     );
 });

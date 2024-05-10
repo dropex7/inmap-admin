@@ -3,7 +3,7 @@
  */
 
 import {memo, useCallback} from 'react';
-import {Divider, Skeleton} from 'antd';
+import {Divider, Popover, Skeleton} from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 import usePaginationParams from '@/hooks/pagination/usePaginationParams.ts';
@@ -15,9 +15,10 @@ import {SUBJECTS_OF_PLACE} from '@/operations/subject/query.ts';
 import {SCROLLED_SUBJECTS_OF_PLACE_KEY} from '@/utils/queryFilterKeys.ts';
 import {useMap} from '@/hooks/useMap.ts';
 import ListView from '@/pages/Map/panel/card/list/ListView.tsx';
+import CreatingTemplateModal from '@/pages/Subject/template/CreatingTemplateModal.tsx';
 
 const ScrolledSubjectList = memo(() => {
-    const {selectedLayerUuid} = useMap();
+    const {selectedLayerUuid, isEditMode} = useMap();
     const placeUuid = useGetPlaceUuid();
     const [pageParams, setParams] = usePaginationParams(SCROLLED_SUBJECTS_OF_PLACE_KEY);
     const [filter] = usePaginationFilter<PaginationParams>(SCROLLED_SUBJECTS_OF_PLACE_KEY);
@@ -42,7 +43,21 @@ const ScrolledSubjectList = memo(() => {
                 next={loadMoreData}
                 hasMore={(data?.subjectsOfPlace.total ?? 0) > pageParams.limit}
                 loader={<Skeleton avatar paragraph={{rows: 5}} active />}
-                endMessage={<Divider plain>А ВОТ И ВСЕ СПИСОК ЗАКОНЧИЛСЯ :)</Divider>}
+                endMessage={
+                    <div className="mt-3 flex flex-col gap-3">
+                        <>
+                            {isEditMode ? (
+                                <Popover title="Чтобы создать объект, нужно выйти из режима редактирования">
+                                    <CreatingTemplateModal type="default" disabled />
+                                </Popover>
+                            ) : (
+                                <CreatingTemplateModal type="default" />
+                            )}
+
+                            <Divider plain>Если нет нужного объекта - создайте новый</Divider>
+                        </>
+                    </div>
+                }
                 scrollableTarget="scrollableDiv"
             >
                 <ListView

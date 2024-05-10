@@ -3,7 +3,7 @@
  */
 
 import {memo, useCallback} from 'react';
-import {NodeIndexOutlined} from '@ant-design/icons';
+import {SelectOutlined} from '@ant-design/icons';
 import {Button} from 'antd';
 import {useMap} from '@/hooks/useMap.ts';
 import {selectObjectByOriginUuid} from '@/utils/widgetMessages.ts';
@@ -21,7 +21,7 @@ const SelectObjectButton = memo<SelectObjectButtonProps>(({originUuid}) => {
         }
     }, [originUuid, ref]);
 
-    return <Button icon={<NodeIndexOutlined />} onClick={handleSelectObject} />;
+    return <Button icon={<SelectOutlined />} onClick={handleSelectObject} />;
 });
 
 export default SelectObjectButton;
