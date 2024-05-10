@@ -37,7 +37,12 @@ const SubjectPanel = memo(() => {
                     ) : (
                         <Spin tip="Загрузка..." size="large" spinning={loading}>
                             <div className="p-3">
-                                <Alert message="Свяжите объект с выбранной площадью" type="info" showIcon />
+                                <Alert
+                                    description="Свяжите объект с выбранной площадью"
+                                    message="Выбранная площадь не связана"
+                                    type="info"
+                                    showIcon
+                                />
                             </div>
                             <ScrolledSubjectList />
                         </Spin>

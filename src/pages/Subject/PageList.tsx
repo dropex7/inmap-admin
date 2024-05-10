@@ -3,16 +3,15 @@ import {Empty, Pagination, Spin} from 'antd';
 import {useCallback, useEffect} from 'react';
 import EmptyIcon from '@/assets/empty.svg?react';
 
-import SearchBar from '@/components/SearchBar';
 import usePaginationFilter from '@/hooks/pagination/usePaginationFilter';
 import usePaginationParams from '@/hooks/pagination/usePaginationParams';
 import {SUBJECTS_OF_PLACE} from '@/operations/subject/query';
-import CreatingTemplateModal from './template/CreatingTemplateModal.tsx';
 import List from './List';
 import type {PaginationFilter} from '@/components/Pagination/types';
 import type {GetSubjectsOfPlaceInputQuery} from '@/generated/graphql';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 import {SUBJECTS_OF_PLACE_KEY} from '@/utils/queryFilterKeys.ts';
+import Filter from '@/pages/Subject/Filter.tsx';
 
 export function Component() {
     const placeUuid = useGetPlaceUuid();
@@ -53,10 +52,7 @@ export function Component() {
                     showSizeChanger={false}
                 />
 
-                <div className="flex items-center gap-3">
-                    <SearchBar placeholder="Поиск объектов" url={SUBJECTS_OF_PLACE_KEY} />
-                    <CreatingTemplateModal />
-                </div>
+                <Filter />
             </div>
 
             <Spin tip="Загрузка..." size="large" spinning={loading}>

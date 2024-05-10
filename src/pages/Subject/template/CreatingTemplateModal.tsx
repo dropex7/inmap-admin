@@ -10,8 +10,9 @@ import TemplateList from '@/pages/Subject/template/TemplateList.tsx';
 import {useQuery} from '@apollo/client';
 import type {TemplateLocalizedModel} from '@/generated/graphql.ts';
 import {GET_TEMPLATES} from '@/operations/template/query.ts';
+import type {BaseButtonProps} from 'antd/es/button/button';
 
-const CreatingTemplateModal = memo(() => {
+const CreatingTemplateModal = memo<BaseButtonProps>(({type = 'primary', ...props}) => {
     const [template, setTemplate] = useState<string>();
     const navigate = useNavigate();
     const {open, onOpen, onClose} = useOpen();
@@ -21,12 +22,12 @@ const CreatingTemplateModal = memo(() => {
     }>(GET_TEMPLATES);
 
     const handleCreateObject = useCallback(() => {
-        navigate(`create-subject/${template}`);
+        navigate(`/subject/create-subject/${template}`);
     }, [navigate, template]);
 
     return (
         <>
-            <Button onClick={onOpen} size="large" type="primary">
+            <Button onClick={onOpen} size="large" type={type} {...props}>
                 Создать объект
             </Button>
             <Modal

@@ -2,7 +2,6 @@
  * Created by MIRZOEV A. on 11.04.2023
  */
 
-import type {CSSProperties} from 'react';
 import {memo, useCallback, useMemo} from 'react';
 
 import type {SubjectLocalizedModel} from '@/generated/graphql.ts';
@@ -19,6 +18,8 @@ import {DeleteOutlined} from '@ant-design/icons';
 
 interface SubjectCardProps {
     subject: Partial<SubjectLocalizedModel>;
+    selectedObjectUuid?: string;
+    setSelectedListItem: (uuid?: string) => void;
 }
 
 const items: MenuProps['items'] = [
@@ -33,13 +34,7 @@ const items: MenuProps['items'] = [
     },
 ];
 
-const overlayStyle: CSSProperties = {
-    borderRadius: '8px',
-    outline: 'solid',
-    outlineColor: 'rgba(255, 255, 255, 0.3)',
-};
-
-const SubjectCard = memo<SubjectCardProps>(({subject}) => {
+const SubjectCard = memo<SubjectCardProps>(({subject, selectedObjectUuid, setSelectedListItem}) => {
     const placeUuid = useGetPlaceUuid();
     const [deleteSubject] = useMutation(DELETE_SUBJECT);
     const {uuid} = subject;
@@ -85,10 +80,26 @@ const SubjectCard = memo<SubjectCardProps>(({subject}) => {
         [handleMenuClick],
     );
 
+    const onOpenChange = useCallback(
+        (value: boolean) => {
+            if (value) {
+                setSelectedListItem(uuid!);
+            } else {
+                setSelectedListItem(undefined);
+            }
+        },
+        [setSelectedListItem, uuid],
+    );
+
     return (
         <>
-            <Dropdown overlayStyle={overlayStyle} placement="top" trigger={['click']} menu={menuProps}>
-                <View subject={subject} />
+            <Dropdown onOpenChange={onOpenChange} placement="bottom" trigger={['click']} menu={menuProps}>
+                <View
+                    subject={subject}
+                    className={
+                        selectedObjectUuid ? (selectedObjectUuid === uuid ? undefined : 'opacity-30') : undefined
+                    }
+                />
             </Dropdown>
             {contextHolder}
         </>
