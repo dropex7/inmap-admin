@@ -17,7 +17,6 @@ export function useGetMessageFromMap() {
     useEffect(() => {
         const handler = (ev: MessageEvent<FlutterMessage>) => {
             const {data, type} = ev.data;
-            console.log(ev);
 
             switch (type) {
                 case FLUTTER_MESSAGE.ready: {
