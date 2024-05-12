@@ -11,6 +11,7 @@ import LinksView from './LinksView';
 
 const Nav = memo(() => {
     const {pathname} = useLocation();
+
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(true);
 

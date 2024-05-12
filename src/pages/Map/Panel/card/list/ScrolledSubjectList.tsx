@@ -16,6 +16,7 @@ import {SCROLLED_SUBJECTS_OF_PLACE_KEY} from '@/utils/queryFilterKeys.ts';
 import {useMap} from '@/hooks/useMap.ts';
 import ListView from '@/pages/map/panel/card/list/ListView.tsx';
 import CreatingTemplateModal from '@/pages/subject/template/CreatingTemplateModal.tsx';
+import {useFilterSubjectsByLayer} from '@/hooks/useFilterSubjectsByLayer.ts';
 
 const ScrolledSubjectList = memo(() => {
     const {selectedLayerUuid, isEditMode} = useMap();
@@ -31,6 +32,8 @@ const ScrolledSubjectList = memo(() => {
         setParams({...pageParams, limit: pageParams.limit + 20});
         fetchMore({variables: {input: {...filter, ...pageParams, placeUuid}}});
     }, [fetchMore, filter, pageParams, placeUuid, setParams]);
+
+    const filteredList = useFilterSubjectsByLayer(data);
 
     if (error) {
         return <>{error.message}</>;
@@ -61,7 +64,7 @@ const ScrolledSubjectList = memo(() => {
                 scrollableTarget="scrollableDiv"
             >
                 <ListView
-                    subjectsOfPlace={data?.subjectsOfPlace.items ?? []}
+                    subjectsOfPlace={filteredList}
                     previousSubjectsOfPlace={previousData?.subjectsOfPlace.items ?? []}
                     loading={loading}
                 />

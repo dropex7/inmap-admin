@@ -6,8 +6,21 @@ export interface SelectedObjectFromFlutter {
     originUuid?: string;
 }
 
+type LinkedLayer = {
+    layerUuid: string;
+    originUuid: string;
+    linkedObjects: Array<SelectedObjectFromFlutter>;
+};
+export interface PlanState {
+    canRedo: boolean;
+    canUndo: boolean;
+    isEdited: boolean;
+    linkedLayers: Array<LinkedLayer>;
+}
+
 interface MaxCtx {
     ref: RefObject<HTMLIFrameElement> | null;
+    planState?: PlanState;
     selectedObject?: SelectedObjectFromFlutter;
     resetSelectedObject: () => void;
     isEditMode: boolean;

@@ -2,10 +2,12 @@ import {useCallback, useEffect, useState} from 'react';
 import type {FlutterMessage} from '@/components/Map/types';
 import {FLUTTER_MESSAGE} from '@/components/Map/types';
 import type {SelectedObjectFromFlutter} from '@/pages/map/MapContext.ts';
+import type {PlanState} from '@/pages/map/MapContext.ts';
 
 export function useGetMessageFromMap() {
     const [isReady, setIsReady] = useState(false);
     const [selectedObjectOnMap, setSelectedObjectOnMap] = useState<SelectedObjectFromFlutter>();
+    const [planState, setPlanState] = useState<PlanState>();
 
     const resetSelectedObject = useCallback(() => {
         setSelectedObjectOnMap(undefined);
@@ -14,13 +16,20 @@ export function useGetMessageFromMap() {
     // This hook is listening an event that came from the Iframe
     useEffect(() => {
         const handler = (ev: MessageEvent<FlutterMessage>) => {
-            switch (ev.data.type) {
+            const {data, type} = ev.data;
+            console.log(ev);
+
+            switch (type) {
                 case FLUTTER_MESSAGE.ready: {
                     setIsReady(true);
                     break;
                 }
                 case FLUTTER_MESSAGE.objectSelected: {
-                    setSelectedObjectOnMap(ev.data.data);
+                    setSelectedObjectOnMap(data);
+                    break;
+                }
+                case FLUTTER_MESSAGE.planStateUpdated: {
+                    setPlanState(data);
                     break;
                 }
             }
@@ -35,5 +44,5 @@ export function useGetMessageFromMap() {
         };
     }, []);
 
-    return {isReady, selectedObjectOnMap, resetSelectedObject};
+    return {isReady, planState, selectedObjectOnMap, resetSelectedObject};
 }

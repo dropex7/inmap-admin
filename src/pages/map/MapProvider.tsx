@@ -9,7 +9,7 @@ import {useGetMessageFromMap} from '@/hooks/useGetMessageFromMap';
 import {useGetPlace} from '@/hooks/useGetPlace.ts';
 
 const MapProvider = memo<PropsWithChildren>(({children}) => {
-    const {resetSelectedObject, selectedObjectOnMap} = useGetMessageFromMap();
+    const {resetSelectedObject, selectedObjectOnMap, planState} = useGetMessageFromMap();
     const {selectedPlan, initialLayerUuid} = useGetPlace();
     const ref = useRef<HTMLIFrameElement>(null);
     const [selectedPlanKey, setSelectedPlanKey] = useState<string>(selectedPlan?.key ?? '');
@@ -32,6 +32,7 @@ const MapProvider = memo<PropsWithChildren>(({children}) => {
                 selectedLayerUuid,
                 setSelectedLayerUuid,
                 resetSelectedObject,
+                planState,
             }}
         >
             {children}

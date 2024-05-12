@@ -51,3 +51,17 @@ export function selectObjectByOriginUuid(originUuid?: string) {
         },
     };
 }
+
+export function undoChanges() {
+    return {
+        type: 'undo',
+        data: {},
+    };
+}
+
+export function redoChanges() {
+    return {
+        type: 'redo',
+        data: {},
+    };
+}

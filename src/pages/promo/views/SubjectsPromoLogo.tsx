@@ -12,7 +12,12 @@ interface SubjectsPromoLogoProps {
 
 const SubjectsPromoLogo = memo<SubjectsPromoLogoProps>(({promoSubjects = []}) => {
     return promoSubjects.map(({logoUrl}) => (
-        <PreviewLogo key={logoUrl} alt="logo" logoUrl={logoUrl} className="-mr-1 size-10 rounded-full object-cover" />
+        <PreviewLogo
+            key={logoUrl}
+            alt="logo"
+            logoUrl={logoUrl}
+            className="-mr-1 size-10 rounded-full border-8 border-sky-500 object-cover"
+        />
     ));
 });
 
