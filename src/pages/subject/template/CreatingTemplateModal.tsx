@@ -6,7 +6,7 @@ import {Button, Modal} from 'antd';
 import {memo, useCallback, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import useOpen from '@/hooks/useOpen.ts';
-import TemplateList from '@/pages/Subject/template/TemplateList.tsx';
+import TemplateList from '@/pages/subject/template/TemplateList.tsx';
 import {useQuery} from '@apollo/client';
 import type {TemplateLocalizedModel} from '@/generated/graphql.ts';
 import {GET_TEMPLATES} from '@/operations/template/query.ts';

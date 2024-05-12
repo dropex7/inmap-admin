@@ -2,7 +2,7 @@
  * Created by MIRZOEV A. on 08.01.2024
  */
 
-import {memo, useMemo} from 'react';
+import {memo, useCallback, useMemo} from 'react';
 import type {GetSubjectsByIdQuery} from '@/generated/graphql.ts';
 import {Button, Typography} from 'antd';
 import noPhoto from '@/assets/no-photo-available.png';
@@ -10,8 +10,9 @@ import PreviewLogo from '@/components/Images/PreviewLogo.tsx';
 import PreviewImage from '@/components/Images/PreviewImage.tsx';
 import {CloseOutlined} from '@ant-design/icons';
 import {useMap} from '@/hooks/useMap.ts';
-import SubjectActions from '@/pages/Map/panel/card/SubjectActions.tsx';
+import SubjectActions from '@/pages/map/panel/card/SubjectActions.tsx';
 import {useGetLayerByIUuid} from '@/hooks/useGetLayerByIUuid.ts';
+import {selectObjectByOriginUuid} from '@/utils/widgetMessages.ts';
 
 interface SubjectInfoProps {
     subject: GetSubjectsByIdQuery['subject'];
@@ -20,11 +21,18 @@ interface SubjectInfoProps {
 const {Title} = Typography;
 
 const SubjectInfo = memo<SubjectInfoProps>(({subject}) => {
-    const {resetSelectedObject} = useMap();
+    const {ref, resetSelectedObject} = useMap();
     const {images, logoUrl} = subject;
     const layer = useGetLayerByIUuid(subject.layerUuid);
 
     const image = useMemo(() => (images.length > 0 ? images[0] : noPhoto), [images]);
+
+    const closeSubjectCard = useCallback(() => {
+        resetSelectedObject();
+        if (ref?.current?.contentWindow) {
+            ref.current.contentWindow.postMessage(selectObjectByOriginUuid(undefined), '*');
+        }
+    }, [ref, resetSelectedObject]);
 
     return (
         <div className="flex flex-col">
@@ -37,7 +45,7 @@ const SubjectInfo = memo<SubjectInfoProps>(({subject}) => {
                 <Button
                     icon={<CloseOutlined />}
                     className="absolute right-3 top-3 z-10 flex items-center justify-center rounded-full bg-zinc-800 bg-opacity-80 px-2 py-1"
-                    onClick={resetSelectedObject}
+                    onClick={closeSubjectCard}
                 />
 
                 <div className="absolute bottom-8 right-3 z-10 flex items-center justify-center rounded-3xl bg-zinc-800 px-2 py-1">

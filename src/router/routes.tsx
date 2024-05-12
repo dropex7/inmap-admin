@@ -11,20 +11,20 @@ export const authorizedAppRoutes = [
                 children: [
                     {
                         errorElement: <PageError />,
-                        lazy: () => import('../pages/Subject/form/Page'),
+                        lazy: () => import('@/pages/subject/form/Page'),
                         path: ':templateId',
                     },
                 ],
             },
             {
                 errorElement: <PageError />,
-                lazy: () => import('../pages/Subject/form/Page'),
+                lazy: () => import('@/pages/subject/form/Page'),
                 path: ':subjectId',
             },
             {
                 errorElement: <PageError />,
                 index: true,
-                lazy: () => import('../pages/Subject/PageList'),
+                lazy: () => import('@/pages/subject/PageList'),
             },
         ],
         lazy: () => import('../components/PageWrapper'),
@@ -35,18 +35,18 @@ export const authorizedAppRoutes = [
         children: [
             {
                 errorElement: <PageError />,
-                lazy: () => import('../pages/Promo/form/PromoForm'),
+                lazy: () => import('@/pages/promo/form/PromoForm'),
                 path: 'create-promo',
             },
             {
                 errorElement: <PageError />,
-                lazy: () => import('../pages/Promo/form/PromoForm'),
+                lazy: () => import('@/pages/promo/form/PromoForm'),
                 path: ':promoId',
             },
             {
                 errorElement: <PageError />,
                 index: true,
-                lazy: () => import('../pages/Promo/Page'),
+                lazy: () => import('@/pages/promo/Page'),
             },
         ],
         lazy: () => import('../components/PageWrapper'),
@@ -58,7 +58,7 @@ export const authorizedAppRoutes = [
             {
                 errorElement: <PageError />,
                 index: true,
-                lazy: () => import('../pages/Map/Page'),
+                lazy: () => import('@/pages/map/Page'),
             },
         ],
         lazy: () => import('../components/PageWrapper'),

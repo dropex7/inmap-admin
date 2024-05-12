@@ -11,7 +11,7 @@ import type {PaginationFilter} from '@/components/Pagination/types';
 import type {GetSubjectsOfPlaceInputQuery} from '@/generated/graphql';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 import {SUBJECTS_OF_PLACE_KEY} from '@/utils/queryFilterKeys.ts';
-import Filter from '@/pages/Subject/Filter.tsx';
+import Filter from '@/pages/subject/Filter.tsx';
 
 export function Component() {
     const placeUuid = useGetPlaceUuid();

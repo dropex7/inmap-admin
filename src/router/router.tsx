@@ -12,7 +12,7 @@ const router = createBrowserRouter([
     },
     {
         errorElement: <PageError />,
-        lazy: () => import('../pages/Login/Page'),
+        lazy: () => import('@/pages/login/Page'),
         path: 'login',
     },
 ]);

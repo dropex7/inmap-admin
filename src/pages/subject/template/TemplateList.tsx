@@ -5,7 +5,7 @@
 import {memo} from 'react';
 
 import type {TemplateLocalizedModel} from '@/generated/graphql.ts';
-import TemplateItem from '@/pages/Subject/template/TemplateItem.tsx';
+import TemplateItem from '@/pages/subject/template/TemplateItem.tsx';
 
 interface TemplateListProps {
     selectedTemplate?: string;

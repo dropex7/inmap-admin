@@ -6,8 +6,8 @@ import {memo} from 'react';
 import {Avatar, List} from 'antd';
 import type {SubjectLocalizedModel} from '@/generated/graphql.ts';
 import {useMap} from '@/hooks/useMap.ts';
-import MapPieButton from '@/pages/Map/panel/card/list/MapPieButton.tsx';
-import SelectObjectButton from '@/pages/Map/panel/card/list/SelectObjectButton.tsx';
+import MapPieButton from '@/pages/map/panel/card/list/MapPieButton.tsx';
+import SelectObjectButton from '@/pages/map/panel/card/list/SelectObjectButton.tsx';
 
 interface ListViewProps {
     subjectsOfPlace: Array<Partial<SubjectLocalizedModel>>;

@@ -43,7 +43,7 @@ export function connectObjectWithPlace(objectUuid?: string, originUuid?: string)
     };
 }
 
-export function selectObjectByOriginUuid(originUuid: string) {
+export function selectObjectByOriginUuid(originUuid?: string) {
     return {
         type: 'select-object',
         data: {

@@ -5,7 +5,7 @@
 import {memo, useCallback} from 'react';
 import SearchBar from '@/components/SearchBar.tsx';
 import {SUBJECTS_OF_PLACE_KEY} from '@/utils/queryFilterKeys.ts';
-import CreatingTemplateModal from '@/pages/Subject/template/CreatingTemplateModal.tsx';
+import CreatingTemplateModal from '@/pages/subject/template/CreatingTemplateModal.tsx';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 import {useQuery} from '@apollo/client';
 import type {GetPlaceLayersQuery} from '@/generated/graphql.ts';

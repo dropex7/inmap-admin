@@ -7,11 +7,11 @@ import type {ColumnsType, TableProps} from 'antd/es/table';
 import {Table} from 'antd';
 import type {PromoLocalizedModel} from '@/generated/graphql';
 import PreviewImage from '@/components/Images/PreviewImage.tsx';
-import PromoTextView from '@/pages/Promo/views/PromoTextView.tsx';
+import PromoTextView from '@/pages/promo/views/PromoTextView.tsx';
 import noPhoto from '@/assets/no-photo-available.png';
 import DateView from '@/components/Date/DateView.tsx';
 import {DATE_WITHOUT_TIME} from '@/utils/dateFormats.ts';
-import PromoSubjectsView from '@/pages/Promo/views/PromoSubjectsView.tsx';
+import PromoSubjectsView from '@/pages/promo/views/PromoSubjectsView.tsx';
 import {useNavigate} from 'react-router-dom';
 
 type PartialPromo = Partial<PromoLocalizedModel>;
@@ -37,6 +37,12 @@ const columns: ColumnsType<PartialPromo> = [
     },
     {
         render: ({title, subtitle}) => <PromoTextView title={title} subtitle={subtitle} />,
+    },
+    {
+        title: 'Дата последнего изменения',
+        align: 'center',
+        render: ({updatedAt}) => <DateView date={updatedAt} format={DATE_WITHOUT_TIME} />,
+        width: 200,
     },
     {
         title: 'Начало акции',

@@ -6,8 +6,8 @@ import {memo, useMemo} from 'react';
 import {useQuery} from '@apollo/client';
 import type {GetSubjectsByPromoQuery} from '@/generated/graphql.ts';
 import {GET_SUBJECTS_BY_PROMO} from '@/operations/subject/query.ts';
-import SubjectsPromoLogo from '@/pages/Promo/views/SubjectsPromoLogo.tsx';
-import ExtraElementsNumber from '@/pages/Promo/views/ExtraElementsNumber.tsx';
+import SubjectsPromoLogo from '@/pages/promo/views/SubjectsPromoLogo.tsx';
+import ExtraElementsNumber from '@/pages/promo/views/ExtraElementsNumber.tsx';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
 interface PromoSubjectsViewProps {

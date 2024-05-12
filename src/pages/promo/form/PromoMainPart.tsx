@@ -10,7 +10,7 @@ import ImageLoaderField from '@/components/ImageLoader/ImageLoaderField';
 import AutoComplete from '@/components/AutoComplete/AutoComplete.tsx';
 import {GET_SUBJECTS_BY_PROMO, SUBJECTS_OF_PLACE} from '@/operations/subject/query.ts';
 import type {GetSubjectsOfPlaceInputQuery, PromoLocalizedModel, SubjectLocalizedModel} from '@/generated/graphql.ts';
-import {createFileFromUrl} from '@/pages/Subject/form/prepareDataForForm.ts';
+import {createFileFromUrl} from '@/pages/subject/form/prepareDataForForm.ts';
 import dayjs from 'dayjs';
 import {useQuery} from '@apollo/client';
 import type {GetSubjectsByPromoQuery} from '@/generated/graphql.ts';

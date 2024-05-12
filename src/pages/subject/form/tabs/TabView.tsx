@@ -3,12 +3,12 @@
  */
 
 import {memo, useMemo} from 'react';
-import MainTab from '@/pages/Subject/form/tabs/MainTab.tsx';
-import {FORM_MENU_BASE_ITEM_KEYS} from '@/pages/Subject/form/tabs/helper.ts';
-import TemplateFields from '@/pages/Subject/form/template/TemplateFields.tsx';
+import MainTab from '@/pages/subject/form/tabs/MainTab.tsx';
+import {FORM_MENU_BASE_ITEM_KEYS} from '@/pages/subject/form/tabs/helper.ts';
+import TemplateFields from '@/pages/subject/form/template/TemplateFields.tsx';
 import type {LocalizedTemplateTabModel} from '@/generated/graphql.ts';
-import PhotosTab from '@/pages/Subject/form/tabs/PhotosTab.tsx';
-import ExtraTabWrapper from '@/pages/Subject/form/tabs/ExtraTabWrapper.tsx';
+import PhotosTab from '@/pages/subject/form/tabs/PhotosTab.tsx';
+import ExtraTabWrapper from '@/pages/subject/form/tabs/ExtraTabWrapper.tsx';
 
 interface TabViewProps {
     selectedTab: string;

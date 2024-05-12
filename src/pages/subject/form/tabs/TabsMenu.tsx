@@ -5,7 +5,7 @@
 import {memo} from 'react';
 import type {MenuProps} from 'antd';
 import {Menu} from 'antd';
-import {FORM_MENU_BASE_ITEM_KEYS} from '@/pages/Subject/form/tabs/helper.ts';
+import {FORM_MENU_BASE_ITEM_KEYS} from '@/pages/subject/form/tabs/helper.ts';
 
 interface TabsMenuProps {
     selectedTab: string;

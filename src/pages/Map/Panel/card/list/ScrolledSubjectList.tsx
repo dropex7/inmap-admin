@@ -14,8 +14,8 @@ import type {GetSubjectsOfPlaceInputQuery} from '@/generated/graphql.ts';
 import {SUBJECTS_OF_PLACE} from '@/operations/subject/query.ts';
 import {SCROLLED_SUBJECTS_OF_PLACE_KEY} from '@/utils/queryFilterKeys.ts';
 import {useMap} from '@/hooks/useMap.ts';
-import ListView from '@/pages/Map/panel/card/list/ListView.tsx';
-import CreatingTemplateModal from '@/pages/Subject/template/CreatingTemplateModal.tsx';
+import ListView from '@/pages/map/panel/card/list/ListView.tsx';
+import CreatingTemplateModal from '@/pages/subject/template/CreatingTemplateModal.tsx';
 
 const ScrolledSubjectList = memo(() => {
     const {selectedLayerUuid, isEditMode} = useMap();

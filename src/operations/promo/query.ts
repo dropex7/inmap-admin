@@ -12,6 +12,8 @@ export const GET_PROMOS = gql`
                 subtitle
                 startDateTime
                 endDateTime
+                createdAt
+                updatedAt
             }
         }
     }

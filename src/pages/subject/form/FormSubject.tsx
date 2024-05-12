@@ -20,9 +20,9 @@ import type {GetSubjectsByIdQuery} from '@/generated/graphql';
 import {defaultScheduleValues, prepareDataForForm} from './prepareDataForForm';
 import type {ImageType} from '@/components/ImageLoader/ImageLoaderField.tsx';
 import {GET_TEMPLATE_BY_ID} from '@/operations/template/query.ts';
-import TabsMenu from '@/pages/Subject/form/tabs/TabsMenu.tsx';
-import {FORM_MENU_BASE_ITEM_KEYS} from '@/pages/Subject/form/tabs/helper.ts';
-import TabView from '@/pages/Subject/form/tabs/TabView.tsx';
+import TabsMenu from '@/pages/subject/form/tabs/TabsMenu.tsx';
+import {FORM_MENU_BASE_ITEM_KEYS} from '@/pages/subject/form/tabs/helper.ts';
+import TabView from '@/pages/subject/form/tabs/TabView.tsx';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
 interface FormProps {

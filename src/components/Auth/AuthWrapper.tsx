@@ -15,11 +15,10 @@ const AuthWrapper = memo(() => {
     const isAuthorized = !!localStorage.getItem('token');
 
     useEffect(() => {
-        onAuthStateChanged(auth, user => {
+        onAuthStateChanged(auth, async user => {
             if (user) {
-                user.getIdToken().then(data => {
-                    localStorage.setItem('token', data);
-                });
+                const token = await user.getIdToken();
+                localStorage.setItem('token', token);
             } else {
                 localStorage.clear();
                 // User is signed out

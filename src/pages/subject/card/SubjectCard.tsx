@@ -9,7 +9,7 @@ import type {SubjectLocalizedModel} from '@/generated/graphql.ts';
 import type {MenuProps} from 'antd';
 import {Dropdown, Modal} from 'antd';
 import {useNavigate} from 'react-router-dom';
-import View from '@/pages/Subject/card/View.tsx';
+import View from '@/pages/subject/card/View.tsx';
 import {useMutation} from '@apollo/client';
 import {DELETE_SUBJECT} from '@/operations/subject/mutation.ts';
 import {SUBJECTS_OF_PLACE} from '@/operations/subject/query.ts';

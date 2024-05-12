@@ -6,7 +6,7 @@ import {memo, useCallback} from 'react';
 import {Button} from 'antd';
 import {getSyncPlanMessage} from '@/utils/widgetMessages.ts';
 
-import PlanSelect from '@/pages/Map/header/PlanSelect.tsx';
+import PlanSelect from '@/pages/map/header/PlanSelect.tsx';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 import {useMap} from '@/hooks/useMap.ts';
 import {StepBackwardOutlined, StepForwardOutlined} from '@ant-design/icons';
