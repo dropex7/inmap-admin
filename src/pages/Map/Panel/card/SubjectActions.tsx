@@ -25,8 +25,8 @@ const SubjectActions = memo(() => {
     }, [message, ref, resetSelectedObject, selectedObject?.objectUuid]);
 
     const handleEditButton = useCallback(() => {
-        navigate(`/subject/${selectedObject?.objectUuid}`);
-    }, [navigate, selectedObject?.objectUuid]);
+        navigate(`/subject/${selectedObject?.originUuid}`);
+    }, [navigate, selectedObject?.originUuid]);
 
     return (
         <div className="flex flex-col gap-3 rounded-xl bg-zinc-800 p-6">
