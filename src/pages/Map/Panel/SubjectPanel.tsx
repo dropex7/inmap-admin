@@ -13,13 +13,13 @@ import SubjectInfo from '@/pages/map/panel/card/SubjectInfo.tsx';
 import ScrolledSubjectList from '@/pages/map/panel/card/list/ScrolledSubjectList.tsx';
 import SearchBar from '@/components/SearchBar.tsx';
 import {SCROLLED_SUBJECTS_OF_PLACE_KEY} from '@/utils/queryFilterKeys.ts';
-import {Alert, Spin} from 'antd';
+import {Alert} from 'antd';
 
 const SubjectPanel = memo(() => {
     const {selectedObject} = useMap();
     const placeUuid = useGetPlaceUuid();
 
-    const {data, loading} = useQuery<GetSubjectsByIdQuery>(GET_SUBJECTS_BY_ID, {
+    const {data} = useQuery<GetSubjectsByIdQuery>(GET_SUBJECTS_BY_ID, {
         variables: {placeUuid, uuid: selectedObject?.originUuid},
         skip: !selectedObject?.originUuid,
     });
@@ -35,7 +35,7 @@ const SubjectPanel = memo(() => {
                     {data ? (
                         <SubjectInfo subject={data.subject} />
                     ) : (
-                        <Spin tip="Загрузка..." size="large" spinning={loading}>
+                        <>
                             <div className="p-3">
                                 <Alert
                                     description="Свяжите объект с выбранной площадью"
@@ -45,7 +45,7 @@ const SubjectPanel = memo(() => {
                                 />
                             </div>
                             <ScrolledSubjectList />
-                        </Spin>
+                        </>
                     )}
                 </div>
             ) : (
