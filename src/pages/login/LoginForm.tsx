@@ -18,7 +18,7 @@ const {Title} = Typography;
 
 const LoginForm = memo(() => {
     const [form] = useForm();
-    const {login} = useAuth();
+    const {login, isError} = useAuth();
 
     const handleLogin = useCallback(
         async ({email, password}: LoginValues) => {
@@ -34,11 +34,13 @@ const LoginForm = memo(() => {
                 <Input autoComplete="email" placeholder="Почта или телефон" />
             </Item>
 
-            <Item name="password" rules={[{required: true, whitespace: true}]}>
+            <Item name="password" className="mb-3" rules={[{required: true, whitespace: true}]}>
                 <Password autoComplete="current-password" placeholder="Пароль" />
             </Item>
 
-            <div className="flex items-center justify-end">
+            {isError && <span className="text-xs text-red-400">Неправильно введен логин или пароль</span>}
+
+            <div className="flex items-center justify-end pt-4">
                 <Button htmlType="submit" type="primary">
                     Войти
                 </Button>

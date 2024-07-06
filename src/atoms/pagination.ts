@@ -4,14 +4,10 @@ import {atomFamily, selectorFamily} from 'recoil';
 
 import type {PaginationParams} from '@/components/Pagination/types';
 
-// presets
-
 export const defaultPaginationParams = {
     limit: 20,
     offset: 0,
 } satisfies PaginationParams;
-
-// atoms & selectors
 
 export const paginationParamsAtom = atomFamily<PaginationParams, string>({
     default: () => defaultPaginationParams,

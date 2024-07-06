@@ -4,7 +4,7 @@ export function getSelectLayerMessage(layerUuid: string) {
     return {
         type: 'select-layer',
         data: {
-            layerUuid,
+            originUuid: layerUuid,
         },
     };
 }

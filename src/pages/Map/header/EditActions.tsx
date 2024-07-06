@@ -9,9 +9,7 @@ import {getSyncPlanMessage, redoChanges, undoChanges} from '@/utils/widgetMessag
 import {useMap} from '@/hooks/useMap.ts';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
-interface EditActionsProps {}
-
-const EditActions = memo<EditActionsProps>(({}) => {
+const EditActions = memo(() => {
     const {ref, toggleEditMode, planState} = useMap();
 
     const placeUuid = useGetPlaceUuid();

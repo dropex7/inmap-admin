@@ -1,6 +1,6 @@
 import {initializeApp} from 'firebase/app';
 import {getAuth, signInWithEmailAndPassword, signOut} from 'firebase/auth';
-import {useCallback, useMemo} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {firebaseConfig} from '../firebase.config';
@@ -10,6 +10,7 @@ const app = initializeApp(firebaseConfig);
 export function useAuth() {
     const auth = useMemo(() => getAuth(app), []);
     const navigate = useNavigate();
+    const [isError, setIsError] = useState(false);
 
     const login = useCallback(
         async (email: string, password: string) => {
@@ -17,7 +18,7 @@ export function useAuth() {
                 await signInWithEmailAndPassword(auth, email, password);
                 navigate('/');
             } catch (err) {
-                // some logic
+                setIsError(true);
             }
         },
         [auth, navigate],
@@ -36,5 +37,5 @@ export function useAuth() {
         signOut(auth);
     }, [auth]);
 
-    return {auth, login, logout};
+    return {auth, login, logout, isError};
 }

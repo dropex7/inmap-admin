@@ -7,9 +7,7 @@ import {Button, Modal} from 'antd';
 import {useBlocker} from 'react-router-dom';
 import {useMap} from '@/hooks/useMap.ts';
 
-interface BlockerElementProps {}
-
-const BlockerElement = memo<BlockerElementProps>(({}) => {
+const BlockerElement = memo(() => {
     const {isEditMode, planState} = useMap();
 
     const blocker = useBlocker(

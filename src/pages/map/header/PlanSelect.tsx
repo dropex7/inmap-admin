@@ -33,7 +33,7 @@ const PlanSelect = memo(() => {
                           label: (
                               <div>
                                   <span>{title}</span>
-                                  <span className="text-xs"> - основная</span>
+                                  <span className="text-xs"> - актуальная</span>
                               </div>
                           ),
                           value: key,

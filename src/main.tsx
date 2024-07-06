@@ -1,5 +1,5 @@
 import {ApolloProvider} from '@apollo/client';
-import {App, ConfigProvider, theme} from 'antd';
+import {App, ConfigProvider} from 'antd';
 import 'antd/dist/reset.css';
 import {StrictMode} from 'react';
 import ReactDOM from 'react-dom/client';
@@ -9,6 +9,7 @@ import './global.css';
 import RouterProviderWrapper from './router/RouterProviderWrapper';
 import {client} from './utils/apolloClient';
 import {validateMessagesWithLabels} from './utils/validateMessages';
+import {customTheme} from '@/customTheme.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <StrictMode>
@@ -16,9 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <ApolloProvider client={client}>
                 <ConfigProvider
                     direction="ltr"
-                    theme={{
-                        algorithm: theme.darkAlgorithm,
-                    }}
+                    theme={customTheme}
                     locale={ruRU}
                     form={{colon: false, validateMessages: validateMessagesWithLabels}}
                 >
