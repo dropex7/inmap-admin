@@ -4,12 +4,13 @@
 
 import {memo} from 'react';
 import type {MenuProps} from 'antd';
-import {Menu} from 'antd';
+import {Tabs} from 'antd';
 import {FORM_MENU_BASE_ITEM_KEYS} from '@/pages/subject/form/tabs/helper.ts';
+import TabView from '@/pages/subject/form/tabs/TabView.tsx';
+import type {TemplateById} from '@/pages/subject/form/FormSubject.tsx';
 
 interface TabsMenuProps {
-    selectedTab: string;
-    setSelectedTab: (value: string) => void;
+    data?: TemplateById;
     extraFields?: MenuProps['items'];
 }
 
@@ -24,18 +25,19 @@ const items: MenuProps['items'] = [
     },
 ];
 
-const TabsMenu = memo<TabsMenuProps>(({selectedTab, setSelectedTab, extraFields = []}) => {
-    const onClick: MenuProps['onClick'] = e => {
-        setSelectedTab(e.key);
-    };
-
+const TabsMenu = memo<TabsMenuProps>(({data, extraFields = []}) => {
     return (
-        <Menu
-            className="w-72 p-1"
-            onClick={onClick}
-            selectedKeys={[selectedTab]}
-            mode="vertical"
-            items={[...items, ...extraFields]}
+        <Tabs
+            tabPosition="left"
+            className="w-full pt-3"
+            items={[...items, ...extraFields].map(({label, key}: any) => {
+                return {
+                    label,
+                    key,
+                    forceRender: true,
+                    children: <TabView key={key} tabKey={key} tabs={data?.template.tabs ?? []} />,
+                };
+            })}
         />
     );
 });

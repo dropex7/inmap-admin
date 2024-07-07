@@ -11,7 +11,7 @@ import PhotosTab from '@/pages/subject/form/tabs/PhotosTab.tsx';
 import ExtraTabWrapper from '@/pages/subject/form/tabs/ExtraTabWrapper.tsx';
 
 interface TabViewProps {
-    selectedTab: string;
+    tabKey: string;
     tabs: Array<LocalizedTemplateTabModel>;
 }
 
@@ -34,10 +34,10 @@ const generateTabViews = (tabs: Array<LocalizedTemplateTabModel>) => {
     return views;
 };
 
-const TabView = memo<TabViewProps>(({selectedTab, tabs}) => {
+const TabView = memo<TabViewProps>(({tabKey, tabs}) => {
     const allViews = useMemo<Record<string, any>>(() => ({...baseViews, ...generateTabViews(tabs)}), [tabs]);
 
-    return <div className="w-full">{allViews[selectedTab]}</div>;
+    return allViews[tabKey];
 });
 
 export default TabView;

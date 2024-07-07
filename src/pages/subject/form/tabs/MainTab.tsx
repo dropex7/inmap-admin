@@ -2,20 +2,27 @@
  * Created by MIRZOEV A. on 07.02.2024
  */
 
-import {memo} from 'react';
-import {Form, Input, Select, Typography} from 'antd';
+import {memo, useMemo} from 'react';
+import {Form, Input, Select, TreeSelect, Typography} from 'antd';
 import ScheduleFields from '@/components/Schedule/ScheduleFields.tsx';
 import {useQuery} from '@apollo/client';
 import type {GetPlaceLayersQuery} from '@/generated/graphql.ts';
-import {GET_PLACE_LAYERS} from '@/operations/place/query.ts';
+import {GET_PLACE_LAYERS, GET_PLACE_RECOMMEDATIONS} from '@/operations/place/query.ts';
 import ImageLoaderField from '@/components/ImageLoader/ImageLoaderField.tsx';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
+import type {GetPlaceRecommendationsQuery} from '@/generated/graphql.ts';
+import {createTreeData} from '@/pages/subject/form/tabs/helper.ts';
 
 const {Item} = Form;
 const {Title} = Typography;
 
 const MainTab = memo(() => {
     const placeId = useGetPlaceUuid();
+    const {data: recs} = useQuery<GetPlaceRecommendationsQuery>(GET_PLACE_RECOMMEDATIONS, {
+        variables: {placeUuid: placeId!},
+    });
+
+    const treeData = useMemo(() => createTreeData(recs ? recs.placeRecommendations : []), [recs]);
 
     const {data} = useQuery<GetPlaceLayersQuery>(GET_PLACE_LAYERS, {variables: {placeUuid: placeId!}});
 
@@ -57,6 +64,23 @@ const MainTab = memo(() => {
                                     value: uuid,
                                 }))}
                                 placeholder="Выберите этаж"
+                            />
+                        </Item>
+
+                        <Item
+                            labelAlign="left"
+                            label="Категория"
+                            rules={[{message: 'Выберите категорию!', required: true}]}
+                            name="recs"
+                        >
+                            <TreeSelect
+                                showSearch
+                                placeholder="Выберите категорию"
+                                allowClear
+                                multiple
+                                treeDefaultExpandAll
+                                treeCheckable
+                                treeData={treeData as any}
                             />
                         </Item>
                     </div>

@@ -16,9 +16,9 @@ interface TemplateFieldsProps {
 const TemplateFields = memo<TemplateFieldsProps>(({tabIndex, fields, templateTabUuid}) => {
     return (
         <div className="flex w-full flex-col">
-            <Form.Item name={[tabIndex, 'templateTabUuid']} initialValue={templateTabUuid} noStyle />
+            <Form.Item name={['tabs', tabIndex, 'templateTabUuid']} initialValue={templateTabUuid} noStyle />
 
-            <Form.List name={[tabIndex, 'fields']}>
+            <Form.List name={['tabs', tabIndex, 'fields']}>
                 {() => (
                     <>
                         {fields.map((field, index) => (

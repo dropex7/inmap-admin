@@ -6,7 +6,7 @@ import type {Color} from 'antd/es/color-picker';
 
 import {useMutation, useQuery} from '@apollo/client';
 import {Form} from 'antd';
-import {memo, useCallback, useMemo, useState} from 'react';
+import {memo, useCallback, useMemo} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import type {SCHEDULE_DAYS} from '@/components/Schedule/types';
 import type {Query} from '@/generated/graphql';
@@ -21,8 +21,6 @@ import {defaultScheduleValues, prepareDataForForm} from './prepareDataForForm';
 import type {ImageType} from '@/components/ImageLoader/ImageLoaderField.tsx';
 import {GET_TEMPLATE_BY_ID} from '@/operations/template/query.ts';
 import TabsMenu from '@/pages/subject/form/tabs/TabsMenu.tsx';
-import {FORM_MENU_BASE_ITEM_KEYS} from '@/pages/subject/form/tabs/helper.ts';
-import TabView from '@/pages/subject/form/tabs/TabView.tsx';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
 
 interface FormProps {
@@ -38,6 +36,7 @@ interface SubjectFormValues {
     shortDescription: string;
     site: string;
     tabs: Array<any>;
+    recs: Array<string>;
 }
 
 export type TemplateById = {template: Query['template']};
@@ -46,7 +45,6 @@ const baseInitialValues = {schedule: defaultScheduleValues()};
 
 const FormSubject = memo<FormProps>(({item}) => {
     const {templateId} = useParams();
-    const [selectedTab, setSelectedTab] = useState<string>(FORM_MENU_BASE_ITEM_KEYS.MAIN);
     const navigate = useNavigate();
     const placeUuid = useGetPlaceUuid();
     const isCreate = !item?.uuid;
@@ -94,6 +92,7 @@ const FormSubject = memo<FormProps>(({item}) => {
                             logo: logo[0].originFileObj?.url,
                             placeUuid,
                             schedule: prepareSchedule(schedule),
+                            promosUuids: [],
                         },
                     },
                 });
@@ -132,9 +131,7 @@ const FormSubject = memo<FormProps>(({item}) => {
             initialValues={initialValues}
             onFinish={onFinish}
         >
-            <TabsMenu selectedTab={selectedTab} setSelectedTab={setSelectedTab} extraFields={extraFields} />
-
-            <TabView selectedTab={selectedTab} tabs={data?.template.tabs ?? []} />
+            <TabsMenu extraFields={extraFields} data={data} />
         </Form>
     );
 });

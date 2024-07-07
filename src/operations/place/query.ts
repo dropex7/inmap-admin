@@ -47,3 +47,17 @@ export const GET_PLACE_PLANS = gql`
         }
     }
 `;
+
+export const GET_PLACE_RECOMMEDATIONS = gql`
+    query GetPlaceRecommendations($placeUuid: String!) {
+        placeRecommendations(placeUuid: $placeUuid) {
+            uuid
+            icon
+            image
+            parent {
+                uuid
+            }
+            title
+        }
+    }
+`;
