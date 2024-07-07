@@ -17,7 +17,6 @@ const FieldWrapper = memo<PropsWithChildren<FieldWrapperProps>>(({children, fiel
         <>
             <Form.Item name={[fieldIndex, 'type']} initialValue={fieldType} noStyle />
             <Form.List name={[fieldIndex, 'data']}>{() => <>{children}</>}</Form.List>
-            <hr />
         </>
     );
 });

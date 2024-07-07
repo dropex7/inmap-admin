@@ -4,13 +4,9 @@
 
 import {memo} from 'react';
 
-import EmailAddress from './fields/EmailAddress';
-import ImagesField from './fields/ImagesField';
-import PhonesField from './fields/PhonesField';
-import SocialMediaField from './fields/SocialMediaField';
-import TitleField from './fields/TitleField';
-import Website from './fields/Website';
 import {FIELD_TYPES} from './fields/types';
+import Contact from '@/pages/subject/form/template/fields/Contact.tsx';
+import MenuField from '@/pages/subject/form/template/fields/MenuField.tsx';
 
 interface FieldByTypeProps {
     fieldType: string;
@@ -20,18 +16,10 @@ interface FieldByTypeProps {
 
 const FieldByType = memo<FieldByTypeProps>(({fieldType, fieldIndex, tabIndex}) => {
     switch (fieldType) {
-        case FIELD_TYPES.website_url:
-            return <Website />;
-        case FIELD_TYPES.email_address:
-            return <EmailAddress />;
-        case FIELD_TYPES.title:
-            return <TitleField />;
-        case FIELD_TYPES.social_media:
-            return <SocialMediaField />;
-        case FIELD_TYPES.images:
-            return <ImagesField tabIndex={tabIndex} fieldIndex={fieldIndex} />;
-        case FIELD_TYPES.phones:
-            return <PhonesField />;
+        case FIELD_TYPES.contacts:
+            return <Contact />;
+        case FIELD_TYPES.menu:
+            return <MenuField tabIndex={tabIndex} fieldIndex={fieldIndex} />;
         default:
             return null;
     }

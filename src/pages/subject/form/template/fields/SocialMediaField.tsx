@@ -6,6 +6,8 @@ import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
 import {Button, Form, Input, Select, Space} from 'antd';
 import {memo} from 'react';
 
+const {Item, List} = Form;
+
 enum SocialMediaTypes {
     facebook = 'facebook',
     flickr = 'flickr',
@@ -33,38 +35,38 @@ const options = Object.entries(SocialMediaTypes).map(([_, value]) => ({
 
 const SocialMediaField = memo(() => {
     return (
-        <Form.Item labelAlign="left" label="Социальные сети">
-            <Form.List name="socialMediaList">
+        <Item labelAlign="left" label="Социальные сети">
+            <List name="socials">
                 {(fields, {add, remove}) => (
                     <div className="flex flex-col gap-2">
                         {fields.map(({key, name, ...restField}) => (
                             <Space align="baseline" key={key} style={{display: 'flex'}}>
-                                <Form.Item
+                                <Item
                                     {...restField}
                                     name={[name, 'type']}
                                     rules={[{message: 'Выберите тип', required: true}]}
                                 >
                                     <Select options={options} placeholder="Тип социальной сети" style={{width: 200}} />
-                                </Form.Item>
-                                <Form.Item
+                                </Item>
+                                <Item
                                     {...restField}
                                     name={[name, 'url']}
                                     rules={[{message: 'Введите ссылку', required: true}]}
                                 >
                                     <Input placeholder="Ссылка" />
-                                </Form.Item>
+                                </Item>
                                 <MinusCircleOutlined onClick={() => remove(name)} />
                             </Space>
                         ))}
-                        <Form.Item>
+                        <Item>
                             <Button block icon={<PlusOutlined />} onClick={() => add()} type="dashed">
                                 Добавить социальную сеть
                             </Button>
-                        </Form.Item>
+                        </Item>
                     </div>
                 )}
-            </Form.List>
-        </Form.Item>
+            </List>
+        </Item>
     );
 });
 
