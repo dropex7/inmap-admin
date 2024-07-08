@@ -86,10 +86,10 @@ const FormSubject = memo<FormProps>(({item}) => {
                             ...values,
                             placeUuid,
                             content: {
-                                tabs: prepareFieldsToSend(tabs),
+                                tabs: prepareFieldsToSend(tabs ?? []),
                                 templateUuid: templateId,
                             },
-                            images: images?.map(image => image.originFileObj?.url),
+                            images: images.map(image => image.originFileObj.url).filter(image => image),
                             logo: logo[0].originFileObj?.url,
                             schedule: prepareSchedule(schedule),
                             promosUuids: [],

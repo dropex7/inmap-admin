@@ -4,7 +4,7 @@
 
 import {memo, useCallback} from 'react';
 import {Button} from 'antd';
-import {StepBackwardOutlined, StepForwardOutlined} from '@ant-design/icons';
+import {RedoOutlined, UndoOutlined} from '@ant-design/icons';
 import {getSyncPlanMessage, redoChanges, undoChanges} from '@/utils/widgetMessages.ts';
 import {useMap} from '@/hooks/useMap.ts';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
@@ -36,8 +36,8 @@ const EditActions = memo(() => {
 
     return (
         <div className="flex gap-3">
-            <Button type="text" icon={<StepBackwardOutlined />} disabled={!planState?.canUndo} onClick={handleUndo} />
-            <Button type="text" icon={<StepForwardOutlined />} disabled={!planState?.canRedo} onClick={handleRedo} />
+            <Button type="text" icon={<UndoOutlined />} disabled={!planState?.canUndo} onClick={handleUndo} />
+            <Button type="text" icon={<RedoOutlined />} disabled={!planState?.canRedo} onClick={handleRedo} />
 
             {/*TODO НУЖЕН СБРОС ИЗМЕНЕНИЙ НА КАРТЕ*/}
             <Button onClick={toggleEditMode}>Отменить изменения</Button>
