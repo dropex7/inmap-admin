@@ -21,7 +21,7 @@ const Nav = memo(() => {
 
     useEffect(() => {
         if (pathname === '/') {
-            navigate('subject', {replace: true});
+            navigate('map', {replace: true});
         }
     }, [navigate, pathname]);
 

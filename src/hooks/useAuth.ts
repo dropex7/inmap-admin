@@ -24,15 +24,6 @@ export function useAuth() {
         [auth, navigate],
     );
 
-    // const sendPasswordReset = async (email: string) => {
-    //   try {
-    //     await sendPasswordResetEmail(auth, email);
-    //     alert("Password reset link sent!");
-    //   } catch (err) {
-    //     // some logic
-    //   }
-    // };
-
     const logout = useCallback(() => {
         signOut(auth);
     }, [auth]);

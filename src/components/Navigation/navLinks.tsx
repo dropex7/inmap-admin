@@ -1,14 +1,9 @@
 import OtherIcon from '@assets/other.svg?react';
 import MapIcon from '@assets/map.svg?react';
 import NewsIcon from '@assets/news.svg?react';
-import {CarOutlined, HomeOutlined, LineChartOutlined, TranslationOutlined} from '@ant-design/icons';
+import {CarOutlined, LineChartOutlined, TranslationOutlined} from '@ant-design/icons';
 
 export const navLinks = [
-    {
-        icon: <HomeOutlined style={{fontSize: '20px'}} />,
-        path: 'home',
-        title: 'Главная',
-    },
     {
         icon: <MapIcon />,
         path: 'map',
