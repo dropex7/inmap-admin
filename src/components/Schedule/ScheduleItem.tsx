@@ -2,7 +2,7 @@
  * Created by MIRZOEV A. on 20.01.2024
  */
 
-import {memo, useCallback} from 'react';
+import {memo, useCallback, useEffect} from 'react';
 
 import type {FormScheduleInterval} from '@/components/Schedule/types.ts';
 import {DAY_TYPES} from '@/components/Schedule/types.ts';
@@ -33,6 +33,10 @@ const ScheduleItem = memo<NewScheduleItemProps>(({name, setCopyInterval, copyInt
     const handlePut = useCallback(() => {
         form.setFieldValue(['schedule', name, 'intervals'], copyInterval);
     }, [copyInterval, form, name]);
+
+    useEffect(() => {
+        form.setFieldValue(['schedule', name, 'intervals'], []);
+    }, [form, name, type]);
 
     return (
         <div className="flex flex-col gap-2">

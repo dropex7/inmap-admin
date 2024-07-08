@@ -1,4 +1,5 @@
 import type {GetPlaceRecommendationsQuery} from '@/generated/graphql.ts';
+import {DAY_TYPES} from '@/components/Schedule/types.ts';
 
 export enum FORM_MENU_BASE_ITEM_KEYS {
     MAIN = 'MAIN',
@@ -28,4 +29,22 @@ export function createTreeData(data: GetPlaceRecommendationsQuery['placeRecommen
     });
 
     return result;
+}
+
+export function validateSchedule(schedule: any) {
+    for (const day of Object.keys(schedule)) {
+        if (schedule[day].type === DAY_TYPES.WORKING) {
+            if (schedule[day].intervals.length < 1) {
+                return true;
+            }
+            if (schedule[day].intervals.includes(undefined)) {
+                return true;
+            }
+            if (schedule[day].intervals.find(({interval}: any) => interval === null)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }

@@ -2,13 +2,14 @@
  * Created by MIRZOEV A. on 20.01.2024
  */
 
-import {memo, useCallback, useMemo, useState} from 'react';
+import {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {Button, Collapse, Form, Modal, Switch} from 'antd';
 import useOpen from '@/hooks/useOpen.ts';
 import type {FormScheduleInterval} from '@/components/Schedule/types.ts';
 import {DAY_TYPES, SCHEDULE_DAYS} from '@/components/Schedule/types.ts';
 import ScheduleItem from '@/components/Schedule/ScheduleItem.tsx';
 import DayInfoView from '@/components/Schedule/DayInfoView.tsx';
+import {validateSchedule} from '@/pages/subject/form/tabs/helper.ts';
 
 type CollapseItems = string | Array<string>;
 
@@ -19,8 +20,20 @@ const scheduleValues = Object.values(SCHEDULE_DAYS);
 const ScheduleFields = memo(() => {
     const form = useFormInstance();
     const schedule = useWatch('schedule', form);
+    const [oldState, setOldState] = useState(form.getFieldValue('schedule'));
+    const [isInvalid, setIsInvalid] = useState(false);
     const {open, onClose, onOpen} = useOpen();
     const [copyIntervals, setCopyIntervals] = useState<Array<FormScheduleInterval>>();
+
+    const onOpenModal = useCallback(() => {
+        setOldState(schedule);
+        onOpen();
+    }, [onOpen, schedule]);
+
+    const onCancelChanges = useCallback(() => {
+        form.setFieldValue('schedule', oldState);
+        onClose();
+    }, [form, oldState, onClose]);
 
     const [activeElements, setActiveElements] = useState<CollapseItems>([]);
 
@@ -60,24 +73,33 @@ const ScheduleFields = memo(() => {
     );
 
     const handleSaveSchedule = useCallback(() => {
-        // TODO: валидация дат
+        if (isInvalid) {
+            return;
+        }
         onClose();
-    }, [onClose]);
+    }, [isInvalid, onClose]);
+
+    useEffect(() => {
+        if (schedule) {
+            setIsInvalid(validateSchedule(schedule));
+        }
+    }, [schedule]);
 
     return (
         <>
-            <Button onClick={onOpen}>Настройка расписания</Button>
+            <Button onClick={onOpenModal}>Настройка расписания</Button>
             <Modal
+                forceRender
                 width={500}
                 title="График работы"
                 open={open}
                 closable={false}
                 maskClosable={false}
                 footer={[
-                    <Button key="cancel" onClick={handleSaveSchedule}>
+                    <Button key="cancel" onClick={onCancelChanges}>
                         Отменить
                     </Button>,
-                    <Button key="save" onClick={handleSaveSchedule} type="primary">
+                    <Button key="save" disabled={isInvalid} onClick={handleSaveSchedule} type="primary">
                         Сохранить
                     </Button>,
                 ]}
@@ -86,13 +108,13 @@ const ScheduleFields = memo(() => {
                     {() => (
                         <div className="flex flex-col gap-3">
                             <Collapse
-                                accordion
                                 activeKey={activeElements}
                                 onChange={handleChangeCollapse}
                                 collapsible="icon"
                                 expandIconPosition="end"
                                 items={scheduleItems}
                             />
+                            {isInvalid && <span className="text-sm text-red-300">Не заполнены интервалы</span>}
                         </div>
                     )}
                 </Form.List>
