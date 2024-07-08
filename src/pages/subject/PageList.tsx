@@ -45,7 +45,7 @@ export function Component() {
         <section className="flex flex-col divide-y divide-zinc-800 rounded-lg bg-zinc-900">
             <div className="flex justify-between px-6 py-3">
                 <Pagination
-                    defaultCurrent={pageParams.offset / pageParams.limit + 1}
+                    current={pageParams.offset / pageParams.limit + 1}
                     onChange={changePage}
                     defaultPageSize={pageParams.limit}
                     total={data?.subjectsOfPlace.total ?? 0}

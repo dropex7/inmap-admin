@@ -84,13 +84,13 @@ const FormSubject = memo<FormProps>(({item}) => {
                     variables: {
                         createSubjectInput: {
                             ...values,
+                            placeUuid,
                             content: {
-                                tabs: prepareFieldsToSend(tabs ?? {}),
+                                tabs: prepareFieldsToSend(tabs),
                                 templateUuid: templateId,
                             },
                             images: images?.map(image => image.originFileObj?.url),
                             logo: logo[0].originFileObj?.url,
-                            placeUuid,
                             schedule: prepareSchedule(schedule),
                             promosUuids: [],
                         },
@@ -104,13 +104,12 @@ const FormSubject = memo<FormProps>(({item}) => {
                         updateSubjectInput: {
                             ...values,
                             uuid: item?.uuid,
-                            // TODO Добавить обработку табов
-                            // content: {
-                            //     tabs: prepareFieldsToSend(tabs),
-                            //     templateUuid: templateId,
-                            // },
-                            images: images?.map(image => image.url),
-                            logo: logo[0].url,
+                            content: {
+                                tabs: prepareFieldsToSend(tabs),
+                                templateUuid: item?.content?.templateUuid,
+                            },
+                            images: images?.map(image => (image.url ? image.url : image.originFileObj.url)),
+                            logo: logo[0].url ? logo[0].url : logo[0].originFileObj.url,
                             schedule,
                         },
                         placeUuid,
@@ -119,7 +118,16 @@ const FormSubject = memo<FormProps>(({item}) => {
                 navigate(`..`);
             }
         },
-        [createSubject, isCreate, item?.uuid, navigate, placeUuid, templateId, updateSubject],
+        [
+            createSubject,
+            isCreate,
+            item?.content?.templateUuid,
+            item?.uuid,
+            navigate,
+            placeUuid,
+            templateId,
+            updateSubject,
+        ],
     );
 
     return (

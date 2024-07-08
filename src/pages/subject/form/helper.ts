@@ -7,9 +7,10 @@ export const prepareFieldsToSend = (tabs: FormFields) =>
         templateTabUuid,
         fields: fields.map(({type, data}: any) => {
             if (type === FIELD_TYPES.menu) {
-                const imagesUrls = data?.imagesUrls?.fileList.map(
-                    ({originFileObj}: {originFileObj: any}) => originFileObj.url,
-                );
+                const imagesUrls = data?.imagesUrls?.fileList
+                    ? data?.imagesUrls?.fileList.map(({originFileObj}: {originFileObj: any}) => originFileObj.url)
+                    : data?.imagesUrls.map((image: any) => (image?.url ? image.url : image.originFileObj.url));
+
                 return {data: {...data, imagesUrls}, type};
             }
 

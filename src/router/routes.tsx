@@ -66,7 +66,7 @@ export const authorizedAppRoutes = [
         path: 'map',
     },
     {
-        element: <div className="text-white">Нет такой странички бро</div>,
+        lazy: () => import('@/router/NotFoundPage'),
         path: '*',
     },
 ];

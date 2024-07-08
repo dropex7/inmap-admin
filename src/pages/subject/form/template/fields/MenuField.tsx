@@ -21,10 +21,10 @@ const MenuField = memo<MenuFieldProps>(({tabIndex, fieldIndex}) => {
                 <Input />
             </Item>
             <ImageLoaderField
-                countOfImages={5}
-                fieldName={['tabs', tabIndex, 'fields', fieldIndex, 'imagesUrls']}
+                countOfImages={10}
+                fieldName={['tabs', tabIndex, 'fields', fieldIndex, 'data', 'imagesUrls']}
                 isRequired={false}
-                label="Фотографии"
+                label="Меню"
                 name="imagesUrls"
             />
         </>

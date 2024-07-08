@@ -13,6 +13,7 @@ import {GET_PROMOS} from '@/operations/promo/query';
 import PromoTable from './PromoTable';
 import type {GetListOfPromosQuery} from '@/generated/graphql';
 import {useGetPlaceUuid} from '@/hooks/useGetPlaceUuid.ts';
+import type {TableProps} from 'antd/es/table/InternalTable';
 
 interface PromoListProps {
     url: string;
@@ -34,10 +35,11 @@ const PromoList = memo<PromoListProps>(({url}) => {
         [pageParams, setParams],
     );
 
-    const paginationSettings = useMemo(
+    const paginationSettings = useMemo<TableProps['pagination']>(
         () => ({
             defaultPageSize: pageParams.limit,
             total: data?.promos.total,
+            position: ['bottomCenter'],
             showSizeChanger: false,
             onChange: changePage,
         }),
