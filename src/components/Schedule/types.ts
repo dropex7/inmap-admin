@@ -3,9 +3,9 @@ import type {Dayjs} from 'dayjs';
 export enum SCHEDULE_DAYS {
     'monday' = 'monday',
     'tuesday' = 'tuesday',
-    'friday' = 'friday',
     'wednesday' = 'wednesday',
     'thursday' = 'thursday',
+    'friday' = 'friday',
     'saturday' = 'saturday',
     'sunday' = 'sunday',
 }
@@ -21,7 +21,7 @@ export const scheduleText: Record<SCHEDULE_DAYS, string> = {
 };
 
 export enum DAY_TYPES {
-    'ALL_DAY' = 'allDay',
+    'ALL_DAY' = 'all_day',
     'OFF' = 'off',
     'WORKING' = 'working_intervals',
 }

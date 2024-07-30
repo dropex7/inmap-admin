@@ -17,6 +17,11 @@ export const prepareSchedule = (
                 type: schedule[dayKey].type,
                 intervals: schedule[dayKey].intervals?.map(({interval}) => prepareScheduleInterval(interval)),
             };
+        }
+        if (schedule[dayKey].type === DAY_TYPES.ALL_DAY) {
+            preparedScheduleValue[dayKey] = {
+                type: schedule[dayKey].type,
+            };
         } else {
             preparedScheduleValue[dayKey] = schedule[dayKey] as ScheduleIntervalsOption;
         }

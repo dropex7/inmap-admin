@@ -21,7 +21,13 @@ const MapEditorHeader = memo(() => {
 
             <BlockerElement />
 
-            {isEditMode ? <EditActions /> : <Button onClick={toggleEditMode}>Редактировать карту</Button>}
+            {isEditMode ? (
+                <EditActions />
+            ) : (
+                <Button type="primary" onClick={toggleEditMode}>
+                    Редактировать карту
+                </Button>
+            )}
         </div>
     );
 });

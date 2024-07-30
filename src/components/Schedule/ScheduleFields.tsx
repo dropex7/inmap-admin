@@ -6,16 +6,16 @@ import {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {Button, Collapse, Form, Modal, Switch} from 'antd';
 import useOpen from '@/hooks/useOpen.ts';
 import type {FormScheduleInterval} from '@/components/Schedule/types.ts';
-import {DAY_TYPES, SCHEDULE_DAYS} from '@/components/Schedule/types.ts';
+import {DAY_TYPES} from '@/components/Schedule/types.ts';
 import ScheduleItem from '@/components/Schedule/ScheduleItem.tsx';
 import DayInfoView from '@/components/Schedule/DayInfoView.tsx';
 import {validateSchedule} from '@/pages/subject/form/tabs/helper.ts';
+import {scheduleValues} from '@/components/Schedule/helper.ts';
+import ScheduleView from '@/components/Schedule/ScheduleView.tsx';
 
 type CollapseItems = string | Array<string>;
 
 const {useFormInstance, useWatch} = Form;
-
-const scheduleValues = Object.values(SCHEDULE_DAYS);
 
 const ScheduleFields = memo(() => {
     const form = useFormInstance();
@@ -88,6 +88,7 @@ const ScheduleFields = memo(() => {
     return (
         <>
             <Button onClick={onOpenModal}>Настройка расписания</Button>
+            <ScheduleView schedule={schedule} />
             <Modal
                 forceRender
                 width={500}

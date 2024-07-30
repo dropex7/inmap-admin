@@ -56,9 +56,7 @@ const PlanSelect = memo(() => {
     return (
         <div className="flex items-center gap-3">
             <Select className="w-60" value={selectedPlanKey} onChange={setSelectedPlanKey} options={planOptions} />
-            <Button type="primary" onClick={handleChangeActualPlan}>
-                Сделать основной
-            </Button>
+            <Button onClick={handleChangeActualPlan}>Сделать основной</Button>
         </div>
     );
 });
